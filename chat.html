@@ -770,12 +770,12 @@
             sendButton.disabled = true;
 
             // Add user message to UI
-            appendMessage('user', message, Date.now(), true);
+            const userMsg = appendMessage('user', message, Date.now(), true);
             messageInput.value = '';
 
             // Show typing indicator
             typingIndicator.classList.add('show');
-            scrollToBottom();
+            scrollToMessage(userMsg);
 
             // Track event
             trackEvent('message_sent', { messageCount: messageCount + 1 });
@@ -806,9 +806,9 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
-                // Add assistant message
-                appendMessage('assistant', data.response, Date.now(), true);
-                scrollToBottom();
+                // Add assistant message and scroll to show its TOP (not bottom)
+                const assistantMsg = appendMessage('assistant', data.response, Date.now(), true);
+                scrollToMessage(assistantMsg);
 
                 // Increment message count
                 messageCount++;
@@ -857,6 +857,9 @@
                 messageHistory.push({ role, content, timestamp });
                 localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
             }
+
+            // Return the element so we can scroll to it
+            return messageDiv;
         }
 
         function formatTime(timestamp) {
@@ -869,7 +872,14 @@
         }
 
         function scrollToBottom() {
+            // Scroll to show the bottom of the container
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function scrollToMessage(messageElement) {
+            // Scroll to show the TOP of the message (not the bottom)
+            // This ensures users see the beginning of long messages
+            messageElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
         // ==========================================
