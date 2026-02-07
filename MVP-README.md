@@ -220,6 +220,24 @@ netlify functions:logs chat
 
 ---
 
+## 📚 KNOWLEDGE BASE (Updated with Real Content)
+
+**NEW:** Maxi now uses content from **Bitcoin Singularity** book (Chapter 10).
+
+**Cached Content:**
+- Three Epochs Framework (Bitcoinization → Hyperbitcoinization → Bitcoin Singularity)
+- Why AI agents choose Bitcoin (Saylor quote + Boyd's prediction)
+- Sustainable Abundance Triad (Bitcoin + AI + Longevity)
+- AI agents with Lightning wallets (no KYC, autonomous operation)
+- Gig economy disruption via Bitcoin
+- Bitcoin-backed UBI concept
+- Austrian economics and time preference
+- Endorsements from Lyn Alden, Bram Kanstein, Joe Bryan
+
+**Source:** `BITCOIN-SINGULARITY-CORE-THESIS.md` (provided by Boyd)
+
+This is the foundational knowledge Maxi uses to answer questions about Bitcoin-AI convergence. All cached for cost efficiency.
+
 ## 🎨 DESIGN PHILOSOPHY
 
 ### Lean Startup Principles Applied
