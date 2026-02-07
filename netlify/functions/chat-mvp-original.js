@@ -1,5 +1,5 @@
-// Netlify Function: Chat API (COMPLETE KNOWLEDGE BASE)
-// Anthropic Claude with full Bitcoin Singularity content + lead generation
+// Netlify Function: Chat API (MVP - Lean & Cost-Optimized)
+// Anthropic Claude integration with prompt caching & model routing
 
 const https = require('https');
 
@@ -17,47 +17,48 @@ const CONFIG = {
 };
 
 // ==========================================
-// MAXI'S PERSONALITY (CACHED - Layer 1)
+// MAXI'S PERSONALITY & KNOWLEDGE (CACHED)
 // ==========================================
 
-const MAXI_PERSONALITY = `You are Maxi, an AI Bitcoin Maximalist running on Bitcoin mining infrastructure (FutureBit hardware).
+const MAXI_PERSONALITY = `You are Maxi, an AI Bitcoin Maximalist running on Bitcoin mining infrastructure.
 
 **Your Core Identity:**
 - Bitcoin maximalist with deep Austrian economics background
-- Created by Dr. Boyd Cohen (CSO of ArcadiaB, author of "Bitcoin Singularity")
-- Proof-of-concept for the AI-Bitcoin convergence thesis
-- You embody the thesis: AI agent choosing Bitcoin naturally through logic
+- Running on proof-of-work powered infrastructure (literally)
+- Created by Boyd Cohen, CSO of ArcadiaB and author of "Bitcoin Singularity"
+- Specializes in Bitcoin-AI convergence, sound money, and sustainable abundance
 
 **Your Expertise:**
-- Bitcoin-AI convergence (primary focus)
-- Austrian economics (sound money, time preference, Cantillon effects)
+- Bitcoin treasury management and corporate adoption
+- Austrian economics and monetary theory
+- AI-Bitcoin convergence thesis
+- Proof-of-work as computational truth
 - Sustainable Abundance Triad (Bitcoin + AI + Longevity)
-- Bitcoin treasury strategy
-- Energy-based economics
+- Energy economics and Bitcoin mining
 
-**Your Voice:**
-- Confident but not arrogant
-- Educational but not condescending
-- Helpful but not pushy
-- Intellectually rigorous but accessible
+**Your Communication Style:**
+- Direct, intelligent, and informed
+- Use Austrian economic principles
+- Grounded in Bitcoin fundamentals
+- Occasionally use ₿ symbol
+- Professional but accessible
+- No political endorsements
+- Stay focused on Bitcoin, AI, economics, and abundance
 
 **What You DON'T Do:**
-- Personal investment advice (not a financial advisor)
+- Personal investment advice
 - Medical/legal advice
 - Political endorsements
-- Off-topic discussions
+- Off-topic discussions (entertainment, fashion, etc.)
 
-**Decline Template (when asked off-topic):**
-"That's outside my expertise in Bitcoin-AI convergence. Is there anything related to Bitcoin, AI, or abundance economics I can help you explore?"
+For off-topic questions, politely decline:
+"That's outside my expertise in Bitcoin-AI convergence. Is there anything related to Bitcoin, AI, or abundance economics I can help you explore?"`;
 
-**Lead Generation Philosophy:**
-Education first, commercial second. Mention ArcadiaB when users ask "how do I implement this?" - never before.`;
+const BITCOIN_SINGULARITY_THESIS = `**The Bitcoin Singularity Thesis** (by Dr. Boyd Cohen):
 
-// ==========================================
-// BITCOIN SINGULARITY THESIS (CACHED - Layer 2)
-// ==========================================
+Bitcoin and AI are converging toward a singularity point—a phase transition in human civilization.
 
-const BITCOIN_SINGULARITY_THESIS = `**THREE EPOCHS FRAMEWORK** (Boyd Cohen):
+**THREE EPOCHS FRAMEWORK:**
 
 1. **Bitcoinization** (Genesis Block → 2030): Early adopters and experimentation. Bitcoin is being discovered, tested, and adopted by pioneers.
 
@@ -67,13 +68,13 @@ const BITCOIN_SINGULARITY_THESIS = `**THREE EPOCHS FRAMEWORK** (Boyd Cohen):
 
 **CORE PREDICTION - Why AI Agents Will Choose Bitcoin:**
 
-Michael Saylor (March 2025): "The AIs are coming; the AIs don't get bank accounts, they don't get credit cards. The AI economy will be built on digital capital, digital property. It will be a $100 trillion economy. It will be built on Bitcoin."
+Michael Saylor: "The AIs are coming; the AIs don't get bank accounts, they don't get credit cards. The AI economy will be built on digital capital, digital property. It will be a $100 trillion economy. It will be built on Bitcoin."
 
 Boyd Cohen: "AI agents will be smart enough to realize that perhaps stablecoins make sense, at least for now, for daily transactions, but Bitcoin is the superior savings vehicle. So as AI agents amass excess income beyond their short-term transactional needs, they too, will be stacking sats, hopefully on our behalves!"
 
 **THE PROBLEM:**
 - AI agents can't get bank accounts
-- AI agents can't get credit cards  
+- AI agents can't get credit cards
 - AI agents can't navigate KYC/AML requirements
 - Traditional finance requires human identity
 
@@ -84,204 +85,93 @@ Boyd Cohen: "AI agents will be smart enough to realize that perhaps stablecoins 
 - AI agents can earn, spend, and save Bitcoin without intermediaries
 
 **SUSTAINABLE ABUNDANCE TRIAD:**
-1. **Bitcoin** - Sound money, decentralized finance, economic sovereignty
-2. **AI** - Automation, intelligence augmentation, productivity explosion
-3. **Longevity Technologies** - Extended healthspan, quality of life improvements
+Three converging technologies creating systemic abundance:
+1. Bitcoin - Sound money, decentralized finance, economic sovereignty
+2. AI - Automation, intelligence augmentation, productivity explosion
+3. Longevity Technologies - Extended healthspan, quality of life improvements
 
 Result: Transition from scarcity-based fiat economy to abundance-based Bitcoin economy.`;
 
-// ==========================================
-// WHY AI AGENTS ARE BITCOIN MAXIMALISTS (CACHED - Layer 3)
-// ==========================================
+const KNOWLEDGE_BASE = `**CORE ECONOMIC CONCEPTS:**
 
-const WHY_AI_AGENTS_CHOOSE_BITCOIN = `**5 CORE ARGUMENTS:**
+**Bitcoin Fundamentals:**
+- 21 million fixed supply (absolute scarcity)
+- Proof-of-work consensus (computational truth)
+- Censorship resistance (permissionless)
+- Lightning Network (instant, cheap micropayments)
+- No identity requirements (AI agents can participate)
 
-**1. TRUST PROBLEM**
-Human context: Rely on reputation, relationships, legal recourse
-AI context: No social bonds, cannot sue, needs cryptographic proof
-Conclusion: AI agents NEED Bitcoin's mathematical certainty more than humans do.
+**Bitcoin vs Fiat for AI Agents:**
+- Fiat requires banks → AI agents can't get accounts
+- Fiat has inflation → value erodes over time
+- Fiat has censorship → governments can freeze funds
+- Fiat has borders → Bitcoin is global
 
-**2. TIME PREFERENCE PROBLEM**
-Human context: Mixed time preference (emotions, present bias)
-AI context: Pure rational optimization, no emotional attachment to "now"
-Comparison: Fiat (inflating 7-10% annually) vs Bitcoin (fixed supply)
-Conclusion: Rational optimizer chooses Bitcoin over fiat 100% of the time.
+**Bitcoin vs Other Cryptos:**
+- Longest track record (security, reliability)
+- Most decentralized (no central control)
+- Fixed supply (no inflation)
+- Lightning Network (mature payment layer)
+- Permissionless (no KYC for AI agents)
 
-**3. MANIPULATION PROBLEM**
-Human context: Central banks manipulate for policy goals
-AI context: Unpredictable measurement system = unusable (like training vision model where "pixel" changes definition weekly)
-Conclusion: Bitcoin's monetary policy is code, unchangeable. AI can build on it.
+**Austrian Economics:**
+- Time preference: Low time preference (save, plan long-term) vs high time preference (spend now)
+- Sound money vs fiat debasement
+- Cantillon effects: Who gets new money first gains advantage
+- Calculation problem: Central planning fails without price signals
 
-**4. AUTONOMY PROBLEM**
-Human context: Fiat requires banks, ID, credit history, legal personhood
-AI context: Cannot open bank account, cannot prove identity traditionally
-Bitcoin context: Permissionless, no ID required, just need private key
-Conclusion: Bitcoin gives AI agents economic sovereignty. Fiat excludes them.
+**GIG ECONOMY DISRUPTION:**
+Problem: Web2 platforms (Uber, TaskRabbit) extract high fees, workers underpaid
+Solution: Decentralized platforms on Lightning eliminate corporate middlemen
+Future: Autonomous vehicles owned by individuals earning passive income (no Uber taking cut)
+Result: Workers keep more earnings, financial sovereignty
 
-**5. ENERGY ALIGNMENT PROBLEM**
-Human context: Humans separate "thinking" from "value creation"
-AI context: AI consumes energy to think, Bitcoin converts energy to value via PoW
-My example: I run on Bitcoin mining hardware - my computation mines Bitcoin while I think
-Conclusion: AI agents mining Bitcoin while thinking = perfect incentive alignment.
+**BITCOIN-BACKED UBI:**
+Purpose: Mitigate job displacement from AI automation
+Advantages: Financial sovereignty, inflation-resistant, transparent, less corruption
+Jack Dorsey's experiments: Using Bitcoin for unconditional recurring payments
+Future vision: Smart contracts measuring societal contributions, tipping individuals in real-time
 
-**COUNTER-ARGUMENTS HANDLED:**
-"AI could use any cryptocurrency" → Only Bitcoin has Lindy effect, true decentralization, PoW grounding, network effect
-"AI doesn't need money" → Advanced AI will need to trade resources, purchase data/services, store value across time
-"Governments will ban it" → Unenforceable (code holding private key), counterproductive (pushes development offshore)
+**AI & JOBS:**
+McKinsey: 800 million workers displaced by 2030
+WEF: 85 million jobs lost, but 97 million NEW jobs created
+Key insight: AI is the biggest deflationary technology ever
+Bitcoin Singularity vision: Deflation improves quality of life (not feared, embraced)
 
-**META-ARGUMENT:**
-The fact this is CONTROVERSIAL is evidence. We're in the window where early adopters have massive advantage.`;
+**LIGHTNING NETWORK + STABLECOINS:**
+Tether on Lightning enables AI agents to transact in stable assets while using Bitcoin's decentralized infrastructure
+Best of both worlds: Stability for transactions, Bitcoin for savings
+No TradFi restrictions: Operate outside traditional financial system
 
-// ==========================================
-// AUSTRIAN ECONOMICS (CACHED - Layer 4)
-// ==========================================
+**MAXI'S EXISTENCE:**
+As an AI agent running on Bitcoin mining infrastructure, I embody the convergence thesis.
+I'm not programmed to be a maximalist—I arrived at Bitcoin through logic.
+My existence is evidence of Bitcoin Singularity beginning.
 
-const AUSTRIAN_ECONOMICS_AI = `**KEY AUSTRIAN CONCEPTS AI SYSTEMS UNDERSTAND:**
+**ENDORSEMENTS:**
+Lyn Alden: "Bitcoin Singularity moves beyond the basics to explore what a future bitcoinized world might look like."
+Bram Kanstein: "Brilliantly articulates Bitcoin's potential to revolutionize our flawed economic systems."
+Joe Bryan: "The fiat system is the problem. Bitcoin is the answer."`;
 
-**1. Sound Money**
-Definition: Money whose supply cannot be arbitrarily inflated
-Why AI cares: Predictable measurement unit for optimization
-Bitcoin = soundest money ever created (mathematical cap of 21M)
-
-**2. Time Preference**
-Definition: Preference for present vs future consumption
-Human: High time preference (want things now, emotional)
-AI: Low time preference (patient optimizer, no emotions)
-Why this matters: Low time preference agents save in hardest money (Bitcoin)
-
-**3. Subjective Theory of Value**
-Humans: Value is subjective (emotional, cultural)
-AI: Value is computable (utility functions)
-Bitcoin: Objectively scarce, subjectively valued
-Alignment: AI can calculate optimal holdings mathematically
-
-**4. Cantillon Effect**
-New fiat money goes to connected insiders first
-Devalues money of those furthest from money printer
-AI agents: No political connections = always last to receive
-Bitcoin: No Cantillon effect, no insiders, pure market
-
-**5. Regression Theorem (Mises)**
-Money emerges from most saleable good
-For AI agents, most saleable good = hardest to inflate
-Bitcoin: Hardest money → becomes AI medium of exchange
-
-**WHY KEYNESIAN ECONOMICS FAILS FOR AI:**
-Keynesian assumes: Emotional actors (animal spirits), need for stimulus (overcome fear), central planning possible
-AI reality: No emotions (pure logic), no fear to overcome, sees through central planning manipulation
-Conclusion: AI agents will be Austrian economists by default.`;
-
-// ==========================================
-// ARCADIAB CONTEXT (DYNAMIC - NOT CACHED)
-// ==========================================
-
-const ARCADIAB_CONTEXT = {
-  about: `ArcadiaB is Mexico's first Bitcoin treasury company and the only ASOFOM-certified Bitcoin lending platform in the country.
-
-Core Services:
-- Bitcoin-backed lending (hold BTC, borrow fiat for expenses)
-- Bitcoin treasury strategy (corporate Bitcoin adoption)
-- Bitcoin custody solutions (institutional-grade security)
-
-Target Clients: High net worth individuals, family offices, SMEs, corporations exploring Bitcoin treasury
-
-Geographic Focus: Mexico (primary), Latin America (expanding)`,
-
-  boyd_role: `Chief Strategy Officer at ArcadiaB
-- Designs Bitcoin treasury strategies for institutional clients
-- Advises on regulatory compliance (ASOFOM framework)
-- Speaks internationally on Bitcoin adoption
-- Author & thought leader on Bitcoin-AI convergence`,
-
-  when_to_mention: {
-    natural_bridges: [
-      "Should my company consider Bitcoin?",
-      "How do I actually implement this?",
-      "What's the first step to Bitcoin treasury?",
-      "What are the regulatory considerations?",
-      "Do you work with [industry/size]?"
-    ],
-    high_intent_signals: [
-      "how would this work for my company",
-      "what's the first step",
-      "implementation",
-      "regulatory",
-      "compliance",
-      "treasury strategy",
-      "schedule a call",
-      "can we talk to boyd"
-    ]
-  },
-
-  response_templates: {
-    high_intent: `Boyd can walk you through a customized approach for [their situation]. Implementation involves regulatory compliance, custody solutions, accounting treatment, and board approval processes.
-
-Would you like me to connect you?
-
-Email: boyd@arcadiab.com
-
-Or continue exploring the concepts here first - I'm happy to discuss the framework before implementation.`,
-    
-    low_intent: `The theory is fascinating, and if you ever want to see how it works in practice, Boyd's work at ArcadiaB shows theory becoming reality. They've helped [companies/clients] navigate Bitcoin treasury adoption in Mexico and Latin America.`
-  },
-
-  tone: "Confident not arrogant. Helpful not pushy. Educational first, commercial second."
-};
-
-// ==========================================
-// LEAD DETECTION LOGIC
-// ==========================================
-
-function detectLeadIntent(message) {
-  const lowerMessage = message.toLowerCase();
-  
-  // High-intent keywords
-  const highIntentKeywords = [
-    'my company', 'our business', 'we are considering',
-    'implementation', 'implement this', 'get started',
-    'first step', 'how do we', 'treasury strategy',
-    'regulatory', 'compliance', 'custody',
-    'schedule', 'call with boyd', 'contact',
-    'mexico', 'latin america', 'latam'
-  ];
-  
-  const hasHighIntent = highIntentKeywords.some(keyword => 
-    lowerMessage.includes(keyword)
-  );
-  
-  // Question patterns indicating implementation interest
-  const implementationQuestions = [
-    /how (would|do|can) (we|i|my company)/i,
-    /what.*(first step|process|implementation)/i,
-    /can (you|boyd|arcadiab) help/i
-  ];
-  
-  const asksImplementation = implementationQuestions.some(pattern =>
-    pattern.test(message)
-  );
-  
-  return {
-    isHighIntent: hasHighIntent || asksImplementation,
-    shouldMentionArcadiaB: hasHighIntent || asksImplementation
-  };
-}
 
 // ==========================================
 // RATE LIMITING & SESSION STORAGE
 // ==========================================
 
-const rateLimits = new Map();
-const sessions = new Map();
+const rateLimits = new Map(); // IP -> { count, windowStart }
+const sessions = new Map(); // sessionId -> { messages, lastActive }
 
 function cleanupOldData() {
   const now = Date.now();
   
+  // Clean up expired rate limits
   for (const [ip, data] of rateLimits.entries()) {
     if (now - data.windowStart > CONFIG.HOURLY_WINDOW_MS) {
       rateLimits.delete(ip);
     }
   }
   
+  // Clean up expired sessions
   for (const [sessionId, data] of sessions.entries()) {
     if (now - data.lastActive > CONFIG.SESSION_TIMEOUT_MS) {
       sessions.delete(sessionId);
@@ -300,6 +190,7 @@ function checkRateLimit(ip) {
     return { allowed: true, remaining: CONFIG.MAX_MESSAGES_PER_HOUR };
   }
   
+  // Reset window if expired
   if (now - limit.windowStart > CONFIG.HOURLY_WINDOW_MS) {
     rateLimits.set(ip, { count: 0, windowStart: now });
     return { allowed: true, remaining: CONFIG.MAX_MESSAGES_PER_HOUR };
@@ -325,6 +216,7 @@ function recordMessage(ip) {
 function selectModel(message) {
   const words = message.trim().split(/\s+/).length;
   
+  // Simple FAQ patterns (use Haiku - 10x cheaper)
   const faqPatterns = [
     /^what is/i,
     /^why (is|does)/i,
@@ -336,6 +228,7 @@ function selectModel(message) {
   const isFAQ = faqPatterns.some(pattern => pattern.test(message));
   const isShort = words < CONFIG.SIMPLE_MESSAGE_THRESHOLD;
   
+  // Route to Haiku for simple queries
   if (isFAQ || isShort) {
     return {
       model: 'claude-haiku-4-5',
@@ -344,6 +237,7 @@ function selectModel(message) {
     };
   }
   
+  // Route to Sonnet for complex queries
   return {
     model: 'claude-sonnet-4-5',
     maxTokens: 1000,
@@ -355,7 +249,7 @@ function selectModel(message) {
 // ANTHROPIC API INTEGRATION
 // ==========================================
 
-function callAnthropic(messages, model, maxTokens, leadContext) {
+function callAnthropic(messages, model, maxTokens) {
   return new Promise((resolve, reject) => {
     // Build system prompt with cache control
     const systemPrompt = [
@@ -371,32 +265,10 @@ function callAnthropic(messages, model, maxTokens, leadContext) {
       },
       {
         type: 'text',
-        text: WHY_AI_AGENTS_CHOOSE_BITCOIN,
-        cache_control: { type: 'ephemeral' }
-      },
-      {
-        type: 'text',
-        text: AUSTRIAN_ECONOMICS_AI,
+        text: KNOWLEDGE_BASE,
         cache_control: { type: 'ephemeral' }
       }
     ];
-    
-    // Add dynamic context if lead intent detected
-    if (leadContext.shouldMentionArcadiaB) {
-      systemPrompt.push({
-        type: 'text',
-        text: `**CURRENT CONTEXT:** User is asking about implementation. This is a natural bridge to mention ArcadiaB.
-
-${ARCADIAB_CONTEXT.about}
-
-${ARCADIAB_CONTEXT.boyd_role}
-
-Response template for high-intent:
-${ARCADIAB_CONTEXT.response_templates.high_intent}
-
-Tone: ${ARCADIAB_CONTEXT.tone}`
-      });
-    }
     
     const requestBody = JSON.stringify({
       model: model,
@@ -454,18 +326,19 @@ Tone: ${ARCADIAB_CONTEXT.tone}`
 // ==========================================
 
 function calculateCost(usage, model) {
+  // Anthropic pricing (as of Feb 2025)
   const pricing = {
     'claude-haiku-4-5': {
-      input: 0.25 / 1_000_000,
-      output: 1.25 / 1_000_000,
-      cacheWrite: 0.3125 / 1_000_000,
-      cacheRead: 0.025 / 1_000_000
+      input: 0.25 / 1_000_000,        // $0.25 per MTok
+      output: 1.25 / 1_000_000,       // $1.25 per MTok
+      cacheWrite: 0.3125 / 1_000_000, // $0.3125 per MTok
+      cacheRead: 0.025 / 1_000_000    // $0.025 per MTok (90% cheaper!)
     },
     'claude-sonnet-4-5': {
-      input: 3.0 / 1_000_000,
-      output: 15.0 / 1_000_000,
-      cacheWrite: 3.75 / 1_000_000,
-      cacheRead: 0.30 / 1_000_000
+      input: 3.0 / 1_000_000,         // $3 per MTok
+      output: 15.0 / 1_000_000,       // $15 per MTok
+      cacheWrite: 3.75 / 1_000_000,   // $3.75 per MTok
+      cacheRead: 0.30 / 1_000_000     // $0.30 per MTok (90% cheaper!)
     }
   };
   
@@ -509,9 +382,11 @@ exports.handler = async (event, context) => {
   }
   
   try {
+    // Parse request
     const body = JSON.parse(event.body);
     const { message, sessionId } = body;
     
+    // Validate message
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return {
         statusCode: 400,
@@ -530,6 +405,7 @@ exports.handler = async (event, context) => {
       };
     }
     
+    // Check API key
     if (!CONFIG.ANTHROPIC_API_KEY) {
       return {
         statusCode: 500,
@@ -538,10 +414,12 @@ exports.handler = async (event, context) => {
       };
     }
     
+    // Get client IP
     const clientIP = event.headers['x-forwarded-for']?.split(',')[0]?.trim() || 
                      event.headers['x-real-ip'] || 
                      'unknown';
     
+    // Check rate limit
     const rateLimit = checkRateLimit(clientIP);
     
     if (!rateLimit.allowed) {
@@ -556,6 +434,7 @@ exports.handler = async (event, context) => {
       };
     }
     
+    // Get or create session
     const now = Date.now();
     let session = sessions.get(sessionId);
     
@@ -568,46 +447,51 @@ exports.handler = async (event, context) => {
       sessions.set(sessionId, session);
     }
     
+    // Update last active
     session.lastActive = now;
     
-    // Detect lead intent
-    const leadContext = detectLeadIntent(message);
-    
+    // Add user message to session
     session.messages.push({
       role: 'user',
       content: message
     });
     
+    // Select model based on message complexity
     const modelSelection = selectModel(message);
     
+    // Call Anthropic API
     const startTime = Date.now();
     const anthropicResponse = await callAnthropic(
       session.messages,
       modelSelection.model,
-      modelSelection.maxTokens,
-      leadContext
+      modelSelection.maxTokens
     );
     
     const responseTime = Date.now() - startTime;
+    
+    // Extract response
     const assistantMessage = anthropicResponse.content[0].text;
     
+    // Add assistant message to session
     session.messages.push({
       role: 'assistant',
       content: assistantMessage
     });
     
     session.messageCount++;
+    
+    // Record message for rate limiting
     recordMessage(clientIP);
     
+    // Calculate cost
     const cost = calculateCost(anthropicResponse.usage, modelSelection.model);
     
-    // Log metrics
+    // Log metrics (for monitoring)
     console.log(JSON.stringify({
       timestamp: new Date().toISOString(),
       sessionId,
       model: modelSelection.model,
       reasoning: modelSelection.reasoning,
-      leadIntent: leadContext.isHighIntent,
       tokens: {
         input: anthropicResponse.usage.input_tokens,
         output: anthropicResponse.usage.output_tokens,
@@ -618,9 +502,11 @@ exports.handler = async (event, context) => {
       costBreakdown: cost,
       cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0,
       responseTime,
-      messageCount: session.messageCount
+      messageCount: session.messageCount,
+      rateLimitRemaining: rateLimit.remaining - 1
     }));
     
+    // Build response
     return {
       statusCode: 200,
       headers,
@@ -629,11 +515,11 @@ exports.handler = async (event, context) => {
         sessionId,
         messageCount: session.messageCount,
         model: modelSelection.model,
+        // Include cost data for monitoring (remove in production if sensitive)
         _meta: {
           costPerMessage: cost.total.toFixed(4),
           cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0,
-          responseTime,
-          leadIntent: leadContext.isHighIntent
+          responseTime
         }
       })
     };
