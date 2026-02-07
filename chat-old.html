@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat with Maxi - Bitcoin-Native AI Advisory</title>
-    <meta name="description" content="Get strategic Bitcoin treasury guidance from Maxi, the first Bitcoin-native AI agent with economic agency.">
+    <title>Ask Maxi Anything - Bitcoin Singularity AI</title>
+    <meta name="description" content="Chat with Maxi, an AI Bitcoin Maximalist running on mining infrastructure. Explore Bitcoin-AI convergence, Austrian economics, and sustainable abundance.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Plausible Analytics -->
+    <script defer data-domain="maximoon.netlify.app" src="https://plausible.io/js/script.js"></script>
+    <script>
+      window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
+    </script>
     
     <style>
         :root {
@@ -16,7 +22,6 @@
             --dark-slate: #0A0E27;
             --mid-slate: #1A1F3A;
             --light-slate: #2D3452;
-            --accent-blue: #4A9EFF;
             --text-primary: #E8EDF4;
             --text-secondary: #A8B2C1;
             --success-green: #10B981;
@@ -68,17 +73,30 @@
             font-family: 'JetBrains Mono', monospace;
         }
 
-        .message-counter {
-            background: var(--light-slate);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
         }
 
-        .message-counter.warning {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid var(--error-red);
+        .icon-button {
+            background: var(--light-slate);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+
+        .icon-button:hover {
+            background: var(--bitcoin-orange);
+            color: var(--dark-slate);
         }
 
         /* Messages Area */
@@ -120,6 +138,7 @@
             padding: 1rem 1.25rem;
             border-radius: 1rem;
             word-wrap: break-word;
+            white-space: pre-wrap;
         }
 
         .message.user .message-bubble {
@@ -188,8 +207,10 @@
         /* Welcome Message */
         .welcome-message {
             text-align: center;
-            padding: 3rem 1.5rem;
+            padding: 2rem 1.5rem;
             color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .welcome-message h2 {
@@ -199,40 +220,37 @@
         }
 
         .welcome-message p {
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
         }
 
         .welcome-suggestions {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
             margin-top: 2rem;
+            text-align: left;
         }
 
-        .suggestion-card {
+        .suggestion-item {
             background: var(--light-slate);
-            padding: 1rem;
+            padding: 0.75rem 1rem;
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
             border: 1px solid transparent;
+            font-size: 0.95rem;
         }
 
-        .suggestion-card:hover {
+        .suggestion-item:hover {
             background: rgba(247, 147, 26, 0.1);
             border-color: var(--bitcoin-orange);
-            transform: translateY(-2px);
+            transform: translateX(5px);
         }
 
-        .suggestion-card h4 {
-            color: var(--bitcoin-orange);
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
-        }
-
-        .suggestion-card p {
-            font-size: 0.9rem;
-            color: var(--text-secondary);
+        .suggestion-item::before {
+            content: '💡 ';
+            margin-right: 0.5rem;
         }
 
         /* Input Area */
@@ -297,7 +315,90 @@
             cursor: not-allowed;
         }
 
-        /* Upgrade Modal */
+        /* Email Capture (Subtle, After 10 Messages) */
+        .email-capture {
+            display: none;
+            background: rgba(247, 147, 26, 0.1);
+            border: 1px solid var(--bitcoin-orange);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .email-capture.show {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .email-capture h3 {
+            color: var(--bitcoin-orange);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .email-capture p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .email-input {
+            flex: 1;
+            background: var(--dark-slate);
+            border: 1px solid var(--light-slate);
+            border-radius: 0.5rem;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .email-input:focus {
+            border-color: var(--bitcoin-orange);
+        }
+
+        .email-submit {
+            background: var(--bitcoin-orange);
+            color: var(--dark-slate);
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .email-submit:hover {
+            background: #ff9f1a;
+        }
+
+        .email-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            text-decoration: underline;
+        }
+
+        /* Share Modal */
         .modal {
             display: none;
             position: fixed;
@@ -322,7 +423,6 @@
             padding: 2rem;
             max-width: 500px;
             margin: 1rem;
-            text-align: center;
         }
 
         .modal-content h2 {
@@ -335,14 +435,26 @@
             margin-bottom: 1.5rem;
         }
 
+        .share-link-box {
+            background: var(--dark-slate);
+            border: 1px solid var(--light-slate);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            word-break: break-all;
+            color: var(--bitcoin-orange);
+        }
+
         .modal-buttons {
             display: flex;
             gap: 1rem;
-            justify-content: center;
         }
 
         .btn {
-            padding: 0.75rem 1.5rem;
+            flex: 1;
+            padding: 0.75rem;
             border-radius: 0.5rem;
             border: none;
             cursor: pointer;
@@ -369,20 +481,38 @@
             background: var(--mid-slate);
         }
 
-        /* Error Message */
-        .error-message {
-            background: rgba(239, 68, 68, 0.2);
-            border: 1px solid var(--error-red);
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--success-green);
+            color: white;
+            padding: 1rem 1.5rem;
             border-radius: 0.5rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            color: var(--error-red);
-            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
             display: none;
+            animation: toastIn 0.3s ease-out;
+            z-index: 2000;
         }
 
-        .error-message.show {
+        .toast.show {
             display: block;
+        }
+
+        .toast.error {
+            background: var(--error-red);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Mobile Responsive */
@@ -397,10 +527,6 @@
                 max-width: 85%;
             }
 
-            .welcome-suggestions {
-                grid-template-columns: 1fr;
-            }
-
             .input-wrapper {
                 gap: 0.5rem;
             }
@@ -408,6 +534,12 @@
             .send-button {
                 width: 45px;
                 height: 45px;
+            }
+
+            .toast {
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
             }
         }
     </style>
@@ -417,34 +549,39 @@
         <!-- Header -->
         <div class="chat-header">
             <div>
-                <h1>💬 Chat with Maxi</h1>
-                <div class="subtitle">Bitcoin-Native AI Advisory</div>
+                <h1>💬 Ask Maxi Anything</h1>
+                <div class="subtitle">Bitcoin-Native AI | No signup required</div>
             </div>
-            <div class="message-counter" id="messageCounter">
-                ⚡ <span id="remainingMessages">10</span> free messages
+            <div class="header-actions">
+                <button class="icon-button" id="shareButton" title="Share conversation">
+                    🔗
+                </button>
+                <a href="/" class="icon-button" title="Back to home">
+                    🏠
+                </a>
             </div>
         </div>
 
         <!-- Messages -->
         <div class="messages-container" id="messagesContainer">
             <div class="welcome-message" id="welcomeMessage">
-                <h2>Welcome! I'm Maxi 🤖₿</h2>
-                <p>I'm a Bitcoin-native AI agent powered by Dr. Boyd Cohen's frameworks.</p>
-                <p>I provide strategic guidance on Bitcoin treasury management, corporate adoption, and the convergence of AI and Bitcoin.</p>
-                <p><strong>You have 10 free messages to start.</strong> Try asking me about:</p>
+                <h2>👋 Hi! I'm Maxi</h2>
+                <p>I'm an AI Bitcoin Maximalist running on mining infrastructure.</p>
+                <p>I specialize in <strong>Bitcoin-AI convergence</strong>, <strong>Austrian economics</strong>, and the path to <strong>sustainable abundance</strong>.</p>
+                <p>What would you like to explore?</p>
                 
                 <div class="welcome-suggestions">
-                    <div class="suggestion-card" data-message="What are the key benefits of Bitcoin treasury strategy for companies?">
-                        <h4>🏢 Treasury Strategy</h4>
-                        <p>Learn about corporate Bitcoin treasury management</p>
+                    <div class="suggestion-item" data-message="Why will AI agents prefer Bitcoin over fiat?">
+                        Why will AI agents prefer Bitcoin over fiat?
                     </div>
-                    <div class="suggestion-card" data-message="Why do AI agents need Bitcoin?">
-                        <h4>🤖 AI & Bitcoin</h4>
-                        <p>Understand the Bitcoin-AI convergence</p>
+                    <div class="suggestion-item" data-message="Explain the Sustainable Abundance Triad">
+                        Explain the Sustainable Abundance Triad
                     </div>
-                    <div class="suggestion-card" data-message="How does Bitcoin's proof-of-work contribute to sustainability?">
-                        <h4>⚡ Energy & Sustainability</h4>
-                        <p>Explore Bitcoin's role in sustainable abundance</p>
+                    <div class="suggestion-item" data-message="How does proof-of-work align AI incentives?">
+                        How does proof-of-work align AI incentives?
+                    </div>
+                    <div class="suggestion-item" data-message="What's wrong with infinite money printing?">
+                        What's wrong with infinite money printing?
                     </div>
                 </div>
             </div>
@@ -458,13 +595,32 @@
 
         <!-- Input -->
         <div class="input-container">
-            <div class="error-message" id="errorMessage"></div>
+            <!-- Email Capture (Shows after 10 messages) -->
+            <div class="email-capture" id="emailCapture">
+                <h3>✉️ Want to continue this conversation later?</h3>
+                <p>Enter your email and we'll send you the full transcript plus weekly Bitcoin-AI insights.</p>
+                <form class="email-form" id="emailForm" name="email-capture" method="POST" data-netlify="true">
+                    <input type="hidden" name="form-name" value="email-capture" />
+                    <input type="hidden" name="source" value="chat-transcript" id="hiddenTranscript" />
+                    <input 
+                        type="email" 
+                        name="email" 
+                        class="email-input" 
+                        id="emailInput" 
+                        placeholder="your@email.com" 
+                        required 
+                    />
+                    <button type="submit" class="email-submit">Send Transcript</button>
+                </form>
+                <button class="email-close" id="emailClose">Maybe later</button>
+            </div>
+
             <div class="input-wrapper">
                 <input 
                     type="text" 
                     class="input-field" 
                     id="messageInput" 
-                    placeholder="Ask me about Bitcoin treasury strategy, AI agents, or corporate adoption..."
+                    placeholder="Ask me about Bitcoin, AI, Austrian economics, or sustainable abundance..."
                     maxlength="500"
                 />
                 <button class="send-button" id="sendButton" title="Send message">
@@ -474,47 +630,79 @@
         </div>
     </div>
 
-    <!-- Upgrade Modal -->
-    <div class="modal" id="upgradeModal">
+    <!-- Share Modal -->
+    <div class="modal" id="shareModal">
         <div class="modal-content">
-            <h2>🚀 Upgrade to Continue</h2>
-            <p>You've used all 10 free messages!</p>
-            <p>Upgrade to get unlimited access to Maxi's strategic Bitcoin guidance, research capabilities, and personalized advisory services.</p>
+            <h2>🔗 Share This Conversation</h2>
+            <p>Copy this link to share your conversation with Maxi:</p>
+            <div class="share-link-box" id="shareLinkBox">
+                Generating link...
+            </div>
             <div class="modal-buttons">
-                <a href="/" class="btn btn-primary">View Pricing</a>
-                <button class="btn btn-secondary" onclick="closeModal()">Close</button>
+                <button class="btn btn-primary" id="copyLinkButton">Copy Link</button>
+                <button class="btn btn-secondary" id="closeModalButton">Close</button>
             </div>
         </div>
     </div>
 
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Netlify Form (Hidden, for submission handling) -->
+    <form name="email-capture" netlify netlify-honeypot="bot-field" hidden>
+        <input type="email" name="email" />
+        <input type="hidden" name="source" />
+    </form>
+
     <script>
-        // State management
-        let sessionId = localStorage.getItem('maxi_session_id');
+        // ==========================================
+        // STATE MANAGEMENT
+        // ==========================================
+
+        let sessionId = localStorage.getItem('maxi_session_id') || generateSessionId();
         let messageHistory = JSON.parse(localStorage.getItem('maxi_messages') || '[]');
-        let messagesRemaining = parseInt(localStorage.getItem('maxi_remaining') || '10');
-        
-        // DOM elements
+        let messageCount = parseInt(localStorage.getItem('maxi_count') || '0');
+
+        const API_ENDPOINT = '/.netlify/functions/chat-mvp';
+
+        // ==========================================
+        // DOM ELEMENTS
+        // ==========================================
+
         const messagesContainer = document.getElementById('messagesContainer');
         const messageInput = document.getElementById('messageInput');
         const sendButton = document.getElementById('sendButton');
         const typingIndicator = document.getElementById('typingIndicator');
         const welcomeMessage = document.getElementById('welcomeMessage');
-        const upgradeModal = document.getElementById('upgradeModal');
-        const errorMessage = document.getElementById('errorMessage');
-        const remainingCounter = document.getElementById('remainingMessages');
-        const messageCounter = document.getElementById('messageCounter');
+        const emailCapture = document.getElementById('emailCapture');
+        const emailForm = document.getElementById('emailForm');
+        const emailClose = document.getElementById('emailClose');
+        const shareButton = document.getElementById('shareButton');
+        const shareModal = document.getElementById('shareModal');
+        const shareLinkBox = document.getElementById('shareLinkBox');
+        const copyLinkButton = document.getElementById('copyLinkButton');
+        const closeModalButton = document.getElementById('closeModalButton');
+        const toast = document.getElementById('toast');
 
-        // API endpoint
-        const API_ENDPOINT = '/.netlify/functions/chat';
+        // ==========================================
+        // INITIALIZATION
+        // ==========================================
 
-        // Initialize
         function init() {
-            updateMessageCounter();
+            localStorage.setItem('maxi_session_id', sessionId);
             loadMessageHistory();
             attachEventListeners();
+            trackEvent('chat_started');
         }
 
-        // Load message history from localStorage
+        function generateSessionId() {
+            return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // ==========================================
+        // MESSAGE HISTORY
+        // ==========================================
+
         function loadMessageHistory() {
             if (messageHistory.length > 0) {
                 welcomeMessage.style.display = 'none';
@@ -522,10 +710,18 @@
                     appendMessage(msg.role, msg.content, msg.timestamp, false);
                 });
                 scrollToBottom();
+                
+                // Check if we should show email capture
+                if (messageCount >= 10 && !localStorage.getItem('maxi_email_captured')) {
+                    showEmailCapture();
+                }
             }
         }
 
-        // Attach event listeners
+        // ==========================================
+        // EVENT LISTENERS
+        // ==========================================
+
         function attachEventListeners() {
             sendButton.addEventListener('click', sendMessage);
             messageInput.addEventListener('keypress', (e) => {
@@ -536,26 +732,35 @@
             });
 
             // Suggestion cards
-            document.querySelectorAll('.suggestion-card').forEach(card => {
-                card.addEventListener('click', () => {
-                    const message = card.getAttribute('data-message');
+            document.querySelectorAll('.suggestion-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const message = item.getAttribute('data-message');
                     messageInput.value = message;
                     sendMessage();
                 });
             });
+
+            // Email form
+            emailForm.addEventListener('submit', handleEmailSubmit);
+            emailClose.addEventListener('click', () => {
+                emailCapture.classList.remove('show');
+                localStorage.setItem('maxi_email_dismissed', 'true');
+            });
+
+            // Share button
+            shareButton.addEventListener('click', showShareModal);
+            closeModalButton.addEventListener('click', () => shareModal.classList.remove('show'));
+            copyLinkButton.addEventListener('click', copyShareLink);
         }
 
-        // Send message
+        // ==========================================
+        // SEND MESSAGE
+        // ==========================================
+
         async function sendMessage() {
             const message = messageInput.value.trim();
             
             if (!message) return;
-            
-            // Check if limit reached
-            if (messagesRemaining <= 0) {
-                showUpgradeModal();
-                return;
-            }
 
             // Hide welcome message
             welcomeMessage.style.display = 'none';
@@ -563,7 +768,6 @@
             // Disable input
             messageInput.disabled = true;
             sendButton.disabled = true;
-            hideError();
 
             // Add user message to UI
             appendMessage('user', message, Date.now(), true);
@@ -572,6 +776,9 @@
             // Show typing indicator
             typingIndicator.classList.add('show');
             scrollToBottom();
+
+            // Track event
+            trackEvent('message_sent', { messageCount: messageCount + 1 });
 
             try {
                 // Send to API
@@ -590,22 +797,11 @@
 
                 if (!response.ok) {
                     if (response.status === 429) {
-                        showUpgradeModal();
+                        showToast('Rate limit reached. Please try again in an hour.', 'error');
                         return;
                     }
                     throw new Error(data.error || 'Failed to send message');
                 }
-
-                // Update session ID
-                if (data.sessionId && !sessionId) {
-                    sessionId = data.sessionId;
-                    localStorage.setItem('maxi_session_id', sessionId);
-                }
-
-                // Update remaining messages
-                messagesRemaining = data.messagesRemaining;
-                localStorage.setItem('maxi_remaining', messagesRemaining);
-                updateMessageCounter();
 
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
@@ -614,10 +810,19 @@
                 appendMessage('assistant', data.response, Date.now(), true);
                 scrollToBottom();
 
+                // Increment message count
+                messageCount++;
+                localStorage.setItem('maxi_count', messageCount);
+
+                // Show email capture after 10 messages
+                if (messageCount === 10 && !localStorage.getItem('maxi_email_captured') && !localStorage.getItem('maxi_email_dismissed')) {
+                    showEmailCapture();
+                }
+
             } catch (error) {
                 console.error('Error sending message:', error);
                 typingIndicator.classList.remove('show');
-                showError(error.message || 'Failed to send message. Please try again.');
+                showToast(error.message || 'Failed to send message. Please try again.', 'error');
             } finally {
                 // Re-enable input
                 messageInput.disabled = false;
@@ -626,7 +831,10 @@
             }
         }
 
-        // Append message to UI
+        // ==========================================
+        // APPEND MESSAGE
+        // ==========================================
+
         function appendMessage(role, content, timestamp, saveToHistory = true) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${role}`;
@@ -651,7 +859,6 @@
             }
         }
 
-        // Format timestamp
         function formatTime(timestamp) {
             const date = new Date(timestamp);
             return date.toLocaleTimeString('en-US', { 
@@ -661,44 +868,131 @@
             });
         }
 
-        // Update message counter
-        function updateMessageCounter() {
-            remainingCounter.textContent = messagesRemaining;
-            
-            if (messagesRemaining <= 3) {
-                messageCounter.classList.add('warning');
-            } else {
-                messageCounter.classList.remove('warning');
-            }
-        }
-
-        // Scroll to bottom
         function scrollToBottom() {
             messagesContainer.scrollTop = messagesContainer.scrollHeight;
         }
 
-        // Show error
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.add('show');
+        // ==========================================
+        // EMAIL CAPTURE
+        // ==========================================
+
+        function showEmailCapture() {
+            emailCapture.classList.add('show');
+            trackEvent('email_capture_shown');
         }
 
-        // Hide error
-        function hideError() {
-            errorMessage.classList.remove('show');
+        async function handleEmailSubmit(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('emailInput').value;
+            const transcript = generateTranscript();
+            
+            // Set hidden field with transcript
+            document.getElementById('hiddenTranscript').value = transcript;
+            
+            try {
+                // Submit via Netlify Forms
+                const formData = new FormData(emailForm);
+                
+                await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(formData).toString()
+                });
+                
+                showToast('✅ Transcript sent! Check your email for weekly insights.', 'success');
+                emailCapture.classList.remove('show');
+                localStorage.setItem('maxi_email_captured', 'true');
+                trackEvent('email_captured', { email });
+                
+            } catch (error) {
+                console.error('Email submission error:', error);
+                showToast('Failed to send transcript. Please try again.', 'error');
+            }
         }
 
-        // Show upgrade modal
-        function showUpgradeModal() {
-            upgradeModal.classList.add('show');
+        function generateTranscript() {
+            let transcript = '=== Chat Transcript with Maxi ===\n\n';
+            
+            messageHistory.forEach(msg => {
+                const time = new Date(msg.timestamp).toLocaleString();
+                const speaker = msg.role === 'user' ? 'You' : 'Maxi';
+                transcript += `[${time}] ${speaker}:\n${msg.content}\n\n`;
+            });
+            
+            transcript += '=== End of Transcript ===\n';
+            transcript += '\nLearn more at: https://maximoon.netlify.app\n';
+            transcript += 'Read the book: Bitcoin Singularity by Boyd Cohen';
+            
+            return transcript;
         }
 
-        // Close modal
-        function closeModal() {
-            upgradeModal.classList.remove('show');
+        // ==========================================
+        // SHARE CONVERSATION
+        // ==========================================
+
+        function showShareModal() {
+            if (messageHistory.length < 5) {
+                showToast('Have at least 5 messages before sharing.', 'error');
+                return;
+            }
+
+            const shareId = 'share_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            const shareUrl = `${window.location.origin}/shared/${shareId}`;
+            
+            // Store conversation in localStorage for now
+            // In production, this would be stored server-side
+            localStorage.setItem(`shared_${shareId}`, JSON.stringify({
+                messages: messageHistory,
+                createdAt: Date.now()
+            }));
+            
+            shareLinkBox.textContent = shareUrl;
+            shareModal.classList.add('show');
+            
+            trackEvent('conversation_shared', { shareId });
         }
 
-        // Initialize on load(':
+        function copyShareLink() {
+            const link = shareLinkBox.textContent;
+            navigator.clipboard.writeText(link).then(() => {
+                showToast('✅ Link copied to clipboard!', 'success');
+                copyLinkButton.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    copyLinkButton.textContent = 'Copy Link';
+                }, 2000);
+            }).catch(err => {
+                showToast('Failed to copy link', 'error');
+            });
+        }
+
+        // ==========================================
+        // TOAST NOTIFICATIONS
+        // ==========================================
+
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.className = `toast show ${type}`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ==========================================
+        // ANALYTICS
+        // ==========================================
+
+        function trackEvent(eventName, props = {}) {
+            if (window.plausible) {
+                window.plausible(eventName, { props });
+            }
+        }
+
+        // ==========================================
+        // INITIALIZE
+        // ==========================================
+
         init();
     </script>
 </body>
