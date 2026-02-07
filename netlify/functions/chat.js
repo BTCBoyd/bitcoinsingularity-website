@@ -650,7 +650,29 @@ exports.handler = async (event, context) => {
     
     const cost = calculateCost(anthropicResponse.usage, modelSelection.model);
     
-    // Log metrics
+    // Enhanced conversation logging for Boyd to review
+    console.log('=== CONVERSATION LOG ===');
+    console.log(JSON.stringify({
+      type: 'conversation',
+      timestamp: new Date().toISOString(),
+      sessionId,
+      conversationTurn: session.messageCount,
+      userQuestion: message,
+      maxiResponse: assistantMessage.substring(0, 500) + (assistantMessage.length > 500 ? '...' : ''),
+      responseLength: assistantMessage.length,
+      language: language,
+      model: modelSelection.model,
+      leadIntent: leadContext.isHighIntent,
+      cost: cost.total.toFixed(4),
+      tokens: {
+        input: anthropicResponse.usage.input_tokens,
+        output: anthropicResponse.usage.output_tokens,
+        cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0
+      },
+      responseTime
+    }, null, 2));
+    
+    // Compact metrics log
     console.log(JSON.stringify({
       timestamp: new Date().toISOString(),
       sessionId,
