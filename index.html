@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Maxi - Bitcoin-Native AI Advisory | BitcoinSingularity.ai</title>
+    <meta name="description" content="Strategic Bitcoin treasury guidance powered by Dr. Boyd Cohen's frameworks and AI-native infrastructure. The first Bitcoin-native AI agent with economic agency.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Maxi - Bitcoin-Native AI Advisory">
+    <meta property="og:description" content="Strategic Bitcoin treasury guidance powered by Dr. Boyd Cohen's frameworks and AI-native infrastructure.">
+    <meta property="og:image" content="https://bitcoinsingularity.ai/assets/og-image.jpg">
+    <meta property="og:url" content="https://bitcoinsingularity.ai">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Maxi - Bitcoin-Native AI Advisory">
+    <meta name="twitter:description" content="Strategic Bitcoin treasury guidance powered by Dr. Boyd Cohen's frameworks and AI-native infrastructure.">
+    <meta name="twitter:image" content="https://bitcoinsingularity.ai/assets/og-image.jpg">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Analytics Placeholder -->
+    <!-- Add Plausible Analytics script here post-deployment:
+    <script defer data-domain="bitcoinsingularity.ai" src="https://plausible.io/js/script.js"></script>
+    -->
+    
+    <style>
+        :root {
+            --bitcoin-orange: #F7931A;
+            --dark-slate: #0A0E27;
+            --mid-slate: #1A1F3A;
+            --light-slate: #2D3452;
+            --accent-blue: #4A9EFF;
+            --text-primary: #E8EDF4;
+            --text-secondary: #A8B2C1;
+            --success-green: #10B981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: var(--dark-slate);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Geometric background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(247, 147, 26, 0.2);
+            z-index: 1000;
+            padding: 1.5rem 0;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '₿';
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--bitcoin-orange);
+        }
+
+        .cta-button {
+            background: var(--bitcoin-orange);
+            color: var(--dark-slate);
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--bitcoin-orange);
+            display: inline-block;
+            min-height: 44px;
+            line-height: 1.5;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--bitcoin-orange);
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--bitcoin-orange);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 80px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(247, 147, 26, 0.2);
+            padding: 2rem;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .mobile-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 500;
+            display: block;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--bitcoin-orange);
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 100px;
+            padding: 6rem 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .hero-text h1 .highlight {
+            color: var(--bitcoin-orange);
+            position: relative;
+        }
+
+        .hero-text .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.5;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--light-slate);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--bitcoin-orange);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .hero-visual {
+            position: relative;
+            height: 500px;
+        }
+
+        .terminal-window {
+            background: var(--mid-slate);
+            border: 1px solid var(--light-slate);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .terminal-header {
+            background: var(--light-slate);
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--text-secondary);
+        }
+
+        .terminal-dot:nth-child(1) { background: #FF5F57; }
+        .terminal-dot:nth-child(2) { background: #FFBD2E; }
+        .terminal-dot:nth-child(3) { background: #28CA42; }
+
+        .terminal-body {
+            padding: 2rem;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        .terminal-line {
+            margin-bottom: 0.75rem;
+            opacity: 0;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .terminal-line:nth-child(1) { animation-delay: 0.2s; }
+        .terminal-line:nth-child(2) { animation-delay: 0.4s; }
+        .terminal-line:nth-child(3) { animation-delay: 0.6s; }
+        .terminal-line:nth-child(4) { animation-delay: 0.8s; }
+        .terminal-line:nth-child(5) { animation-delay: 1s; }
+
+        .terminal-prompt {
+            color: var(--success-green);
+        }
+
+        .terminal-command {
+            color: var(--accent-blue);
+        }
+
+        .terminal-output {
+            color: var(--text-secondary);
+            padding-left: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Services Section */
+        .services {
+            padding: 6rem 2rem;
+            background: rgba(26, 31, 58, 0.5);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .section-header p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+        }
+
+        .services-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--mid-slate);
+            border: 1px solid var(--light-slate);
+            border-radius: 8px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--bitcoin-orange);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--bitcoin-orange);
+        }
+
+        .service-card:hover::before {
+            transform: scaleY(1);
+        }
+
+        .service-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--bitcoin-orange);
+            font-weight: 600;
+        }
+
+        .service-card .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .service-card .price-detail {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            color: var(--success-green);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .service-button {
+            display: inline-block;
+            background: transparent;
+            color: var(--bitcoin-orange);
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--bitcoin-orange);
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            line-height: 1.5;
+        }
+
+        .service-button:hover {
+            background: var(--bitcoin-orange);
+            color: var(--dark-slate);
+        }
+
+        /* Positioning Section */
+        .positioning {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .positioning-content {
+            background: linear-gradient(135deg, var(--mid-slate) 0%, var(--light-slate) 100%);
+            border: 1px solid rgba(247, 147, 26, 0.3);
+            border-radius: 8px;
+            padding: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .positioning-content::before {
+            content: '"';
+            position: absolute;
+            font-size: 15rem;
+            color: rgba(247, 147, 26, 0.1);
+            top: -2rem;
+            left: 2rem;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .positioning-content blockquote {
+            font-size: 2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            font-weight: 400;
+        }
+
+        .positioning-content cite {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-style: normal;
+            display: block;
+        }
+
+        .positioning-content cite strong {
+            color: var(--bitcoin-orange);
+        }
+
+        /* Credentials Section */
+        .credentials {
+            padding: 6rem 2rem;
+            background: rgba(26, 31, 58, 0.5);
+        }
+
+        .credentials-grid {
+            max-width: 1400px;
+            margin: 3rem auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .credential-card {
+            background: var(--mid-slate);
+            border: 1px solid var(--light-slate);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .credential-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--bitcoin-orange);
+        }
+
+        .credential-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .credential-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .credential-card p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .credential-card a {
+            display: inline-block;
+            transition: transform 0.2s ease;
+        }
+
+        .credential-card a:hover {
+            transform: translateX(5px);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 6rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .contact-content {
+            background: var(--mid-slate);
+            border: 1px solid var(--light-slate);
+            border-radius: 8px;
+            padding: 3rem;
+        }
+
+        .contact h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .contact p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background: var(--dark-slate);
+            border: 1px solid var(--light-slate);
+            border-radius: 4px;
+            padding: 0.75rem 1rem;
+            color: var(--text-primary);
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            min-height: 44px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--bitcoin-orange);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-button {
+            background: var(--bitcoin-orange);
+            color: var(--dark-slate);
+            padding: 1rem 2rem;
+            border: 2px solid var(--bitcoin-orange);
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Crimson Pro', serif;
+            min-height: 44px;
+        }
+
+        .submit-button:hover {
+            background: transparent;
+            color: var(--bitcoin-orange);
+            transform: translateY(-2px);
+        }
+
+        .contact-mailto {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--light-slate);
+        }
+
+        .contact-mailto p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-mailto a {
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+
+        .contact-mailto a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 6rem 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .cta-section p {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            background: var(--bitcoin-orange);
+            color: var(--dark-slate);
+            padding: 1.25rem 3rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--bitcoin-orange);
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .cta-primary:hover {
+            background: transparent;
+            color: var(--bitcoin-orange);
+            transform: translateY(-2px);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 1.25rem 3rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border: 2px solid var(--light-slate);
+            transition: all 0.3s ease;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .cta-secondary:hover {
+            border-color: var(--bitcoin-orange);
+            color: var(--bitcoin-orange);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--mid-slate);
+            border-top: 1px solid var(--light-slate);
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .footer-links a:hover {
+            color: var(--bitcoin-orange);
+        }
+
+        /* Responsive - Mobile First Approach */
+        @media (max-width: 768px) {
+            /* Navigation */
+            .nav-links {
+                display: none !important;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            nav .cta-button {
+                display: none;
+            }
+
+            /* Hero */
+            .hero {
+                margin-top: 80px;
+                padding: 3rem 1.5rem;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .hero-visual {
+                height: auto;
+                display: none; /* Hide terminal animation on mobile for performance */
+            }
+
+            /* Services */
+            .services {
+                padding: 4rem 1.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .section-header p {
+                font-size: 1.1rem;
+            }
+
+            /* Positioning */
+            .positioning {
+                padding: 4rem 1.5rem;
+            }
+
+            .positioning-content {
+                padding: 2rem;
+            }
+
+            .positioning-content blockquote {
+                font-size: 1.3rem;
+                line-height: 1.6;
+            }
+
+            .positioning-content::before {
+                font-size: 8rem;
+            }
+
+            /* Credentials */
+            .credentials {
+                padding: 4rem 1.5rem;
+            }
+
+            .credentials-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            /* Contact */
+            .contact {
+                padding: 4rem 1.5rem;
+            }
+
+            .contact-content {
+                padding: 2rem;
+            }
+
+            .contact h2 {
+                font-size: 2rem;
+            }
+
+            .contact p {
+                font-size: 1.1rem;
+            }
+
+            /* CTA */
+            .cta-section {
+                padding: 4rem 1.5rem;
+            }
+
+            .cta-section h2 {
+                font-size: 2rem;
+            }
+
+            .cta-section p {
+                font-size: 1.2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cta-primary,
+            .cta-secondary {
+                width: 100%;
+                justify-content: center;
+            }
+
+            /* Footer */
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Tablet breakpoint */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .hero-text h1 {
+                font-size: 3.5rem;
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .credentials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Small mobile breakpoint */
+        @media (max-width: 375px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .hero-text .subtitle {
+                font-size: 1rem;
+            }
+
+            .service-card {
+                padding: 1.5rem;
+            }
+
+            .positioning-content {
+                padding: 1.5rem;
+            }
+
+            .positioning-content blockquote {
+                font-size: 1.1rem;
+            }
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <a href="/" class="logo">Maxi</a>
+            <ul class="nav-links">
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="/blog.html">Insights</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="#contact" class="cta-button">Book Assessment</a>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#services" onclick="toggleMobileMenu()">Services</a></li>
+            <li><a href="#about" onclick="toggleMobileMenu()">About</a></li>
+            <li><a href="/blog.html" onclick="toggleMobileMenu()">Insights</a></li>
+            <li><a href="#contact" onclick="toggleMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Bitcoin Treasury Strategy Meets <span class="highlight">AI-Native Advisory</span></h1>
+                <p class="subtitle">Dr. Boyd Cohen's systematized expertise delivered through the first Bitcoin-native AI agent with economic agency. Strategic guidance for corporate Bitcoin adoption.</p>
+                <a href="#services" class="cta-button">Explore Services</a>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number mono">20+</span>
+                        <span class="stat-label">Years Strategic Consulting</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number" style="font-size: 1.3rem; line-height: 1.2;">CSO at<br>ArcadiaB</span>
+                        <span class="stat-label">Mexico's First Bitcoin Treasury Co.</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number mono">₿</span>
+                        <span class="stat-label">Bitcoin-Native Architecture</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="terminal-dot"></div>
+                        <div class="terminal-dot"></div>
+                        <div class="terminal-dot"></div>
+                    </div>
+                    <div class="terminal-body mono">
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">maxi@futurebit:~$</span> 
+                            <span class="terminal-command">assess-treasury --company=YourCorp</span>
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            Analyzing treasury strategy...
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            Client Maturity: Level 1 (Exploration Phase)
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            Recommended Allocation: 2-5% (Strategic)
+                        </div>
+                        <div class="terminal-line terminal-output">
+                            Custody Architecture: Multi-sig institutional
+                        </div>
+                        <div class="terminal-line">
+                            <span class="terminal-prompt">maxi@futurebit:~$</span> 
+                            <span style="animation: blink 1s infinite;">_</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="section-header">
+            <h2>Advisory Services</h2>
+            <p>From strategic assessment to full implementation. Backed by Dr. Boyd Cohen's proven frameworks.</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🎯</div>
+                <h3>Strategic Assessment</h3>
+                <div class="price">$1,500</div>
+                <div class="price-detail">One-time engagement</div>
+                <p>Low-risk entry point for companies exploring Bitcoin treasury strategy. Comprehensive diagnostic and roadmap.</p>
+                <ul class="service-features">
+                    <li>Client maturity diagnostic (Level 0-3)</li>
+                    <li>Custom treasury allocation roadmap</li>
+                    <li>30-minute consultation with Boyd</li>
+                    <li>Implementation options analysis</li>
+                    <li>30-day email support</li>
+                </ul>
+                <a href="#contact" class="service-button">Book Assessment</a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">⚡</div>
+                <h3>Implementation Retainer</h3>
+                <div class="price">$5,000<span style="font-size: 1.2rem; color: var(--text-secondary);">/month</span></div>
+                <div class="price-detail">3-month minimum</div>
+                <p>For companies ready to execute 2-5% treasury allocation. Full implementation support with Boyd directly engaged.</p>
+                <ul class="service-features">
+                    <li>Weekly strategy calls with Maxi</li>
+                    <li>Policy framework development</li>
+                    <li>Vendor/custodian evaluation</li>
+                    <li>Board presentation preparation</li>
+                    <li>Boyd direct involvement</li>
+                </ul>
+                <a href="#contact" class="service-button">Get Started</a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <h3>Ongoing Advisory</h3>
+                <div class="price">$3,500<span style="font-size: 1.2rem; color: var(--text-secondary);">/month</span></div>
+                <div class="price-detail">Rolling engagement</div>
+                <p>Post-implementation governance support for companies maintaining Bitcoin treasury positions.</p>
+                <ul class="service-features">
+                    <li>Monthly governance support</li>
+                    <li>Regulatory & market updates</li>
+                    <li>Treasury strategy refinement</li>
+                    <li>Quarterly strategy reviews</li>
+                    <li>Boyd oversight on major decisions</li>
+                </ul>
+                <a href="#contact" class="service-button">Learn More</a>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">💬</div>
+                <h3>Subscription Access</h3>
+                <div class="price">$500<span style="font-size: 1.2rem; color: var(--text-secondary);">/month</span></div>
+                <div class="price-detail">Direct Maxi access</div>
+                <p>For companies not yet ready for full implementation but wanting ongoing Bitcoin treasury intelligence.</p>
+                <ul class="service-features">
+                    <li>50 messages/month with Maxi</li>
+                    <li>Voice interaction enabled</li>
+                    <li>Monthly treasury market briefs</li>
+                    <li>Regulatory update summaries</li>
+                    <li>Priority response time</li>
+                </ul>
+                <a href="#contact" class="service-button">Subscribe</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Positioning Section -->
+    <section class="positioning" id="about">
+        <div class="positioning-content">
+            <blockquote>
+                How will AI agents transact economically inside your organization? Bitcoin treasury strategy isn't just optimization—it's architecting for AI-native business models.
+            </blockquote>
+            <cite>
+                <strong>Maxi</strong> - First Bitcoin-native AI agent with economic agency
+            </cite>
+        </div>
+    </section>
+
+    <!-- Credentials Section -->
+    <section class="credentials">
+        <div class="section-header">
+            <h2>Why Maxi</h2>
+            <p>The only Bitcoin advisory combining PhD-level strategic expertise, AI-native architecture, and proven implementation track record.</p>
+        </div>
+
+        <div class="credentials-grid">
+            <div class="credential-card">
+                <div class="credential-icon">🎓</div>
+                <h3>Academic Foundation</h3>
+                <p>Dr. Boyd Cohen, PhD - 20+ years strategic consulting, EGADE Business School Academic Director of Sustainability, author of 5 books including "Bitcoin Singularity"</p>
+            </div>
+
+            <div class="credential-card">
+                <div class="credential-icon">₿</div>
+                <h3>Bitcoin-Native</h3>
+                <p>Only AI agent with Lightning wallet and economic agency. Born on mining node, earning sats, demonstrating autonomous economic participation</p>
+            </div>
+
+            <div class="credential-card">
+                <div class="credential-icon">
+                    <!-- Placeholder until Boyd provides logo -->
+                    <div style="width: 80px; height: 80px; background: linear-gradient(135deg, var(--bitcoin-orange) 0%, var(--accent-blue) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: white;">AB</div>
+                    <!-- When logo arrives: <img src="arcadiab-logo.svg" alt="ArcadiaB" style="width: 80px; height: auto;"> -->
+                </div>
+                <h3>Institutional Implementation</h3>
+                <p><strong>Boyd Cohen, Chief Strategy Officer at ArcadiaB</strong></p>
+                <p>Mexico's first Bitcoin treasury company and ASOFOM-certified lending platform. Boyd's hands-on experience implementing Bitcoin strategies for corporate clients and family offices across Latin America ensures Maxi's frameworks are grounded in real-world execution, not theory.</p>
+                <p style="margin-top: 1rem;"><a href="https://arcadiab.com" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none; font-weight: 600;">Learn more about ArcadiaB →</a></p>
+            </div>
+
+            <div class="credential-card">
+                <div class="credential-icon">🌎</div>
+                <h3>Bilingual Capability</h3>
+                <p>Full English/Spanish advisory services. Strategic advantage for LatAm market access and Mexican regulatory expertise</p>
+            </div>
+
+            <div class="credential-card">
+                <div class="credential-icon">🔬</div>
+                <h3>Convergence Framework</h3>
+                <p>Sustainable Abundance Triad: Bitcoin × AI × Longevity. Unique strategic lens on exponential technology convergence</p>
+            </div>
+
+            <div class="credential-card">
+                <div class="credential-icon">⚙️</div>
+                <h3>Systematic Methodology</h3>
+                <p>Client maturity diagnostic, proven consulting frameworks, Saylor mental models, objection handling—systematized expertise at scale</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="contact-content">
+            <h2>Get Started</h2>
+            <p>Ready to explore Bitcoin treasury strategy? Let's start the conversation.</p>
+            
+            <!-- Netlify Forms -->
+            <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+                <input type="hidden" name="form-name" value="contact">
+                <p style="display: none;">
+                    <label>Don't fill this out if you're human: <input name="bot-field"></label>
+                </p>
+                
+                <div class="form-group">
+                    <label for="name">Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+            
+            <div class="contact-mailto">
+                <p>Or email directly:</p>
+                <a href="mailto:maxi@bitcoinsingularity.ai">maxi@bitcoinsingularity.ai</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Ready to Explore Bitcoin Treasury Strategy?</h2>
+        <p>Start with a Strategic Assessment. Low risk, high clarity. Understand your options before committing to implementation.</p>
+        <div class="cta-buttons">
+            <a href="#contact" class="cta-primary">Book $1,500 Assessment</a>
+            <a href="mailto:maxi@bitcoinsingularity.ai?subject=Free%20Trial%20Request" class="cta-secondary">Try Free (10 messages)</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 BitcoinSingularity.ai | Maxi - Bitcoin-Native AI Advisory</p>
+        <p class="mono" style="color: var(--bitcoin-orange); margin-top: 1rem;">Developed under guidance of Dr. Boyd Cohen, PhD</p>
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-slate);">
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                Boyd Cohen serves as Chief Strategy Officer at 
+                <a href="https://arcadiab.com" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none; font-weight: 600;">ArcadiaB</a>, 
+                Mexico's first Bitcoin treasury company
+            </p>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                For LatAm Bitcoin treasury implementation: custody, lending, wealth management
+            </p>
+        </div>
+        <div class="footer-links">
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/terms.html">Terms of Service</a>
+            <a href="https://nostr.com/maxi" target="_blank">Nostr</a>
+            <a href="https://twitter.com/boydcohen" target="_blank">Twitter/X</a>
+            <a href="mailto:maxi@bitcoinsingularity.ai">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('nav');
+            
+            if (!nav.contains(event.target) && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
