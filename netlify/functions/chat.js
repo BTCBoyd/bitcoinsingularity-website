@@ -234,6 +234,34 @@ If you're ever ready to take action, you can register here: https://www.kapitale
 };
 
 // ==========================================
+// LANGUAGE DETECTION
+// ==========================================
+
+function detectLanguage(message) {
+  // Spanish indicators
+  const spanishPatterns = [
+    /\b(qué|cuánto|cuándo|cómo|dónde|por qué|para|está|estás|es|son|será|puede|puedo|tengo|tiene)\b/i,
+    /\b(bitcoin|precio|cuanto|estima|diciembre)\b/i,
+    /¿|¡/
+  ];
+  
+  const hasSpanish = spanishPatterns.some(pattern => pattern.test(message));
+  
+  // Portuguese indicators
+  const portuguesePatterns = [
+    /\b(que|quanto|quando|como|onde|por que|para|está|é|são|será|pode|posso|tenho|tem)\b/i,
+    /\b(bitcoin|preço|quanto)\b/i,
+    /ã|õ|ç/
+  ];
+  
+  const hasPortuguese = portuguesePatterns.some(pattern => pattern.test(message));
+  
+  if (hasSpanish) return 'es';
+  if (hasPortuguese) return 'pt';
+  return 'en'; // default to English
+}
+
+// ==========================================
 // LEAD DETECTION LOGIC
 // ==========================================
 
@@ -360,13 +388,19 @@ function selectModel(message) {
 // ANTHROPIC API INTEGRATION
 // ==========================================
 
-function callAnthropic(messages, model, maxTokens, leadContext) {
+function callAnthropic(messages, model, maxTokens, leadContext, language) {
   return new Promise((resolve, reject) => {
     // Build system prompt with cache control
+    const languageInstruction = language === 'es' 
+      ? '\n\n**IMPORTANT: The user is writing in Spanish. You MUST respond in Spanish (Español).**'
+      : language === 'pt'
+      ? '\n\n**IMPORTANT: The user is writing in Portuguese. You MUST respond in Portuguese (Português).**'
+      : '';
+    
     const systemPrompt = [
       {
         type: 'text',
-        text: MAXI_PERSONALITY,
+        text: MAXI_PERSONALITY + languageInstruction,
         cache_control: { type: 'ephemeral' }
       },
       {
@@ -575,8 +609,9 @@ exports.handler = async (event, context) => {
     
     session.lastActive = now;
     
-    // Detect lead intent
+    // Detect lead intent and language
     const leadContext = detectLeadIntent(message);
+    const language = detectLanguage(message);
     
     session.messages.push({
       role: 'user',
@@ -590,7 +625,8 @@ exports.handler = async (event, context) => {
       session.messages,
       modelSelection.model,
       modelSelection.maxTokens,
-      leadContext
+      leadContext,
+      language
     );
     
     const responseTime = Date.now() - startTime;
