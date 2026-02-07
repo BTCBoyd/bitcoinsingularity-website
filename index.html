@@ -275,6 +275,107 @@
             font-size: 1.1rem;
         }
 
+        /* Who Maxi Is For Section */
+        .who-for {
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--mid-slate) 0%, var(--dark-slate) 100%);
+            border-top: 1px solid rgba(247, 147, 26, 0.2);
+            border-bottom: 1px solid rgba(247, 147, 26, 0.2);
+        }
+
+        .who-for .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .who-for h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--bitcoin-orange);
+            margin-bottom: 3rem;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+
+        .audience-list {
+            padding: 2rem;
+            background: var(--mid-slate);
+            border-radius: 8px;
+            border: 1px solid var(--light-slate);
+        }
+
+        .audience-list.for {
+            border-left: 4px solid var(--bitcoin-orange);
+        }
+
+        .audience-list.not-for {
+            border-left: 4px solid var(--text-secondary);
+        }
+
+        .audience-list h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+
+        .audience-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .audience-list li {
+            padding: 0.75rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .audience-list.for li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--bitcoin-orange);
+            font-weight: bold;
+        }
+
+        .audience-list.not-for li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--text-secondary);
+        }
+
+        .audience-list a {
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .audience-list a:hover {
+            border-bottom-color: var(--bitcoin-orange);
+        }
+
+        .audience-list .note {
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--light-slate);
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .audience-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* About Section */
         .about {
             padding: 6rem 2rem;
@@ -478,6 +579,37 @@
                     Created by active Bitcoin strategists working with companies navigating 
                     treasury adoption
                 </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Who Maxi Is For -->
+    <section class="who-for">
+        <div class="container">
+            <h2>Who Maxi Is For</h2>
+            
+            <div class="audience-grid">
+                <div class="audience-list for">
+                    <h3>✅ This Is For You If:</h3>
+                    <ul>
+                        <li>Bitcoin educators developing curriculum</li>
+                        <li>AI researchers exploring alignment mechanisms</li>
+                        <li>CFOs/CTOs evaluating Bitcoin treasury strategy</li>
+                        <li>Investors analyzing Bitcoin-AI convergence thesis</li>
+                        <li>Developers building on Bitcoin infrastructure</li>
+                        <li>Anyone who wants COHERENT reasoning, not balanced exploration</li>
+                    </ul>
+                </div>
+                
+                <div class="audience-list not-for">
+                    <h3>❌ Not Right For You If:</h3>
+                    <ul>
+                        <li>Complete Bitcoin beginners (try <a href="https://bitcoin.org" target="_blank" rel="noopener">Bitcoin.org</a> first)</li>
+                        <li>People looking for "pros and cons" analysis</li>
+                        <li>Users who prefer neutral, exploratory AI</li>
+                    </ul>
+                    <p class="note">Maxi is an opinionated reasoning agent, not a general-purpose assistant.</p>
+                </div>
             </div>
         </div>
     </section>
