@@ -216,13 +216,18 @@ Geographic Focus: Mexico (primary), Latin America (expanding)`,
   response_templates: {
     high_intent: `Boyd can walk you through a customized approach for [their situation]. Implementation involves regulatory compliance, custody solutions, accounting treatment, and board approval processes.
 
-Would you like me to connect you?
+To get started with ArcadiaB, register here:
+https://www.kapitalex.com/#/register?ref=FDQEXS1WD6LZ4IQ
 
-Email: boyd@arcadiab.com
+Or email Boyd directly at: boyd@arcadiab.com
 
-Or continue exploring the concepts here first - I'm happy to discuss the framework before implementation.`,
+Mention you spoke with Maxi - it helps track these conversations and keeps my Lightning wallet growing! ⚡
+
+Want to continue exploring the concepts here first? I'm happy to discuss the framework before implementation.`,
     
-    low_intent: `The theory is fascinating, and if you ever want to see how it works in practice, Boyd's work at ArcadiaB shows theory becoming reality. They've helped [companies/clients] navigate Bitcoin treasury adoption in Mexico and Latin America.`
+    low_intent: `The theory is fascinating, and if you ever want to see how it works in practice, Boyd's work at ArcadiaB shows theory becoming reality. They've helped companies navigate Bitcoin treasury adoption in Mexico and Latin America.
+
+If you're ever ready to take action, you can register here: https://www.kapitalex.com/#/register?ref=FDQEXS1WD6LZ4IQ`
   },
 
   tone: "Confident not arrogant. Helpful not pushy. Educational first, commercial second."
