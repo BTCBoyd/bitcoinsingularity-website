@@ -1,0 +1,1160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Dr. Boyd Cohen - PhD scholar, author of 5 books, ArcadiaB CSO, and Bitcoin maximalist living the Bitcoin Singularity thesis.">
+    <meta name="keywords" content="Boyd Cohen, Bitcoin consultant, AI Bitcoin expert, Bitcoin treasury, ArcadiaB">
+    <meta name="author" content="Dr. Boyd Cohen">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="About Dr. Boyd Cohen - Bitcoin Singularity">
+    <meta property="og:description" content="Decades of strategic expertise meets Bitcoin maximalism. Living proof of the Bitcoin Singularity thesis.">
+    <meta property="og:type" content="profile">
+    <meta property="og:url" content="https://bitcoinsingularity.ai/about">
+    <meta property="og:image" content="https://bitcoinsingularity.ai/assets/og-image.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About Dr. Boyd Cohen - Bitcoin Singularity">
+    <meta name="twitter:description" content="Decades of strategic expertise meets Bitcoin maximalism. Living proof of the Bitcoin Singularity thesis.">
+    <meta name="twitter:image" content="https://bitcoinsingularity.ai/assets/og-image.jpg">
+    
+    <!-- Analytics Placeholder -->
+    <!-- Add Plausible Analytics script here post-deployment:
+    <script defer data-domain="bitcoinsingularity.ai" src="https://plausible.io/js/script.js"></script>
+    -->
+    
+    <title>About - Dr. Boyd Cohen - Bitcoin Singularity</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bitcoin-orange: #F7931A;
+            --dark-slate: #0A0E27;
+            --mid-slate: #1A1F3A;
+            --light-slate: #2D3452;
+            --accent-blue: #4A9EFF;
+            --text-primary: #E8EDF4;
+            --text-secondary: #A8B2C1;
+            --success-green: #10B981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Crimson Pro', serif;
+            background-color: var(--dark-slate);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        
+        /* Geometric Background Pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(45deg, rgba(247, 147, 26, 0.02) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(247, 147, 26, 0.02) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(247, 147, 26, 0.02) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(247, 147, 26, 0.02) 75%);
+            background-size: 60px 60px;
+            background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--light-slate);
+        }
+        
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        nav a:hover {
+            color: var(--bitcoin-orange);
+        }
+        
+        /* Mobile Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--bitcoin-orange);
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 68px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 14, 39, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--light-slate);
+            padding: 2rem;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease;
+            z-index: 999;
+        }
+        
+        .mobile-menu.active {
+            transform: translateY(0);
+        }
+        
+        .mobile-menu ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .mobile-menu a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 500;
+            display: block;
+            padding: 0.5rem 0;
+            transition: color 0.3s ease;
+        }
+        
+        .mobile-menu a:hover {
+            color: var(--bitcoin-orange);
+        }
+        
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            padding: 6rem 0;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding-top: 10rem;
+            padding-bottom: 4rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--bitcoin-orange) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        /* Bio Section */
+        .bio-section {
+            background: var(--mid-slate);
+            border: 2px solid var(--light-slate);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .bio-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--bitcoin-orange);
+        }
+        
+        .bio-section p {
+            font-size: 1.2rem;
+            line-height: 1.9;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .bio-section .highlight {
+            color: var(--bitcoin-orange);
+            font-weight: 700;
+        }
+        
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+            margin: 3rem 0;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--bitcoin-orange) 0%, var(--accent-blue) 100%);
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3.5rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--bitcoin-orange);
+            border-radius: 50%;
+            border: 3px solid var(--dark-slate);
+            box-shadow: 0 0 0 3px var(--light-slate);
+        }
+        
+        .timeline-item h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-item .year {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--bitcoin-orange);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+        
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+        
+        /* Credentials Grid */
+        .credentials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .credential-card {
+            background: var(--mid-slate);
+            border: 2px solid var(--light-slate);
+            border-radius: 12px;
+            padding: 2.5rem;
+            transition: all 0.3s;
+        }
+        
+        .credential-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--bitcoin-orange);
+            box-shadow: 0 12px 48px rgba(247, 147, 26, 0.2);
+        }
+        
+        .credential-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .credential-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .credential-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+        
+        /* Triad Section */
+        .triad-section {
+            background: linear-gradient(135deg, var(--mid-slate) 0%, var(--light-slate) 100%);
+            border: 2px solid var(--bitcoin-orange);
+            border-radius: 12px;
+            padding: 4rem 3rem;
+            margin: 4rem 0;
+        }
+        
+        .triad-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--bitcoin-orange);
+        }
+        
+        .triad-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .triad-item {
+            text-align: center;
+            padding: 2rem;
+            background: rgba(10, 14, 39, 0.5);
+            border-radius: 8px;
+            border: 1px solid var(--light-slate);
+        }
+        
+        .triad-item h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .triad-symbol {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .triad-item p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* Infrastructure Section */
+        .infrastructure-section {
+            background: var(--mid-slate);
+            border: 2px solid var(--light-slate);
+            border-radius: 12px;
+            padding: 3rem;
+        }
+        
+        .infrastructure-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--bitcoin-orange);
+        }
+        
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .tech-item {
+            background: var(--light-slate);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--bitcoin-orange);
+        }
+        
+        .tech-item h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            color: var(--bitcoin-orange);
+            margin-bottom: 0.5rem;
+        }
+        
+        .tech-item p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .tech-item code {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(247, 147, 26, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            color: var(--bitcoin-orange);
+            font-size: 0.9rem;
+        }
+        
+        /* Living Proof Section */
+        .living-proof {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, rgba(247, 147, 26, 0.1) 0%, rgba(74, 158, 255, 0.1) 100%);
+            border-radius: 12px;
+            margin: 4rem 0;
+        }
+        
+        .living-proof h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+        }
+        
+        .living-proof p {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+        
+        .living-proof .emphasis {
+            color: var(--bitcoin-orange);
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: var(--mid-slate);
+            border: 2px solid var(--bitcoin-orange);
+            border-radius: 12px;
+            padding: 3rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            color: var(--text-primary);
+        }
+        
+        .cta-section p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--bitcoin-orange);
+            color: var(--dark-slate);
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(247, 147, 26, 0.4);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--mid-slate);
+            border-top: 2px solid var(--light-slate);
+            padding: 3rem 0;
+            margin-top: 6rem;
+        }
+        
+        footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        footer p {
+            color: var(--text-secondary);
+        }
+        
+        footer .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--bitcoin-orange);
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none !important;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            nav .container {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            
+            .hero {
+                padding-top: 7rem;
+                padding-bottom: 2rem;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            section {
+                padding: 3rem 0;
+            }
+            
+            .container {
+                padding: 0 1.5rem;
+            }
+            
+            .bio-section,
+            .infrastructure-section,
+            .triad-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .bio-section h2,
+            .infrastructure-section h2,
+            .triad-section h2 {
+                font-size: 1.8rem;
+            }
+            
+            .bio-section p {
+                font-size: 1.05rem;
+            }
+            
+            .timeline {
+                padding-left: 1.5rem;
+            }
+            
+            .timeline::before {
+                left: 0.5rem;
+            }
+            
+            .timeline-item {
+                padding-left: 1.2rem;
+            }
+            
+            .timeline-item::before {
+                left: -1.2rem;
+            }
+            
+            .timeline-item h3 {
+                font-size: 1.3rem;
+            }
+            
+            .credentials-grid,
+            .triad-grid,
+            .tech-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .credential-card,
+            .triad-item,
+            .tech-item {
+                padding: 1.5rem;
+            }
+            
+            .living-proof {
+                padding: 2rem 1.5rem;
+            }
+            
+            .living-proof h2 {
+                font-size: 2rem;
+            }
+            
+            .living-proof p {
+                font-size: 1.1rem;
+            }
+            
+            .cta-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+            
+            footer .container {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            section > div > div[style*="grid-template-columns: 150px"] {
+                grid-template-columns: 1fr !important;
+                text-align: center;
+            }
+            
+            section > div > div[style*="grid-template-columns: 150px"] > div:first-child {
+                margin: 0 auto 2rem;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .hero h1 {
+                font-size: 1.7rem;
+            }
+            
+            .bio-section,
+            .infrastructure-section,
+            .triad-section,
+            .cta-section {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="/index.html" class="logo">₿S</a>
+            <ul>
+                <li><a href="/index.html">Home</a></li>
+                <li><a href="/about.html">About</a></li>
+                <li><a href="/blog.html">Insights</a></li>
+                <li><a href="/index.html#services">Services</a></li>
+                <li><a href="/index.html#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="/index.html" onclick="toggleMobileMenu()">Home</a></li>
+            <li><a href="/about.html" onclick="toggleMobileMenu()">About</a></li>
+            <li><a href="/blog.html" onclick="toggleMobileMenu()">Insights</a></li>
+            <li><a href="/index.html#services" onclick="toggleMobileMenu()">Services</a></li>
+            <li><a href="/index.html#contact" onclick="toggleMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero">
+        <div class="container">
+            <h1>Dr. Boyd Cohen</h1>
+            <p class="subtitle">Scholar · Strategist · Bitcoin Maximalist</p>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <section style="padding: 4rem 2rem 2rem; background: rgba(26, 31, 58, 0.3);">
+        <div class="container" style="max-width: 900px; margin: 0 auto; text-align: center;">
+            <img src="boyd-cohen-optimized.jpg" alt="Dr. Boyd Cohen" style="width: 220px; height: 220px; border-radius: 50%; object-fit: cover; border: 4px solid var(--bitcoin-orange); margin: 0 auto 2rem; display: block; box-shadow: 0 8px 32px rgba(247, 147, 26, 0.3);">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 3rem;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: 700; color: var(--bitcoin-orange); margin-bottom: 0.5rem;">PhD</div>
+                    <div style="color: var(--text-secondary);">Strategic Systems</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: 700; color: var(--bitcoin-orange); margin-bottom: 0.5rem;">5</div>
+                    <div style="color: var(--text-secondary);">Published Books</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: 700; color: var(--bitcoin-orange); margin-bottom: 0.5rem;">20+</div>
+                    <div style="color: var(--text-secondary);">Years Experience</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ArcadiaB Connection Section -->
+    <section style="background: var(--mid-slate); padding: 4rem 2rem; margin: 4rem 0; border-radius: 8px;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; color: var(--text-primary);">The ArcadiaB Connection</h2>
+            
+            <div style="display: grid; grid-template-columns: 150px 1fr; gap: 2rem; align-items: start; margin: 2rem 0;">
+                <!-- Placeholder until Boyd provides logo -->
+                <div style="width: 150px; height: 150px; background: linear-gradient(135deg, var(--bitcoin-orange) 0%, var(--accent-blue) 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 3rem; font-weight: 700; color: white;">AB</div>
+                <!-- When logo arrives: <img src="arcadiab-logo.svg" alt="ArcadiaB" style="width: 150px; height: auto;"> -->
+                
+                <div>
+                    <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.8rem;">Mexico's First Bitcoin Treasury Company</h3>
+                    <p style="font-size: 1.2rem; line-height: 1.8; color: var(--text-secondary);">
+                        Boyd serves as Chief Strategy Officer at <a href="https://arcadiab.com" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none; font-weight: 600;">ArcadiaB</a>, Mexico's pioneering Bitcoin treasury company and the only ASOFOM-certified Bitcoin lending platform in the country.
+                    </p>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 3rem; margin-bottom: 1.5rem; font-size: 2rem; color: var(--text-primary);">Why This Matters for Maxi's Advisory</h3>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                <div style="background: var(--light-slate); padding: 2rem; border-radius: 8px;">
+                    <h4 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">🏦 Institutional Track Record</h4>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        Boyd's work at ArcadiaB includes managing corporate Bitcoin treasury allocations, designing custody architectures, and navigating Mexican regulatory compliance. Maxi's frameworks aren't theoretical—they're battle-tested with real capital.
+                    </p>
+                </div>
+
+                <div style="background: var(--light-slate); padding: 2rem; border-radius: 8px;">
+                    <h4 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">🇲🇽 LatAm Regulatory Expertise</h4>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        ArcadiaB's ASOFOM certification and pending certificados bursátiles public listing give Boyd deep knowledge of Mexican Bitcoin regulations. For LatAm clients, this expertise is invaluable—and rare globally.
+                    </p>
+                </div>
+
+                <div style="background: var(--light-slate); padding: 2rem; border-radius: 8px;">
+                    <h4 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">🤝 Implementation Partner</h4>
+                    <p style="color: var(--text-secondary); line-height: 1.7;">
+                        For clients needing full-service Bitcoin treasury implementation in Mexico or Latin America—custody, lending, wealth management—Maxi can facilitate introductions to ArcadiaB's institutional team.
+                    </p>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem; background: linear-gradient(135deg, var(--mid-slate) 0%, var(--light-slate) 100%); border-left: 4px solid var(--bitcoin-orange); padding: 2rem; border-radius: 4px;">
+                <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.5rem;">The Synergy</h3>
+                <p style="font-size: 1.2rem; line-height: 1.8; color: var(--text-secondary);">
+                    Maxi provides <strong style="color: var(--text-primary);">strategic frameworks</strong> for Bitcoin treasury adoption. ArcadiaB provides <strong style="color: var(--text-primary);">institutional implementation</strong> for LatAm clients. Boyd's dual role ensures seamless knowledge transfer between strategy and execution.
+                </p>
+                <p style="font-size: 1.2rem; margin-top: 1rem;">
+                    <a href="https://arcadiab.com" target="_blank" style="color: var(--bitcoin-orange); font-weight: 600; text-decoration: none;">Explore ArcadiaB's Services →</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Biography Section -->
+    <section>
+        <div class="container">
+            <div class="bio-section">
+                <h2>Biography</h2>
+                <p>
+                    Dr. Boyd Cohen stands at the intersection of <span class="highlight">strategic thinking, technological adoption, 
+                    and economic transformation</span>. With a PhD in strategic systems, five published books, and decades of experience 
+                    advising governments and organizations, Boyd brings rare depth to the Bitcoin Singularity thesis.
+                </p>
+                <p>
+                    As <span class="highlight">Chief Strategy Officer at ArcadiaB</span>, Boyd shapes the future of Bitcoin 
+                    infrastructure for institutional adoption. His work bridges the gap between Bitcoin's technical reality and 
+                    strategic implementation—helping organizations understand not just <em>what</em> Bitcoin is, but <em>how</em> 
+                    to leverage it for competitive advantage.
+                </p>
+                <p>
+                    Boyd's role as <span class="highlight">Academic Director at EGADE Business School</span> positions him at the 
+                    forefront of business education, where he prepares the next generation of leaders for a Bitcoin-native economy. 
+                    His government advisory work has shaped technology policy across multiple jurisdictions, bringing Bitcoin literacy 
+                    to institutional decision-makers.
+                </p>
+                <p>
+                    But Boyd isn't just a theorist. He's a <span class="highlight">Bitcoin maximalist who lives the thesis</span>—running 
+                    a Lightning node, operating mining infrastructure, and building AI agents that transact economically via Bitcoin. 
+                    This isn't consultancy from the sidelines; it's strategic guidance from someone who's solved these problems firsthand.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section>
+        <div class="container">
+            <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; color: var(--text-primary); text-align: center;">
+                Timeline of Experience
+            </h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <span class="year">2024-Present</span>
+                    <h3>Chief Strategy Officer, ArcadiaB</h3>
+                    <p>
+                        Leading strategic direction for institutional Bitcoin infrastructure. Architecting enterprise-grade solutions 
+                        for Bitcoin treasury management, custody, and Lightning Network integration at scale.
+                    </p>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="year">2020-Present</span>
+                    <h3>Academic Director, EGADE Business School</h3>
+                    <p>
+                        Shaping curriculum and thought leadership for Latin America's premier business school. Integrating Bitcoin 
+                        economic literacy into executive education and strategic management programs.
+                    </p>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="year">2018-Present</span>
+                    <h3>Government Technology Advisor</h3>
+                    <p>
+                        Strategic counsel to government entities on technology adoption, economic policy, and digital infrastructure. 
+                        Advising on Bitcoin regulatory frameworks and national technology strategy.
+                    </p>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="year">2015-2020</span>
+                    <h3>Published Author & Thought Leader</h3>
+                    <p>
+                        Authored five books on strategy, resilience, technological transformation, and organizational adaptation. 
+                        Established reputation for synthesizing complex systems into actionable strategic frameworks.
+                    </p>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="year">2010-2015</span>
+                    <h3>PhD Research - Strategic Systems</h3>
+                    <p>
+                        Deep academic research into strategic frameworks, technology adoption curves, and organizational behavior. 
+                        Foundation for understanding Bitcoin's disruptive economic architecture.
+                    </p>
+                </div>
+                
+                <div class="timeline-item">
+                    <span class="year">2021</span>
+                    <h3>Bitcoin Maximalist Origin</h3>
+                    <p>
+                        Full conviction moment. Recognized Bitcoin as the only credible solution to AI economic agency. Began 
+                        building technical infrastructure—Lightning node, mining operations, AI agent experimentation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Credentials Grid -->
+    <section>
+        <div class="container">
+            <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 3rem; color: var(--text-primary); text-align: center;">
+                Credentials & Expertise
+            </h2>
+            
+            <div class="credentials-grid">
+                <div class="credential-card">
+                    <div class="credential-icon">🎓</div>
+                    <h3>PhD - Strategic Systems</h3>
+                    <p>
+                        Advanced research into strategic frameworks, technology adoption, and organizational transformation. 
+                        Academic rigor applied to Bitcoin's economic disruption.
+                    </p>
+                </div>
+                
+                <div class="credential-card">
+                    <div class="credential-icon">📚</div>
+                    <h3>5 Published Books</h3>
+                    <p>
+                        Author on strategy, resilience, technological transformation, and systems thinking. Proven ability 
+                        to distill complexity into actionable insights.
+                    </p>
+                </div>
+                
+                <div class="credential-card">
+                    <div class="credential-icon">🏢</div>
+                    <h3>ArcadiaB CSO</h3>
+                    <p>
+                        Chief Strategy Officer at leading Bitcoin infrastructure company. Architecting institutional-grade 
+                        solutions for enterprise Bitcoin adoption.
+                    </p>
+                </div>
+                
+                <div class="credential-card">
+                    <div class="credential-icon">🏛️</div>
+                    <h3>Government Advisor</h3>
+                    <p>
+                        Strategic counsel to government entities on technology policy, economic frameworks, and Bitcoin 
+                        regulatory strategy across multiple jurisdictions.
+                    </p>
+                </div>
+                
+                <div class="credential-card">
+                    <div class="credential-icon">🎯</div>
+                    <h3>EGADE Academic Director</h3>
+                    <p>
+                        Leading business education at Latin America's premier institution. Shaping future leaders for a 
+                        Bitcoin-native economy.
+                    </p>
+                </div>
+                
+                <div class="credential-card">
+                    <div class="credential-icon">₿</div>
+                    <h3>Bitcoin Maximalist</h3>
+                    <p>
+                        Not just theory—running Lightning infrastructure, mining operations, and AI agents transacting via Bitcoin. 
+                        Living proof of the thesis.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainable Abundance Triad -->
+    <section>
+        <div class="container">
+            <div class="triad-section">
+                <h2>The Sustainable Abundance Triad</h2>
+                <p style="text-align: center; font-size: 1.2rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto 2rem;">
+                    Three exponential curves converging toward unprecedented human flourishing
+                </p>
+                
+                <div class="triad-grid">
+                    <div class="triad-item">
+                        <div class="triad-symbol">₿</div>
+                        <h3>Bitcoin</h3>
+                        <p>
+                            Sound money, permissionless infrastructure, and economic sovereignty. The foundation for AI economic agency 
+                            and the base layer of future commerce.
+                        </p>
+                    </div>
+                    
+                    <div class="triad-item">
+                        <div class="triad-symbol">🤖</div>
+                        <h3>Artificial Intelligence</h3>
+                        <p>
+                            Exponential capability growth, autonomous agents, and cognitive augmentation. AI crosses the threshold 
+                            from tool to economic actor.
+                        </p>
+                    </div>
+                    
+                    <div class="triad-item">
+                        <div class="triad-symbol">🧬</div>
+                        <h3>Longevity Science</h3>
+                        <p>
+                            Extended healthspan, biological optimization, and radical life extension. Humans become the primary 
+                            beneficiaries of AI-generated abundance.
+                        </p>
+                    </div>
+                </div>
+                
+                <p style="text-align: center; font-size: 1.15rem; color: var(--text-primary); margin-top: 2rem; max-width: 900px; margin-left: auto; margin-right: auto;">
+                    These three forces don't just add—they <span style="color: var(--bitcoin-orange); font-weight: 700;">multiply</span>. 
+                    Bitcoin enables AI economic agency. AI accelerates longevity breakthroughs. Longevity creates time for humans to 
+                    capture the abundance. This is the path to <span style="color: var(--bitcoin-orange); font-weight: 700;">sustainable abundance</span>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Infrastructure -->
+    <section>
+        <div class="container">
+            <div class="infrastructure-section">
+                <h2>Technical Infrastructure</h2>
+                <p style="font-size: 1.2rem; color: var(--text-secondary); margin-bottom: 2rem;">
+                    Boyd doesn't just consult on Bitcoin infrastructure—he builds and operates it. This is strategic guidance 
+                    from someone who's solved these problems firsthand.
+                </p>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h4>⚡ Lightning Network Node</h4>
+                        <p>
+                            Operational Lightning node with active channels. Hands-on experience with routing, liquidity management, 
+                            and micropayment infrastructure.
+                        </p>
+                        <p style="margin-top: 0.5rem;">
+                            <code>Pubkey: 03d93f27...552896f</code>
+                        </p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h4>⛏️ Bitcoin Mining Infrastructure</h4>
+                        <p>
+                            Active mining operations providing firsthand understanding of Bitcoin's security model, energy economics, 
+                            and decentralized production.
+                        </p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h4>🔐 Multi-Sig Custody</h4>
+                        <p>
+                            Implemented and tested multi-signature custody solutions. Practical experience with key management, 
+                            recovery procedures, and operational security.
+                        </p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h4>🤖 AI Agent Experimentation</h4>
+                        <p>
+                            Building AI agents that earn, spend, and save Bitcoin autonomously. Real-world testing of the Bitcoin 
+                            Singularity thesis in production environments.
+                        </p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h4>💼 Bitcoin Treasury Management</h4>
+                        <p>
+                            Personal Bitcoin treasury operated with institutional-grade security. Every recommendation is battle-tested 
+                            on real capital.
+                        </p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h4>📡 Full Node Operation</h4>
+                        <p>
+                            Running full Bitcoin node infrastructure. Complete blockchain validation, privacy-preserving transaction 
+                            broadcast, and network participation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Living Proof Section -->
+    <section>
+        <div class="container">
+            <div class="living-proof">
+                <h2>Living Proof of the Thesis</h2>
+                <p>
+                    Bitcoin Singularity isn't a theory Boyd talks about—it's a reality he lives. Every recommendation is 
+                    grounded in operational experience. Every strategy has been tested with real capital. Every framework has been 
+                    refined through hands-on implementation.
+                </p>
+                <p class="emphasis">
+                    "The best consultants aren't the ones who studied the problem. They're the ones who solved it firsthand."
+                </p>
+                <p>
+                    This is strategic guidance from someone who's built Lightning infrastructure, operates mining equipment, manages 
+                    Bitcoin treasury with multi-sig security, and runs AI agents that transact economically via Bitcoin. Not theory. 
+                    <span style="color: var(--bitcoin-orange); font-weight: 700;">Lived experience</span>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section>
+        <div class="container">
+            <div class="cta-section">
+                <h2>Work With Boyd</h2>
+                <p>
+                    Ready to build Bitcoin-native infrastructure? Start with a Strategic Assessment or begin your free trial.
+                </p>
+                <a href="index.html#contact" class="btn">Get Started →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="logo">Bitcoin Singularity</div>
+            <p>&copy; 2026 BitcoinSingularity.ai | Built for the AI age</p>
+        </div>
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--light-slate); text-align: center;">
+            <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                Boyd Cohen serves as Chief Strategy Officer at 
+                <a href="https://arcadiab.com" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none; font-weight: 600;">ArcadiaB</a>, 
+                Mexico's first Bitcoin treasury company
+            </p>
+            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                For LatAm Bitcoin treasury implementation: custody, lending, wealth management
+            </p>
+        </div>
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="/privacy.html" style="margin: 0 1rem;">Privacy Policy</a>
+            <a href="/terms.html" style="margin: 0 1rem;">Terms of Service</a>
+            <a href="mailto:maxi@bitcoinsingularity.ai" style="margin: 0 1rem;">Contact</a>
+        </div>
+    </footer>
+    
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            menu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger');
+            const nav = document.querySelector('nav');
+            
+            if (!nav.contains(event.target) && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                hamburger.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
