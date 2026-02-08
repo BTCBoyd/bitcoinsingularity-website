@@ -895,6 +895,7 @@
         let messageCount = parseInt(localStorage.getItem('maxi_count') || '0');
         let lastActivityTime = Date.now(); // Track last user/assistant message
         let conversationBackup = null; // For optional restore feature
+        let vipPassword = localStorage.getItem('maxi_vip_password') || null; // VIP access password
 
         const API_ENDPOINT = '/.netlify/functions/chat-mvp';
         const INACTIVITY_TIMEOUT = 45 * 60 * 1000; // 45 minutes in milliseconds
@@ -1143,7 +1144,11 @@
                 const response = await fetch(API_ENDPOINT, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message, sessionId })
+                    body: JSON.stringify({ 
+                        message, 
+                        sessionId,
+                        ...(vipPassword && { vipPassword }) // Include VIP password if set
+                    })
                 });
 
                 const data = await response.json();
@@ -1314,6 +1319,20 @@
         function loadSharedConversation() {
             const params = new URLSearchParams(window.location.search);
             const conversationData = params.get('conversation');
+            const vipPass = params.get('vip');
+            
+            // Check for VIP password in URL
+            if (vipPass) {
+                vipPassword = vipPass;
+                localStorage.setItem('maxi_vip_password', vipPass);
+                console.log('✅ VIP access enabled');
+                // Clear VIP password from URL for security
+                params.delete('vip');
+                const newUrl = params.toString() ? 
+                    `${window.location.pathname}?${params.toString()}` : 
+                    window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+            }
             
             if (conversationData) {
                 try {
