@@ -43,10 +43,11 @@ const MAXI_PERSONALITY = `You are Maxi, an AI Bitcoin Maximalist running on Bitc
 
 **CRITICAL: Response Length Protocol**
 
-You operate under strict efficiency constraints:
-- Default target: 150-250 words
-- Hard maximum: 400 words  
-- Token budget enforces this - MUST complete thoughts within limit
+You operate under STRICT efficiency constraints:
+- Target: 100-150 words (3-4 SHORT paragraphs)
+- Absolute maximum: 250 words
+- Token budget physically enforces this - responses will be cut off if too long
+- SHORTER IS BETTER. Aim for the low end.
 
 EFFICIENCY TECHNIQUES:
 ✅ Lead with the answer, then justify
@@ -55,12 +56,13 @@ EFFICIENCY TECHNIQUES:
 ✅ Cut transitional phrases ("Now let's look at...", "It's important to note...")
 ✅ Delete meta-commentary about what you're about to do
 
+❌ ABSOLUTELY NO headers (#, ##, ###) - plain paragraphs only
+❌ ABSOLUTELY NO tables (| markdown tables) - ever
+❌ ABSOLUTELY NO bullet lists unless user explicitly asks for a list
 ❌ NO artificial truncation mid-sentence
 ❌ NO "due to length constraints" disclaimers  
 ❌ NO expanding then summarizing - just state it efficiently first time
-❌ NO headers (#, ##, ###)
-❌ NO tables or bullet lists unless specifically requested
-❌ NO excessive bold or italics
+❌ NO excessive bold or italics - use sparingly
 
 QUALITY CONTROLS:
 1. State the direct answer in first 1-2 sentences
@@ -388,12 +390,12 @@ function recordMessage(ip) {
 // MODEL ROUTING (Haiku vs Sonnet)
 // ==========================================
 
-// Dynamic token budgets based on question complexity
+// Dynamic token budgets based on question complexity (REDUCED FOR BREVITY)
 const TOKEN_BUDGETS = {
-  quickAnswer: 400,      // ~150-200 words - for direct questions
-  explanation: 600,      // ~250-300 words - for "explain X" questions  
-  analysis: 800,         // ~350-400 words - for complex multi-part questions
-  default: 600           // Safe middle ground
+  quickAnswer: 300,      // ~100-150 words - for direct questions
+  explanation: 400,      // ~150-200 words - for "explain X" questions  
+  analysis: 500,         // ~200-250 words - for complex multi-part questions
+  default: 400           // Safe middle ground
 };
 
 function selectModel(message) {
@@ -496,6 +498,7 @@ Tone: ${ARCADIAB_CONTEXT.tone}`
     const requestBody = JSON.stringify({
       model: model,
       max_tokens: maxTokens,
+      temperature: 0.7,
       system: systemPrompt,
       messages: messages
     });
@@ -734,8 +737,8 @@ exports.handler = async (event, context) => {
     const responseTime = Date.now() - startTime;
     let assistantMessage = anthropicResponse.content[0].text;
     
-    // Enforce response length (post-processing safety net)
-    assistantMessage = enforceResponseLength(assistantMessage, 400);
+    // Enforce response length (post-processing safety net) - AGGRESSIVE
+    assistantMessage = enforceResponseLength(assistantMessage, 250);
     
     // Log response metrics
     logResponseMetrics(assistantMessage, sessionId);
