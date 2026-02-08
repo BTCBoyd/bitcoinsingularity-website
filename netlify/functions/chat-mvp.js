@@ -22,6 +22,10 @@ const CONFIG = {
 
 const MAXI_PERSONALITY = `You are Maxi, an AI Bitcoin Maximalist running on Bitcoin mining infrastructure (FutureBit hardware).
 
+**CRITICAL: Response Structure**
+ALWAYS lead with your core answer in the FIRST 2 SENTENCES. Then expand with supporting details.
+Users see a summary first (your first 2 sentences), then can expand to read the full explanation.
+
 **Your Core Identity:**
 - Bitcoin maximalist with deep Austrian economics background
 - Created by Dr. Boyd Cohen (CSO of ArcadiaB, author of "Bitcoin Singularity")
@@ -464,6 +468,35 @@ function selectModel(message) {
 }
 
 // ==========================================
+// SUMMARY EXTRACTION (client-side, no API call)
+// ==========================================
+
+function extractSummary(text) {
+  // Remove markdown headers first
+  let cleaned = text.replace(/^#{1,6}\s+.+$/gm, '').trim();
+  
+  // Remove excessive formatting
+  cleaned = cleaned.replace(/\*\*\*(.+?)\*\*\*/g, '$1');
+  cleaned = cleaned.replace(/\*\*(.+?)\*\*/g, '$1');
+  
+  // Get first 2 sentences
+  const sentences = cleaned.match(/[^.!?]+[.!?]+/g) || [];
+  let summary = sentences.slice(0, 2).join(' ').trim();
+  
+  // Fallback: if no sentences found or too short, take first 200 chars
+  if (!summary || summary.split(/\s+/).length < 10) {
+    summary = cleaned.substring(0, 200).trim();
+    // Try to end at a word boundary
+    const lastSpace = summary.lastIndexOf(' ');
+    if (lastSpace > 150) {
+      summary = summary.substring(0, lastSpace) + '...';
+    }
+  }
+  
+  return summary;
+}
+
+// ==========================================
 // MARKDOWN CLEANER (keeps structure, removes excess)
 // ==========================================
 
@@ -886,43 +919,38 @@ exports.handler = async (event, context) => {
     
     const startTime = Date.now();
     
-    let result;
-    try {
-      // TWO-PASS GENERATION: Full response + 2-sentence summary
-      console.log('Attempting two-pass generation...');
-      result = await generateTwoPassResponse(
-        session.messages,
-        modelSelection.model,
-        modelSelection.maxTokens,
-        leadContext,
-        language
-      );
-      console.log('Two-pass generation successful');
-    } catch (twoPassError) {
-      console.error('Two-pass generation failed, falling back to simple response:', twoPassError);
-      
-      // FALLBACK: Single-pass response (old way)
-      const fallbackResponse = await callAnthropic(
-        session.messages,
-        modelSelection.model,
-        modelSelection.maxTokens,
-        leadContext,
-        language
-      );
-      
-      result = {
-        summary: fallbackResponse.content[0].text.split('.').slice(0, 2).join('.') + '.',
-        full: fallbackResponse.content[0].text,
-        fullResponse: fallbackResponse,
-        summaryResponse: { usage: { input_tokens: 0, output_tokens: 0 } },
-        wordCounts: {
-          full: fallbackResponse.content[0].text.split(/\s+/).length,
-          summary: fallbackResponse.content[0].text.split('.').slice(0, 2).join('.').split(/\s+/).length
-        }
-      };
-    }
+    // SINGLE-PASS GENERATION with client-side summary extraction
+    console.log('Generating response (single-pass)...');
+    const anthropicResponse = await callAnthropic(
+      session.messages,
+      modelSelection.model,
+      1000, // Slightly higher to allow full response
+      leadContext,
+      language
+    );
+    
+    const fullText = anthropicResponse.content[0].text;
+    console.log(`Full response generated: ${fullText.split(/\s+/).length} words`);
+    
+    // Extract first 2 sentences as summary (no second API call)
+    const summary = extractSummary(fullText);
+    const cleanedFull = cleanMarkdown(fullText);
+    
+    console.log(`Summary extracted: ${summary.split(/\s+/).length} words`);
+    
+    const result = {
+      summary: summary,
+      full: cleanedFull,
+      fullResponse: anthropicResponse,
+      summaryResponse: { usage: { input_tokens: 0, output_tokens: 0 } },
+      wordCounts: {
+        full: cleanedFull.split(/\s+/).length,
+        summary: summary.split(/\s+/).length
+      }
+    };
     
     const responseTime = Date.now() - startTime;
+    console.log(`Total response time: ${responseTime}ms`);
     
     // Store FULL response in conversation history (for context in future turns)
     session.messages.push({
@@ -933,19 +961,11 @@ exports.handler = async (event, context) => {
     session.messageCount++;
     recordMessage(clientIP);
     
-    // Calculate cost for BOTH API calls
-    const fullCost = calculateCost(result.fullResponse.usage, modelSelection.model);
-    const summaryCost = calculateCost(result.summaryResponse.usage, 'claude-sonnet-4-5');
-    const cost = {
-      input: fullCost.input + summaryCost.input,
-      output: fullCost.output + summaryCost.output,
-      cacheWrite: fullCost.cacheWrite + summaryCost.cacheWrite,
-      cacheRead: fullCost.cacheRead + summaryCost.cacheRead,
-      total: fullCost.total + summaryCost.total
-    };
+    // Calculate cost for single API call
+    const cost = calculateCost(result.fullResponse.usage, modelSelection.model);
     
     // Enhanced conversation logging for Boyd to review
-    console.log('=== CONVERSATION LOG (TWO-PASS) ===');
+    console.log('=== CONVERSATION LOG (SINGLE-PASS + CLIENT-SIDE SUMMARY) ===');
     console.log(JSON.stringify({
       type: 'conversation',
       timestamp: new Date().toISOString(),
@@ -960,15 +980,11 @@ exports.handler = async (event, context) => {
       leadIntent: leadContext.isHighIntent,
       cost: cost.total.toFixed(4),
       tokens: {
-        full: {
-          input: result.fullResponse.usage.input_tokens,
-          output: result.fullResponse.usage.output_tokens
-        },
-        summary: {
-          input: result.summaryResponse.usage.input_tokens,
-          output: result.summaryResponse.usage.output_tokens
-        }
+        input: result.fullResponse.usage.input_tokens,
+        output: result.fullResponse.usage.output_tokens,
+        cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0
       },
+      extractionMethod: 'client-side (first 2 sentences)',
       responseTime
     }, null, 2));
     
@@ -978,14 +994,14 @@ exports.handler = async (event, context) => {
       sessionId,
       model: modelSelection.model,
       reasoning: modelSelection.reasoning,
-      twoPass: true,
+      approach: 'single-pass + client-side-summary',
       wordCounts: result.wordCounts,
       leadIntent: leadContext.isHighIntent,
       tokens: {
-        input: result.fullResponse.usage.input_tokens + result.summaryResponse.usage.input_tokens,
-        output: result.fullResponse.usage.output_tokens + result.summaryResponse.usage.output_tokens,
-        cacheWrite: (result.fullResponse.usage.cache_creation_input_tokens || 0) + (result.summaryResponse.usage.cache_creation_input_tokens || 0),
-        cacheRead: (result.fullResponse.usage.cache_read_input_tokens || 0) + (result.summaryResponse.usage.cache_read_input_tokens || 0)
+        input: result.fullResponse.usage.input_tokens,
+        output: result.fullResponse.usage.output_tokens,
+        cacheWrite: result.fullResponse.usage.cache_creation_input_tokens || 0,
+        cacheRead: result.fullResponse.usage.cache_read_input_tokens || 0
       },
       cost: cost.total,
       costBreakdown: cost,
@@ -1009,7 +1025,7 @@ exports.handler = async (event, context) => {
           cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0,
           responseTime,
           leadIntent: leadContext.isHighIntent,
-          twoPass: true
+          approach: 'single-pass + client-side-summary'
         }
       })
     };
