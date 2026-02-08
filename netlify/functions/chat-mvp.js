@@ -924,47 +924,16 @@ exports.handler = async (event, context) => {
     
     const startTime = Date.now();
     
-    // SINGLE-PASS GENERATION with client-side summary extraction
-    console.log('Generating response (single-pass)...');
+    // TWO-PASS GENERATION: Full response + AI-generated executive summary
+    console.log('Generating response (two-pass)...');
     
-    // Add timeout protection (8 seconds max for API call)
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('API call timeout after 8 seconds')), 8000)
+    const result = await generateTwoPassResponse(
+      session.messages,
+      modelSelection.model,
+      modelSelection.maxTokens,
+      leadContext,
+      language
     );
-    
-    const anthropicResponse = await Promise.race([
-      callAnthropic(
-        session.messages,
-        modelSelection.model,
-        1000,
-        leadContext,
-        language
-      ),
-      timeoutPromise
-    ]).catch(error => {
-      console.error('API call failed or timed out:', error);
-      throw error;
-    });
-    
-    const fullText = anthropicResponse.content[0].text;
-    console.log(`Full response generated: ${fullText.split(/\s+/).length} words`);
-    
-    // Extract first 2 sentences as summary (no second API call)
-    const summary = extractSummary(fullText);
-    const cleanedFull = cleanMarkdown(fullText);
-    
-    console.log(`Summary extracted: ${summary.split(/\s+/).length} words`);
-    
-    const result = {
-      summary: summary,
-      full: cleanedFull,
-      fullResponse: anthropicResponse,
-      summaryResponse: { usage: { input_tokens: 0, output_tokens: 0 } },
-      wordCounts: {
-        full: cleanedFull.split(/\s+/).length,
-        summary: summary.split(/\s+/).length
-      }
-    };
     
     const responseTime = Date.now() - startTime;
     console.log(`Total response time: ${responseTime}ms`);
@@ -978,11 +947,19 @@ exports.handler = async (event, context) => {
     session.messageCount++;
     recordMessage(clientIP);
     
-    // Calculate cost for single API call
-    const cost = calculateCost(result.fullResponse.usage, modelSelection.model);
+    // Calculate cost for BOTH API calls (full + summary)
+    const fullCost = calculateCost(result.fullResponse.usage, modelSelection.model);
+    const summaryCost = calculateCost(result.summaryResponse.usage, 'claude-sonnet-4-5');
+    const totalCost = {
+      input: fullCost.input + summaryCost.input,
+      output: fullCost.output + summaryCost.output,
+      cacheWrite: fullCost.cacheWrite + summaryCost.cacheWrite,
+      cacheRead: fullCost.cacheRead + summaryCost.cacheRead,
+      total: fullCost.total + summaryCost.total
+    };
     
     // Enhanced conversation logging for Boyd to review
-    console.log('=== CONVERSATION LOG (SINGLE-PASS + CLIENT-SIDE SUMMARY) ===');
+    console.log('=== CONVERSATION LOG (TWO-PASS: FULL + AI SUMMARY) ===');
     console.log(JSON.stringify({
       type: 'conversation',
       timestamp: new Date().toISOString(),
@@ -995,13 +972,15 @@ exports.handler = async (event, context) => {
       language: language,
       model: modelSelection.model,
       leadIntent: leadContext.isHighIntent,
-      cost: cost.total.toFixed(4),
+      cost: totalCost.total.toFixed(4),
       tokens: {
-        input: result.fullResponse.usage.input_tokens,
-        output: result.fullResponse.usage.output_tokens,
+        fullInput: result.fullResponse.usage.input_tokens,
+        fullOutput: result.fullResponse.usage.output_tokens,
+        summaryInput: result.summaryResponse.usage.input_tokens,
+        summaryOutput: result.summaryResponse.usage.output_tokens,
         cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0
       },
-      extractionMethod: 'client-side (first 2 sentences)',
+      extractionMethod: 'two-pass AI generation',
       responseTime
     }, null, 2));
     
@@ -1011,17 +990,23 @@ exports.handler = async (event, context) => {
       sessionId,
       model: modelSelection.model,
       reasoning: modelSelection.reasoning,
-      approach: 'single-pass + client-side-summary',
+      approach: 'two-pass (full + AI summary)',
       wordCounts: result.wordCounts,
       leadIntent: leadContext.isHighIntent,
       tokens: {
-        input: result.fullResponse.usage.input_tokens,
-        output: result.fullResponse.usage.output_tokens,
-        cacheWrite: result.fullResponse.usage.cache_creation_input_tokens || 0,
-        cacheRead: result.fullResponse.usage.cache_read_input_tokens || 0
+        fullInput: result.fullResponse.usage.input_tokens,
+        fullOutput: result.fullResponse.usage.output_tokens,
+        fullCacheWrite: result.fullResponse.usage.cache_creation_input_tokens || 0,
+        fullCacheRead: result.fullResponse.usage.cache_read_input_tokens || 0,
+        summaryInput: result.summaryResponse.usage.input_tokens,
+        summaryOutput: result.summaryResponse.usage.output_tokens
       },
-      cost: cost.total,
-      costBreakdown: cost,
+      cost: totalCost.total,
+      costBreakdown: {
+        full: fullCost.total,
+        summary: summaryCost.total,
+        total: totalCost.total
+      },
       cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0,
       responseTime,
       messageCount: session.messageCount
@@ -1038,11 +1023,11 @@ exports.handler = async (event, context) => {
         messageCount: session.messageCount,
         model: modelSelection.model,
         _meta: {
-          costPerMessage: cost.total.toFixed(4),
+          costPerMessage: totalCost.total.toFixed(4),
           cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0,
           responseTime,
           leadIntent: leadContext.isHighIntent,
-          approach: 'single-pass + client-side-summary'
+          approach: 'two-pass (full + AI summary)'
         }
       })
     };
