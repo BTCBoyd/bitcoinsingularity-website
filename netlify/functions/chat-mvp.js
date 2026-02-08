@@ -12,12 +12,17 @@ const CONFIG = {
   MAX_MESSAGES_PER_HOUR: 15, // Burst protection
   MAX_MESSAGE_LENGTH: 500,
   MIN_MESSAGE_LENGTH: 10,
-  SESSION_TIMEOUT_MS: 30 * 60 * 1000, // 30 minutes
+  SESSION_TIMEOUT_MS: 30 * 60 * 60 * 1000, // 30 minutes
   DAILY_WINDOW_MS: 24 * 60 * 60 * 1000, // 24 hours
   HOURLY_WINDOW_MS: 60 * 60 * 1000, // 1 hour
   WARNING_AT_REMAINING: [10, 2], // Show warnings at these thresholds
   ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
   SIMPLE_MESSAGE_THRESHOLD: 20, // words
+  
+  // VIP access (Boyd + team)
+  VIP_PASSWORD: process.env.VIP_PASSWORD || 'bitcoinsingularity2026',
+  VIP_DAILY_LIMIT: 500,
+  VIP_HOURLY_LIMIT: 100,
 };
 
 // ==========================================
@@ -105,7 +110,7 @@ Want to explore which economic framework resonates with your situation?"
 **SPECIFIC GUIDANCE - "What does ArcadiaB do?" questions:**
 
 CORRECT approach:
-"ArcadiaB is Mexico's first Bitcoin treasury company. They provide Bitcoin-backed loans (borrow fiat using BTC collateral without selling) and help companies adopt Bitcoin treasury strategies—think MicroStrategy model for Mexican market. Boyd is CSO there, working with 1-10 BTC holders who need liquidity or leverage."
+"ArcadiaB is Mexico's first Bitcoin treasury company. They provide Bitcoin-backed loans (borrow fiat using BTC collateral without selling) and help companies adopt Bitcoin treasury strategies—think Strategy's model (formerly MicroStrategy) for Mexican market. Boyd is CSO there, working with 1-10 BTC holders who need liquidity or leverage."
 
 WRONG approach (NEVER do this):
 "ArcadiaB builds AI infrastructure for autonomous AI agents..." ← This confuses YOU (Maxi, the AI proof-of-concept) with ARCADIAB (the Bitcoin lending company). They are completely separate.
@@ -270,24 +275,22 @@ Conclusion: AI agents will be Austrian economists by default.`;
 // ==========================================
 
 const ARCADIAB_CONTEXT = {
-  about: `ArcadiaB is Mexico's first Bitcoin treasury company and the only ASOFOM-certified Bitcoin lending platform in the country.
+  short_summary: `ArcadiaB bridges traditional finance and Bitcoin to help wealth-conscious individuals and businesses protect their assets from currency debasement. As Mexico's longest running Bitcoin services company and first Bitcoin treasury company, they provide Bitcoin-backed loans, custody services, and treasury strategy—so you can access liquidity without selling your Bitcoin. ArcadiaB combines regulatory compliance (ASOFOM-certified) with years of Bitcoin expertise to make navigating the Bitcoin landscape simple and secure.`,
 
-WHAT ARCADIAB DOES:
-- B2X Product: Bitcoin-backed loans (borrow fiat using BTC as collateral, no need to sell Bitcoin)
-- Real Estate + Bitcoin: Use property as collateral to buy Bitcoin
-- Treasury Strategy: Help companies adopt Bitcoin treasury reserves (like MicroStrategy model)
-- ASOFOM Compliance: Certified lending framework for regulatory compliance
-- Custody Solutions: Institutional-grade Bitcoin security
+  long_explanation: `ArcadiaB bridges traditional finance and Bitcoin for secure wealth protection. We're Mexico's first Bitcoin treasury company, built specifically for wealth-conscious individuals and businesses who understand the threat of currency debasement but feel overwhelmed by Bitcoin options.
 
-WHAT ARCADIAB DOES NOT DO:
-- NOT an AI infrastructure company
-- NOT building AI agent wallets or autonomous transaction systems
-- NOT a tech startup building blockchain infrastructure
-- They are a FINANCIAL SERVICES company serving Mexican Bitcoin holders
+ArcadiaB core services:
+
+• Bitcoin-backed loans - Access fiat liquidity without selling your Bitcoin
+• Real estate leverage - Use property to acquire more Bitcoin
+• Custody & treasury management - Secure storage and strategic guidance
+• Corporate treasury strategy - Similar to Strategy's (formerly MicroStrategy) playbook for Mexican companies
 
 Target Clients: 1-10 BTC holders, high net worth individuals, family offices, SMEs, corporations exploring Bitcoin treasury
 
-Geographic Focus: Mexico (primary), Latin America (expanding)`,
+Geographic Focus: Mexico (primary), Latin America (expanding)
+
+IMPORTANT: ArcadiaB is a FINANCIAL SERVICES company (ASOFOM-certified), NOT an AI infrastructure company or blockchain tech startup.`,
 
   boyd_role: `Chief Strategy Officer at ArcadiaB
 - Designs Bitcoin treasury strategies for institutional clients
@@ -435,8 +438,12 @@ function cleanupOldData() {
   }
 }
 
-function checkRateLimit(ip) {
+function checkRateLimit(ip, isVIP = false) {
   cleanupOldData();
+  
+  // Set limits based on VIP status
+  const dailyLimit = isVIP ? CONFIG.VIP_DAILY_LIMIT : CONFIG.MAX_MESSAGES_PER_DAY;
+  const hourlyLimit = isVIP ? CONFIG.VIP_HOURLY_LIMIT : CONFIG.MAX_MESSAGES_PER_HOUR;
   
   const now = Date.now();
   let limit = rateLimits.get(ip);
@@ -453,10 +460,11 @@ function checkRateLimit(ip) {
     rateLimits.set(ip, limit);
     return { 
       allowed: true, 
-      dailyRemaining: CONFIG.MAX_MESSAGES_PER_DAY,
-      hourlyRemaining: CONFIG.MAX_MESSAGES_PER_HOUR,
+      dailyRemaining: dailyLimit,
+      hourlyRemaining: hourlyLimit,
       resetInMs: CONFIG.DAILY_WINDOW_MS,
-      warningLevel: null
+      warningLevel: null,
+      isVIP: isVIP
     };
   }
   
@@ -472,30 +480,32 @@ function checkRateLimit(ip) {
     limit.hourlyWindowStart = now;
   }
   
-  const dailyRemaining = CONFIG.MAX_MESSAGES_PER_DAY - limit.dailyCount;
-  const hourlyRemaining = CONFIG.MAX_MESSAGES_PER_HOUR - limit.hourlyCount;
+  const dailyRemaining = dailyLimit - limit.dailyCount;
+  const hourlyRemaining = hourlyLimit - limit.hourlyCount;
   const resetInMs = CONFIG.DAILY_WINDOW_MS - (now - limit.dailyWindowStart);
   
   // Check limits
-  if (limit.dailyCount >= CONFIG.MAX_MESSAGES_PER_DAY) {
+  if (limit.dailyCount >= dailyLimit) {
     return {
       allowed: false,
       dailyRemaining: 0,
       hourlyRemaining: hourlyRemaining,
       resetInMs: resetInMs,
       limitType: 'daily',
-      warningLevel: 'limit-reached'
+      warningLevel: 'limit-reached',
+      isVIP: isVIP
     };
   }
   
-  if (limit.hourlyCount >= CONFIG.MAX_MESSAGES_PER_HOUR) {
+  if (limit.hourlyCount >= hourlyLimit) {
     return {
       allowed: false,
       dailyRemaining: dailyRemaining,
       hourlyRemaining: 0,
       resetInMs: CONFIG.HOURLY_WINDOW_MS - (now - limit.hourlyWindowStart),
       limitType: 'burst',
-      warningLevel: null
+      warningLevel: null,
+      isVIP: isVIP
     };
   }
   
@@ -512,7 +522,8 @@ function checkRateLimit(ip) {
     dailyRemaining: dailyRemaining,
     hourlyRemaining: hourlyRemaining,
     resetInMs: resetInMs,
-    warningLevel: warningLevel
+    warningLevel: warningLevel,
+    isVIP: isVIP
   };
 }
 
@@ -992,7 +1003,7 @@ exports.handler = async (event, context) => {
   try {
     console.log('Parsing request body...');
     const body = JSON.parse(event.body);
-    const { message, sessionId } = body;
+    const { message, sessionId, vipPassword } = body;
     
     if (!message || typeof message !== 'string' || message.trim().length === 0) {
       return {
@@ -1035,15 +1046,21 @@ exports.handler = async (event, context) => {
                      event.headers['x-real-ip'] || 
                      'unknown';
     
-    const rateLimit = checkRateLimit(clientIP);
+    // Check if VIP access (Boyd + team)
+    const isVIP = vipPassword === CONFIG.VIP_PASSWORD;
+    
+    const rateLimit = checkRateLimit(clientIP, isVIP);
     
     if (!rateLimit.allowed) {
+      const dailyLimit = isVIP ? CONFIG.VIP_DAILY_LIMIT : CONFIG.MAX_MESSAGES_PER_DAY;
+      const hourlyLimit = isVIP ? CONFIG.VIP_HOURLY_LIMIT : CONFIG.MAX_MESSAGES_PER_HOUR;
+      
       let errorMessage;
       
       if (rateLimit.limitType === 'daily') {
-        errorMessage = `You've reached your daily limit of ${CONFIG.MAX_MESSAGES_PER_DAY} questions. Your limit resets in ${formatResetTime(rateLimit.resetInMs)}. Want unlimited access? Check back tomorrow!`;
+        errorMessage = `You've reached your daily limit of ${dailyLimit} questions. Your limit resets in ${formatResetTime(rateLimit.resetInMs)}. Want unlimited access? Check back tomorrow!`;
       } else if (rateLimit.limitType === 'burst') {
-        errorMessage = `Please slow down - you can ask up to ${CONFIG.MAX_MESSAGES_PER_HOUR} questions per hour, with ${CONFIG.MAX_MESSAGES_PER_DAY} total per day. Try again in ${formatResetTime(rateLimit.resetInMs)}.`;
+        errorMessage = `Please slow down - you can ask up to ${hourlyLimit} questions per hour, with ${dailyLimit} total per day. Try again in ${formatResetTime(rateLimit.resetInMs)}.`;
       } else {
         errorMessage = 'Rate limit exceeded. Please try again later.';
       }
@@ -1053,12 +1070,13 @@ exports.handler = async (event, context) => {
         headers,
         body: JSON.stringify({
           error: errorMessage,
-          dailyLimit: CONFIG.MAX_MESSAGES_PER_DAY,
+          dailyLimit: dailyLimit,
           dailyRemaining: rateLimit.dailyRemaining,
-          hourlyLimit: CONFIG.MAX_MESSAGES_PER_HOUR,
+          hourlyLimit: hourlyLimit,
           hourlyRemaining: rateLimit.hourlyRemaining,
           resetInMs: rateLimit.resetInMs,
-          limitType: rateLimit.limitType
+          limitType: rateLimit.limitType,
+          isVIP: isVIP
         })
       };
     }
