@@ -569,6 +569,120 @@ Tone: ${ARCADIAB_CONTEXT.tone}`
 }
 
 // ==========================================
+// ANTHROPIC API HELPER
+// ==========================================
+
+async function callAnthropicAPI(model, maxTokens, systemPrompt, messages, temperature = 0.7) {
+  return new Promise((resolve, reject) => {
+    const requestBody = JSON.stringify({
+      model: model,
+      max_tokens: maxTokens,
+      temperature: temperature,
+      system: systemPrompt,
+      messages: messages
+    });
+    
+    const options = {
+      hostname: 'api.anthropic.com',
+      port: 443,
+      path: '/v1/messages',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': CONFIG.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'Content-Length': Buffer.byteLength(requestBody)
+      }
+    };
+    
+    const req = https.request(options, (res) => {
+      let data = '';
+      
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      res.on('end', () => {
+        if (res.statusCode !== 200) {
+          reject(new Error(`Anthropic API error: ${res.statusCode} - ${data}`));
+          return;
+        }
+        
+        try {
+          const response = JSON.parse(data);
+          resolve(response);
+        } catch (error) {
+          reject(new Error(`Failed to parse Anthropic response: ${error.message}`));
+        }
+      });
+    });
+    
+    req.on('error', (error) => {
+      reject(new Error(`Request failed: ${error.message}`));
+    });
+    
+    req.write(requestBody);
+    req.end();
+  });
+}
+
+// ==========================================
+// TWO-PASS COMPRESSION APPROACH
+// ==========================================
+
+async function getCompressedResponse(messages, model, leadContext, language) {
+  // PASS 1: Let Claude think fully and provide thorough answer
+  const fullResponse = await callAnthropic(
+    messages,
+    model,
+    800,  // Let it think fully
+    leadContext,
+    language
+  );
+  
+  const fullText = fullResponse.content[0].text;
+  
+  // PASS 2: Force compression to exact format
+  const compressionPrompt = `Compress the following response to EXACTLY 120-150 words while keeping the core logic:
+
+${fullText}
+
+MANDATORY RULES:
+- Direct answer first (1-2 sentences)
+- ONE key supporting point (2-3 sentences)
+- One follow-up question (1 sentence)
+- Nothing else. No headers, no lists, no extra content.`;
+
+  const compressionSystemPrompt = [
+    {
+      type: 'text',
+      text: 'You are a compression specialist. Your job is to take long responses and compress them to exactly 120-150 words while preserving the core logic and maintaining a complete, coherent answer. Follow the instructions exactly.'
+    }
+  ];
+
+  const compressedResponse = await callAnthropicAPI(
+    'claude-sonnet-4-5',  // Use Sonnet for compression (better at following instructions)
+    250,
+    compressionSystemPrompt,
+    [{ role: 'user', content: compressionPrompt }],
+    0.2  // Lower temperature for more deterministic compression
+  );
+  
+  return {
+    fullResponse: fullResponse,
+    compressedResponse: compressedResponse,
+    fullText: fullText,
+    compressedText: compressedResponse.content[0].text,
+    totalUsage: {
+      input_tokens: fullResponse.usage.input_tokens + compressedResponse.usage.input_tokens,
+      output_tokens: fullResponse.usage.output_tokens + compressedResponse.usage.output_tokens,
+      cache_creation_input_tokens: (fullResponse.usage.cache_creation_input_tokens || 0) + (compressedResponse.usage.cache_creation_input_tokens || 0),
+      cache_read_input_tokens: (fullResponse.usage.cache_read_input_tokens || 0) + (compressedResponse.usage.cache_read_input_tokens || 0)
+    }
+  };
+}
+
+// ==========================================
 // RESPONSE LENGTH ENFORCEMENT
 // ==========================================
 
@@ -748,18 +862,19 @@ exports.handler = async (event, context) => {
     const modelSelection = selectModel(message);
     
     const startTime = Date.now();
-    const anthropicResponse = await callAnthropic(
+    
+    // TWO-PASS APPROACH: Let Claude think, then compress
+    const result = await getCompressedResponse(
       session.messages,
       modelSelection.model,
-      modelSelection.maxTokens,
       leadContext,
       language
     );
     
     const responseTime = Date.now() - startTime;
-    let assistantMessage = anthropicResponse.content[0].text;
+    let assistantMessage = result.compressedText;
     
-    // Enforce response length (post-processing safety net) - HARD 150 WORD LIMIT
+    // Final safety net (should rarely trigger now)
     assistantMessage = enforceResponseLength(assistantMessage, 150);
     
     // Log response metrics
@@ -773,7 +888,16 @@ exports.handler = async (event, context) => {
     session.messageCount++;
     recordMessage(clientIP);
     
-    const cost = calculateCost(anthropicResponse.usage, modelSelection.model);
+    // Calculate cost for BOTH API calls
+    const fullCost = calculateCost(result.fullResponse.usage, modelSelection.model);
+    const compressionCost = calculateCost(result.compressedResponse.usage, 'claude-sonnet-4-5');
+    const cost = {
+      input: fullCost.input + compressionCost.input,
+      output: fullCost.output + compressionCost.output,
+      cacheWrite: fullCost.cacheWrite + compressionCost.cacheWrite,
+      cacheRead: fullCost.cacheRead + compressionCost.cacheRead,
+      total: fullCost.total + compressionCost.total
+    };
     
     // Enhanced conversation logging for Boyd to review
     console.log('=== CONVERSATION LOG ===');
@@ -797,22 +921,25 @@ exports.handler = async (event, context) => {
       responseTime
     }, null, 2));
     
-    // Compact metrics log
+    // Compact metrics log (TWO-PASS APPROACH)
     console.log(JSON.stringify({
       timestamp: new Date().toISOString(),
       sessionId,
       model: modelSelection.model,
       reasoning: modelSelection.reasoning,
+      twoPass: true,
       leadIntent: leadContext.isHighIntent,
       tokens: {
-        input: anthropicResponse.usage.input_tokens,
-        output: anthropicResponse.usage.output_tokens,
-        cacheWrite: anthropicResponse.usage.cache_creation_input_tokens || 0,
-        cacheRead: anthropicResponse.usage.cache_read_input_tokens || 0
+        input: result.totalUsage.input_tokens,
+        output: result.totalUsage.output_tokens,
+        cacheWrite: result.totalUsage.cache_creation_input_tokens || 0,
+        cacheRead: result.totalUsage.cache_read_input_tokens || 0
       },
+      fullResponseWords: result.fullText.split(/\s+/).length,
+      compressedResponseWords: result.compressedText.split(/\s+/).length,
       cost: cost.total,
       costBreakdown: cost,
-      cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0,
+      cacheHit: (result.totalUsage.cache_read_input_tokens || 0) > 0,
       responseTime,
       messageCount: session.messageCount
     }));
