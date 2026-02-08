@@ -631,19 +631,27 @@ async function callAnthropicAPI(model, maxTokens, systemPrompt, messages, temper
 // ==========================================
 
 async function getCompressedResponse(messages, model, leadContext, language) {
-  // PASS 1: Let Claude think fully and provide thorough answer
-  const fullResponse = await callAnthropic(
-    messages,
-    model,
-    800,  // Let it think fully
-    leadContext,
-    language
-  );
+  console.log('=== TWO-PASS COMPRESSION START ===');
   
-  const fullText = fullResponse.content[0].text;
-  
-  // PASS 2: Force compression to exact format
-  const compressionPrompt = `Compress the following response to EXACTLY 120-150 words while keeping the core logic:
+  try {
+    // PASS 1: Let Claude think fully and provide thorough answer
+    console.log('PASS 1: Starting full response...');
+    const fullResponse = await callAnthropic(
+      messages,
+      model,
+      800,  // Let it think fully
+      leadContext,
+      language
+    );
+    
+    const fullText = fullResponse.content[0].text;
+    const fullWordCount = fullText.split(/\s+/).length;
+    console.log(`PASS 1 COMPLETE: ${fullWordCount} words`);
+    console.log(`PASS 1 PREVIEW: ${fullText.substring(0, 200)}...`);
+    
+    // PASS 2: Force compression to exact format
+    console.log('PASS 2: Starting compression...');
+    const compressionPrompt = `Compress the following response to EXACTLY 120-150 words while keeping the core logic:
 
 ${fullText}
 
@@ -653,33 +661,43 @@ MANDATORY RULES:
 - One follow-up question (1 sentence)
 - Nothing else. No headers, no lists, no extra content.`;
 
-  const compressionSystemPrompt = [
-    {
-      type: 'text',
-      text: 'You are a compression specialist. Your job is to take long responses and compress them to exactly 120-150 words while preserving the core logic and maintaining a complete, coherent answer. Follow the instructions exactly.'
-    }
-  ];
+    const compressionSystemPrompt = [
+      {
+        type: 'text',
+        text: 'You are a compression specialist. Your job is to take long responses and compress them to exactly 120-150 words while preserving the core logic and maintaining a complete, coherent answer. Follow the instructions exactly.'
+      }
+    ];
 
-  const compressedResponse = await callAnthropicAPI(
-    'claude-sonnet-4-5',  // Use Sonnet for compression (better at following instructions)
-    250,
-    compressionSystemPrompt,
-    [{ role: 'user', content: compressionPrompt }],
-    0.2  // Lower temperature for more deterministic compression
-  );
-  
-  return {
-    fullResponse: fullResponse,
-    compressedResponse: compressedResponse,
-    fullText: fullText,
-    compressedText: compressedResponse.content[0].text,
-    totalUsage: {
-      input_tokens: fullResponse.usage.input_tokens + compressedResponse.usage.input_tokens,
-      output_tokens: fullResponse.usage.output_tokens + compressedResponse.usage.output_tokens,
-      cache_creation_input_tokens: (fullResponse.usage.cache_creation_input_tokens || 0) + (compressedResponse.usage.cache_creation_input_tokens || 0),
-      cache_read_input_tokens: (fullResponse.usage.cache_read_input_tokens || 0) + (compressedResponse.usage.cache_read_input_tokens || 0)
-    }
-  };
+    const compressedResponse = await callAnthropicAPI(
+      'claude-sonnet-4-5',  // Use Sonnet for compression (better at following instructions)
+      250,
+      compressionSystemPrompt,
+      [{ role: 'user', content: compressionPrompt }],
+      0.2  // Lower temperature for more deterministic compression
+    );
+    
+    const compressedText = compressedResponse.content[0].text;
+    const compressedWordCount = compressedText.split(/\s+/).length;
+    console.log(`PASS 2 COMPLETE: ${compressedWordCount} words`);
+    console.log(`PASS 2 FULL TEXT: ${compressedText}`);
+    console.log('=== TWO-PASS COMPRESSION END ===');
+    
+    return {
+      fullResponse: fullResponse,
+      compressedResponse: compressedResponse,
+      fullText: fullText,
+      compressedText: compressedText,
+      totalUsage: {
+        input_tokens: fullResponse.usage.input_tokens + compressedResponse.usage.input_tokens,
+        output_tokens: fullResponse.usage.output_tokens + compressedResponse.usage.output_tokens,
+        cache_creation_input_tokens: (fullResponse.usage.cache_creation_input_tokens || 0) + (compressedResponse.usage.cache_creation_input_tokens || 0),
+        cache_read_input_tokens: (fullResponse.usage.cache_read_input_tokens || 0) + (compressedResponse.usage.cache_read_input_tokens || 0)
+      }
+    };
+  } catch (error) {
+    console.error('ERROR IN TWO-PASS COMPRESSION:', error);
+    throw error;
+  }
 }
 
 // ==========================================
@@ -872,10 +890,17 @@ exports.handler = async (event, context) => {
     );
     
     const responseTime = Date.now() - startTime;
+    
+    console.log('=== USING COMPRESSED TEXT ===');
+    console.log(`Full response words: ${result.fullText.split(/\s+/).length}`);
+    console.log(`Compressed response words: ${result.compressedText.split(/\s+/).length}`);
+    
     let assistantMessage = result.compressedText;
+    console.log(`Assistant message (before enforce): ${assistantMessage.split(/\s+/).length} words`);
     
     // Final safety net (should rarely trigger now)
     assistantMessage = enforceResponseLength(assistantMessage, 150);
+    console.log(`Assistant message (after enforce): ${assistantMessage.split(/\s+/).length} words`);
     
     // Log response metrics
     logResponseMetrics(assistantMessage, sessionId);
