@@ -885,17 +885,9 @@
                     })
                 });
 
-                let data;
-                try {
-                    data = await response.json();
-                    alert('Got data: ' + JSON.stringify(data).substring(0, 100));
-                } catch (e) {
-                    alert('JSON parse error: ' + e.message);
-                    throw e;
-                }
+                const data = await response.json();
 
                 if (!response.ok) {
-                    alert('Response not OK: ' + response.status);
                     if (response.status === 429) {
                         showToast('Rate limit reached. Please try again in an hour.', 'error');
                         return;
@@ -905,33 +897,10 @@
 
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
-                alert('Typing indicator hidden');
 
-                try {
-                    // ABSOLUTE SIMPLEST: Create and append directly
-                    const testDiv = document.createElement('div');
-                    testDiv.style.background = 'yellow';
-                    testDiv.style.padding = '20px';
-                    testDiv.style.margin = '10px';
-                    testDiv.style.color = 'black';
-                    testDiv.style.border = '5px solid red';
-                    testDiv.textContent = 'TEST: ' + data.summary;
-                    
-                    alert('Test div created');
-                    
-                    // Insert before typing indicator
-                    const container = document.getElementById('messagesContainer');
-                    const indicator = document.getElementById('typingIndicator');
-                    
-                    alert('About to insert. Container: ' + !!container + ', Indicator: ' + !!indicator);
-                    
-                    container.insertBefore(testDiv, indicator);
-                    
-                    alert('Insert complete! Check page.');
-                } catch (e) {
-                    alert('Display error: ' + e.message + '\nStack: ' + e.stack);
-                    throw e;
-                }
+                // Display the summary (clean version)
+                const assistantMsg = appendMessage('assistant', data.summary, Date.now(), true);
+                scrollToMessage(assistantMsg);
 
                 // Increment message count
                 messageCount++;
