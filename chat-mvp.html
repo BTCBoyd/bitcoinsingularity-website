@@ -153,6 +153,57 @@
             border-bottom-left-radius: 0.25rem;
         }
 
+        /* Expandable Response */
+        .response-summary {
+            margin-bottom: 0.75rem;
+        }
+
+        .response-full {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(247, 147, 26, 0.2);
+        }
+
+        .response-full.expanded {
+            display: block;
+            animation: expandIn 0.3s ease-out;
+        }
+
+        @keyframes expandIn {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 2000px;
+            }
+        }
+
+        .expand-button {
+            background: transparent;
+            border: 1px solid var(--bitcoin-orange);
+            color: var(--bitcoin-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .expand-button:hover {
+            background: rgba(247, 147, 26, 0.1);
+        }
+
+        .expand-button.expanded {
+            color: var(--text-secondary);
+            border-color: var(--text-secondary);
+        }
+
         .message-time {
             font-size: 0.75rem;
             color: var(--text-secondary);
@@ -663,7 +714,7 @@
         let messageHistory = JSON.parse(localStorage.getItem('maxi_messages') || '[]');
         let messageCount = parseInt(localStorage.getItem('maxi_count') || '0');
 
-        const API_ENDPOINT = '/.netlify/functions/chat-simple';
+        const API_ENDPOINT = '/.netlify/functions/chat-mvp';
 
         // ==========================================
         // DOM ELEMENTS
@@ -707,7 +758,14 @@
             if (messageHistory.length > 0) {
                 welcomeMessage.style.display = 'none';
                 messageHistory.forEach(msg => {
-                    appendMessage(msg.role, msg.content, msg.timestamp, false);
+                    // Handle both old (string) and new (object with summary/full) formats
+                    const content = msg.summary ? {
+                        summary: msg.summary,
+                        full: msg.content,
+                        wordCount: msg.content.split(/\s+/).length
+                    } : msg.content;
+                    
+                    appendMessage(msg.role, content, msg.timestamp, false);
                 });
                 scrollToBottom();
                 
@@ -806,8 +864,12 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
-                // Add assistant message and scroll to show its TOP (not bottom)
-                const assistantMsg = appendMessage('assistant', data.response, Date.now(), true);
+                // Add assistant message with expandable UI
+                const assistantMsg = appendMessage('assistant', {
+                    summary: data.summary,
+                    full: data.full,
+                    wordCount: data.wordCounts?.full || 0
+                }, Date.now(), true);
                 scrollToMessage(assistantMsg);
 
                 // Increment message count
@@ -841,7 +903,61 @@
             
             const bubbleDiv = document.createElement('div');
             bubbleDiv.className = 'message-bubble';
-            bubbleDiv.textContent = content;
+            
+            // Handle expandable responses from assistant
+            if (role === 'assistant' && typeof content === 'object' && content.summary) {
+                // Summary (always visible)
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'response-summary';
+                summaryDiv.textContent = content.summary;
+                bubbleDiv.appendChild(summaryDiv);
+                
+                // Full response (collapsed by default)
+                const fullDiv = document.createElement('div');
+                fullDiv.className = 'response-full';
+                fullDiv.textContent = content.full;
+                bubbleDiv.appendChild(fullDiv);
+                
+                // Expand button
+                const expandBtn = document.createElement('button');
+                expandBtn.className = 'expand-button';
+                expandBtn.textContent = `Read full explanation (${content.wordCount} words) ▼`;
+                expandBtn.addEventListener('click', () => {
+                    const isExpanded = fullDiv.classList.contains('expanded');
+                    
+                    if (isExpanded) {
+                        fullDiv.classList.remove('expanded');
+                        expandBtn.textContent = `Read full explanation (${content.wordCount} words) ▼`;
+                        expandBtn.classList.remove('expanded');
+                        trackEvent('response_collapsed');
+                    } else {
+                        fullDiv.classList.add('expanded');
+                        expandBtn.textContent = `Hide full explanation ▲`;
+                        expandBtn.classList.add('expanded');
+                        trackEvent('response_expanded', { wordCount: content.wordCount });
+                    }
+                });
+                bubbleDiv.appendChild(expandBtn);
+                
+                // Save full text to history for context
+                if (saveToHistory) {
+                    messageHistory.push({ 
+                        role, 
+                        content: content.full, 
+                        summary: content.summary,
+                        timestamp 
+                    });
+                    localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
+                }
+            } else {
+                // Simple text message (user messages or legacy format)
+                bubbleDiv.textContent = typeof content === 'string' ? content : content.summary || content.full || content;
+                
+                if (saveToHistory) {
+                    messageHistory.push({ role, content: typeof content === 'string' ? content : content.full, timestamp });
+                    localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
+                }
+            }
             
             const timeDiv = document.createElement('div');
             timeDiv.className = 'message-time';
@@ -851,12 +967,6 @@
             messageDiv.appendChild(timeDiv);
             
             messagesContainer.insertBefore(messageDiv, typingIndicator);
-
-            // Save to history
-            if (saveToHistory) {
-                messageHistory.push({ role, content, timestamp });
-                localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
-            }
 
             // Return the element so we can scroll to it
             return messageDiv;
