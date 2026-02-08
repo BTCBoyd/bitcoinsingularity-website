@@ -886,14 +886,41 @@ exports.handler = async (event, context) => {
     
     const startTime = Date.now();
     
-    // TWO-PASS GENERATION: Full response + 2-sentence summary
-    const result = await generateTwoPassResponse(
-      session.messages,
-      modelSelection.model,
-      modelSelection.maxTokens,
-      leadContext,
-      language
-    );
+    let result;
+    try {
+      // TWO-PASS GENERATION: Full response + 2-sentence summary
+      console.log('Attempting two-pass generation...');
+      result = await generateTwoPassResponse(
+        session.messages,
+        modelSelection.model,
+        modelSelection.maxTokens,
+        leadContext,
+        language
+      );
+      console.log('Two-pass generation successful');
+    } catch (twoPassError) {
+      console.error('Two-pass generation failed, falling back to simple response:', twoPassError);
+      
+      // FALLBACK: Single-pass response (old way)
+      const fallbackResponse = await callAnthropic(
+        session.messages,
+        modelSelection.model,
+        modelSelection.maxTokens,
+        leadContext,
+        language
+      );
+      
+      result = {
+        summary: fallbackResponse.content[0].text.split('.').slice(0, 2).join('.') + '.',
+        full: fallbackResponse.content[0].text,
+        fullResponse: fallbackResponse,
+        summaryResponse: { usage: { input_tokens: 0, output_tokens: 0 } },
+        wordCounts: {
+          full: fallbackResponse.content[0].text.split(/\s+/).length,
+          summary: fallbackResponse.content[0].text.split('.').slice(0, 2).join('.').split(/\s+/).length
+        }
+      };
+    }
     
     const responseTime = Date.now() - startTime;
     
