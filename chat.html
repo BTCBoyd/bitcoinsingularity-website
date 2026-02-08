@@ -542,6 +542,97 @@
                 left: 1rem;
             }
         }
+
+        /* ============================================
+           EXPANDABLE MESSAGE STYLES
+           ============================================ */
+
+        .exec-summary {
+            font-size: 1.0625rem;
+            line-height: 1.65;
+            color: var(--text-primary);
+            margin-bottom: 0.875rem;
+            font-weight: 500;
+            padding: 0.5rem 0;
+        }
+
+        .expand-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.125rem;
+            background: linear-gradient(135deg, var(--bitcoin-orange) 0%, #ff9f1a 100%);
+            color: var(--dark-slate);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 6px rgba(247, 147, 26, 0.25);
+            margin-bottom: 0.5rem;
+        }
+
+        .expand-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(247, 147, 26, 0.35);
+        }
+
+        .expand-btn:active {
+            transform: translateY(0);
+        }
+
+        .expand-text,
+        .collapse-text {
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .expand-btn .icon {
+            transition: transform 0.3s ease;
+        }
+
+        .expand-btn .icon.rotated {
+            transform: rotate(180deg);
+        }
+
+        .full-response {
+            margin-top: 0.5rem;
+            padding: 1.5rem;
+            background: linear-gradient(to bottom, var(--light-slate), var(--mid-slate));
+            border-left: 4px solid var(--bitcoin-orange);
+            border-radius: 8px;
+            font-size: 0.9375rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .full-response p {
+            margin-bottom: 1rem;
+        }
+
+        .full-response p:last-child {
+            margin-bottom: 0;
+        }
+
+        .full-response strong {
+            color: var(--bitcoin-orange);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -755,60 +846,6 @@
         }
 
         // ==========================================
-        // RESPONSE CLEANING (CLIENT-SIDE ENFORCEMENT)
-        // ==========================================
-
-        function cleanResponse(rawResponse) {
-            let cleaned = rawResponse;
-            
-            // Strip markdown headers (# ## ### etc)
-            cleaned = cleaned.replace(/^#{1,6}\s+.+$/gm, '');
-            
-            // Strip markdown tables (lines with | pipes)
-            cleaned = cleaned.replace(/^\|.+\|$/gm, '');
-            cleaned = cleaned.replace(/^\|[-:\s|]+\|$/gm, '');
-            
-            // Strip horizontal rules (---, ***, ___)
-            cleaned = cleaned.replace(/^[-*_]{3,}$/gm, '');
-            
-            // Strip numbered lists with sub-items (1. 2. 3. etc)
-            // Keep simple numbered lists but remove complex ones
-            cleaned = cleaned.replace(/^\d+\.\s+\*\*.+\*\*$/gm, '');
-            
-            // Remove excessive bold formatting (keep light use)
-            // This regex finds **text** patterns that are used for section headers
-            cleaned = cleaned.replace(/\*\*([^*]+)\*\*:/g, '$1:');
-            
-            // Remove code blocks (```...```)
-            cleaned = cleaned.replace(/```[\s\S]*?```/g, '');
-            
-            // Clean up multiple blank lines (leave max 2)
-            cleaned = cleaned.replace(/\n{3,}/g, '\n\n');
-            
-            // Trim whitespace
-            cleaned = cleaned.trim();
-            
-            // Enforce word limit (150 words max)
-            const words = cleaned.split(/\s+/);
-            if (words.length > 150) {
-                // Find last complete sentence within 150 words
-                const truncated = words.slice(0, 150).join(' ');
-                const lastPeriod = truncated.lastIndexOf('.');
-                const lastQuestion = truncated.lastIndexOf('?');
-                const lastExclamation = truncated.lastIndexOf('!');
-                const lastSentenceEnd = Math.max(lastPeriod, lastQuestion, lastExclamation);
-                
-                if (lastSentenceEnd > truncated.length * 0.8) {
-                    cleaned = truncated.substring(0, lastSentenceEnd + 1);
-                } else {
-                    cleaned = truncated + '...';
-                }
-            }
-            
-            return cleaned;
-        }
-
-        // ==========================================
         // SEND MESSAGE
         // ==========================================
 
@@ -861,20 +898,8 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
-                // Clean the response aggressively (strip headers, tables, enforce length)
-                const cleanedResponse = cleanResponse(data.response);
-                
-                // Log cleaning for debugging
-                if (data.response !== cleanedResponse) {
-                    console.log('Response cleaned:', {
-                        originalLength: data.response.split(/\s+/).length,
-                        cleanedLength: cleanedResponse.split(/\s+/).length,
-                        strippedContent: data.response.length - cleanedResponse.length
-                    });
-                }
-
-                // Add assistant message and scroll to show its TOP (not bottom)
-                const assistantMsg = appendMessage('assistant', cleanedResponse, Date.now(), true);
+                // Add expandable assistant message (summary + full)
+                const assistantMsg = appendExpandableMessage(data);
                 scrollToMessage(assistantMsg);
 
                 // Increment message count
@@ -927,6 +952,102 @@
 
             // Return the element so we can scroll to it
             return messageDiv;
+        }
+
+        function appendExpandableMessage(data) {
+            const timestamp = Date.now();
+            const messageId = `msg-${timestamp}`;
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message assistant';
+            messageDiv.setAttribute('data-timestamp', timestamp);
+            
+            messageDiv.innerHTML = `
+                <div class="exec-summary">
+                    ${data.summary}
+                </div>
+                <button class="expand-btn" data-message-id="${messageId}" aria-expanded="false">
+                    <span class="expand-text">
+                        <svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Read full explanation (${data.wordCounts.full} words)
+                    </span>
+                    <span class="collapse-text" style="display:none;">
+                        <svg class="icon rotated" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        Collapse
+                    </span>
+                </button>
+                <div class="full-response" id="${messageId}" style="display:none;">
+                    ${formatMarkdown(data.full)}
+                </div>
+                <div class="message-time">${formatTime(timestamp)}</div>
+            `;
+            
+            messagesContainer.insertBefore(messageDiv, typingIndicator);
+            
+            // Add event listener for expand/collapse
+            const expandBtn = messageDiv.querySelector('.expand-btn');
+            expandBtn.addEventListener('click', () => toggleExpand(expandBtn, messageId));
+            
+            // Save to history (save full response for context)
+            messageHistory.push({ 
+                role: 'assistant', 
+                content: data.full,
+                summary: data.summary,
+                timestamp 
+            });
+            localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
+            
+            return messageDiv;
+        }
+        
+        function toggleExpand(button, messageId) {
+            const fullResponse = document.getElementById(messageId);
+            const expandText = button.querySelector('.expand-text');
+            const collapseText = button.querySelector('.collapse-text');
+            const isExpanded = button.getAttribute('aria-expanded') === 'true';
+            
+            if (isExpanded) {
+                // Collapse
+                fullResponse.style.display = 'none';
+                expandText.style.display = 'flex';
+                collapseText.style.display = 'none';
+                button.setAttribute('aria-expanded', 'false');
+                
+                trackEvent('response_collapsed', { messageId });
+            } else {
+                // Expand
+                fullResponse.style.display = 'block';
+                expandText.style.display = 'none';
+                collapseText.style.display = 'flex';
+                button.setAttribute('aria-expanded', 'true');
+                
+                // Smooth scroll to show expanded content
+                setTimeout(() => {
+                    fullResponse.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'nearest',
+                        inline: 'nearest'
+                    });
+                }, 100);
+                
+                trackEvent('response_expanded', { 
+                    messageId,
+                    wordCount: fullResponse.textContent.split(/\s+/).length 
+                });
+            }
+        }
+        
+        function formatMarkdown(text) {
+            // Basic markdown to HTML conversion
+            return text
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
         }
 
         function formatTime(timestamp) {
