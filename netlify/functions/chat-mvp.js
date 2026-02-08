@@ -825,6 +825,8 @@ function calculateCost(usage, model) {
 // ==========================================
 
 exports.handler = async (event, context) => {
+  console.log('=== FUNCTION START ===', new Date().toISOString());
+  
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -833,10 +835,12 @@ exports.handler = async (event, context) => {
   };
   
   if (event.httpMethod === 'OPTIONS') {
+    console.log('OPTIONS request');
     return { statusCode: 200, headers, body: '' };
   }
   
   if (event.httpMethod !== 'POST') {
+    console.log('Non-POST request:', event.httpMethod);
     return {
       statusCode: 405,
       headers,
@@ -845,6 +849,7 @@ exports.handler = async (event, context) => {
   }
   
   try {
+    console.log('Parsing request body...');
     const body = JSON.parse(event.body);
     const { message, sessionId } = body;
     
@@ -921,13 +926,25 @@ exports.handler = async (event, context) => {
     
     // SINGLE-PASS GENERATION with client-side summary extraction
     console.log('Generating response (single-pass)...');
-    const anthropicResponse = await callAnthropic(
-      session.messages,
-      modelSelection.model,
-      1000, // Slightly higher to allow full response
-      leadContext,
-      language
+    
+    // Add timeout protection (8 seconds max for API call)
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('API call timeout after 8 seconds')), 8000)
     );
+    
+    const anthropicResponse = await Promise.race([
+      callAnthropic(
+        session.messages,
+        modelSelection.model,
+        1000,
+        leadContext,
+        language
+      ),
+      timeoutPromise
+    ]).catch(error => {
+      console.error('API call failed or timed out:', error);
+      throw error;
+    });
     
     const fullText = anthropicResponse.content[0].text;
     console.log(`Full response generated: ${fullText.split(/\s+/).length} words`);
@@ -1031,13 +1048,19 @@ exports.handler = async (event, context) => {
     };
     
   } catch (error) {
-    console.error('Chat error:', error);
+    console.error('=== FATAL ERROR ===');
+    console.error('Error type:', error.constructor.name);
+    console.error('Error message:', error.message);
+    console.error('Error stack:', error.stack);
+    console.error('===================');
+    
     return {
       statusCode: 500,
       headers,
       body: JSON.stringify({
         error: 'Failed to process message',
-        message: process.env.NODE_ENV === 'development' ? error.message : undefined
+        details: error.message, // Always show error message for debugging
+        type: error.constructor.name
       })
     };
   }
