@@ -887,15 +887,7 @@
 
                 const data = await response.json();
 
-                // DEBUG LOGS
-                console.log('🔍 RECEIVED DATA:', data);
-                console.log('🔍 Has summary?', !!data.summary);
-                console.log('🔍 Has full?', !!data.full);
-                console.log('🔍 Has wordCounts?', !!data.wordCounts);
-                console.log('🔍 Data keys:', Object.keys(data));
-
                 if (!response.ok) {
-                    console.log('🔍 Response not OK, status:', response.status);
                     if (response.status === 429) {
                         showToast('Rate limit reached. Please try again in an hour.', 'error');
                         return;
@@ -906,12 +898,11 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
-                // Add expandable assistant message
-                console.log('🔍 About to display message...');
-                const assistantMsg = appendExpandableMessage(data);
-                console.log('🔍 Display function returned:', assistantMsg);
-                scrollToMessage(assistantMsg);
-                console.log('🔍 Scroll complete');
+                // SIMPLE TEST: Just display the summary as plain text
+                const messageDiv = document.createElement('div');
+                messageDiv.className = 'message assistant';
+                messageDiv.innerHTML = `<div class="message-bubble">${data.summary}</div>`;
+                messagesContainer.insertBefore(messageDiv, typingIndicator);
 
                 // Increment message count
                 messageCount++;
