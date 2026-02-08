@@ -898,11 +898,20 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
-                // SIMPLE TEST: Just display the summary as plain text
-                const messageDiv = document.createElement('div');
-                messageDiv.className = 'message assistant';
-                messageDiv.innerHTML = `<div class="message-bubble">${data.summary}</div>`;
-                messagesContainer.insertBefore(messageDiv, typingIndicator);
+                // ABSOLUTE SIMPLEST: Create and append directly
+                const testDiv = document.createElement('div');
+                testDiv.style.background = 'yellow';
+                testDiv.style.padding = '20px';
+                testDiv.style.margin = '10px';
+                testDiv.style.color = 'black';
+                testDiv.textContent = 'SUMMARY: ' + data.summary;
+                
+                // Insert before typing indicator
+                const container = document.getElementById('messagesContainer');
+                const indicator = document.getElementById('typingIndicator');
+                container.insertBefore(testDiv, indicator);
+                
+                console.log('Message inserted:', testDiv);
 
                 // Increment message count
                 messageCount++;
