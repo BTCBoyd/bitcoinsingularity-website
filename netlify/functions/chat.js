@@ -387,14 +387,14 @@ function selectModel(message) {
   if (isFAQ || isShort) {
     return {
       model: 'claude-haiku-4-5',
-      maxTokens: 500,
+      maxTokens: 300,
       reasoning: 'Simple FAQ or short query'
     };
   }
   
   return {
     model: 'claude-sonnet-4-5',
-    maxTokens: 1000,
+    maxTokens: 400,
     reasoning: 'Complex query requiring depth'
   };
 }
