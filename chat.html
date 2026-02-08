@@ -898,9 +898,28 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
+                // DEBUG: Log what we received
+                console.log('API Response:', {
+                    hasSummary: !!data.summary,
+                    hasFull: !!data.full,
+                    hasResponse: !!data.response,
+                    keys: Object.keys(data)
+                });
+
                 // Add expandable assistant message (summary + full)
-                const assistantMsg = appendExpandableMessage(data);
-                scrollToMessage(assistantMsg);
+                // Fallback to old format if new format not available
+                if (data.summary && data.full) {
+                    console.log('Using NEW expandable format');
+                    const assistantMsg = appendExpandableMessage(data);
+                    scrollToMessage(assistantMsg);
+                } else if (data.response) {
+                    console.log('Using OLD single-response format (fallback)');
+                    const assistantMsg = appendMessage('assistant', data.response, Date.now(), true);
+                    scrollToMessage(assistantMsg);
+                } else {
+                    console.error('Unexpected API response format:', data);
+                    throw new Error('Invalid API response format');
+                }
 
                 // Increment message count
                 messageCount++;
