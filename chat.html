@@ -755,7 +755,7 @@
         let messageHistory = JSON.parse(localStorage.getItem('maxi_messages') || '[]');
         let messageCount = parseInt(localStorage.getItem('maxi_count') || '0');
 
-        const API_ENDPOINT = '/.netlify/functions/chat-mvp';
+        const API_ENDPOINT = '/.netlify/functions/chat-simple';
 
         // ==========================================
         // DOM ELEMENTS
@@ -898,28 +898,9 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
-                // DEBUG: Log what we received
-                console.log('API Response:', {
-                    hasSummary: !!data.summary,
-                    hasFull: !!data.full,
-                    hasResponse: !!data.response,
-                    keys: Object.keys(data)
-                });
-
-                // Add expandable assistant message (summary + full)
-                // Fallback to old format if new format not available
-                if (data.summary && data.full) {
-                    console.log('Using NEW expandable format');
-                    const assistantMsg = appendExpandableMessage(data);
-                    scrollToMessage(assistantMsg);
-                } else if (data.response) {
-                    console.log('Using OLD single-response format (fallback)');
-                    const assistantMsg = appendMessage('assistant', data.response, Date.now(), true);
-                    scrollToMessage(assistantMsg);
-                } else {
-                    console.error('Unexpected API response format:', data);
-                    throw new Error('Invalid API response format');
-                }
+                // Add expandable assistant message
+                const assistantMsg = appendExpandableMessage(data);
+                scrollToMessage(assistantMsg);
 
                 // Increment message count
                 messageCount++;
@@ -974,17 +955,13 @@
         }
 
         function appendExpandableMessage(data) {
-            console.log('appendExpandableMessage called with:', data);
-            
             const timestamp = Date.now();
             const messageId = `msg-${timestamp}`;
             
-            console.log('Creating message div...');
             const messageDiv = document.createElement('div');
             messageDiv.className = 'message assistant';
             messageDiv.setAttribute('data-timestamp', timestamp);
             
-            console.log('Setting innerHTML...');
             messageDiv.innerHTML = `
                 <div class="exec-summary">
                     ${data.summary}
@@ -1009,29 +986,13 @@
                 <div class="message-time">${formatTime(timestamp)}</div>
             `;
             
-            console.log('Inserting into DOM...');
-            console.log('messagesContainer:', messagesContainer);
-            console.log('typingIndicator:', typingIndicator);
-            
-            try {
-                messagesContainer.insertBefore(messageDiv, typingIndicator);
-                console.log('Message inserted successfully');
-            } catch (e) {
-                console.error('Failed to insert message:', e);
-                throw e;
-            }
+            messagesContainer.insertBefore(messageDiv, typingIndicator);
             
             // Add event listener for expand/collapse
-            console.log('Adding event listeners...');
             const expandBtn = messageDiv.querySelector('.expand-btn');
-            if (!expandBtn) {
-                console.error('Expand button not found in message!');
-            } else {
-                expandBtn.addEventListener('click', () => toggleExpand(expandBtn, messageId));
-            }
+            expandBtn.addEventListener('click', () => toggleExpand(expandBtn, messageId));
             
-            // Save to history (save full response for context)
-            console.log('Saving to history...');
+            // Save to history
             messageHistory.push({ 
                 role: 'assistant', 
                 content: data.full,
@@ -1040,7 +1001,6 @@
             });
             localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
             
-            console.log('appendExpandableMessage complete, returning messageDiv');
             return messageDiv;
         }
         
@@ -1082,20 +1042,12 @@
         }
         
         function formatMarkdown(text) {
-            console.log('formatMarkdown called with text length:', text?.length);
-            try {
-                // Basic markdown to HTML conversion
-                const result = text
-                    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                    .replace(/\*(.+?)\*/g, '<em>$1</em>')
-                    .replace(/\n\n/g, '</p><p>')
-                    .replace(/\n/g, '<br>');
-                console.log('formatMarkdown result length:', result.length);
-                return result;
-            } catch (e) {
-                console.error('formatMarkdown error:', e);
-                return text; // Return original text if formatting fails
-            }
+            // Basic markdown to HTML conversion
+            return text
+                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.+?)\*/g, '<em>$1</em>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
         }
 
         function formatTime(timestamp) {
