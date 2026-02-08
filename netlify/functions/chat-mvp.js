@@ -302,26 +302,35 @@ If you're ever ready to take action, you can register here: https://www.kapitale
 // ==========================================
 
 function detectLanguage(message) {
-  // Spanish indicators
-  const spanishPatterns = [
-    /\b(qué|cuánto|cuándo|cómo|dónde|por qué|para|está|estás|es|son|será|puede|puedo|tengo|tiene)\b/i,
-    /\b(bitcoin|precio|cuanto|estima|diciembre)\b/i,
-    /¿|¡/
+  // Portuguese-SPECIFIC indicators (check first - more distinctive)
+  const portugueseOnlyPatterns = [
+    /ã|õ|ç/, // Unique diacritics
+    /\b(não|você|está|também|porém|português)\b/i,
+    /\b(quanto|onde|são)\b/i
   ];
   
-  const hasSpanish = spanishPatterns.some(pattern => pattern.test(message));
+  const portugueseScore = portugueseOnlyPatterns.filter(pattern => pattern.test(message)).length;
   
-  // Portuguese indicators
-  const portuguesePatterns = [
-    /\b(que|quanto|quando|como|onde|por que|para|está|é|são|será|pode|posso|tenho|tem)\b/i,
-    /\b(bitcoin|preço|quanto)\b/i,
-    /ã|õ|ç/
+  // Spanish-SPECIFIC indicators
+  const spanishOnlyPatterns = [
+    /¿|¡/, // Inverted punctuation
+    /\b(qué|dónde|cómo|cuándo|cuánto|español|por qué)\b/i,
+    /\b(estás|tiene|puede|será|diciembre)\b/i
   ];
   
-  const hasPortuguese = portuguesePatterns.some(pattern => pattern.test(message));
+  const spanishScore = spanishOnlyPatterns.filter(pattern => pattern.test(message)).length;
   
-  if (hasSpanish) return 'es';
-  if (hasPortuguese) return 'pt';
+  // Decide based on scores (prefer more distinctive patterns)
+  if (portugueseScore > spanishScore) return 'pt';
+  if (spanishScore > portugueseScore) return 'es';
+  
+  // If tied or no matches, look for ANY Spanish/Portuguese indicators
+  const hasSpanishWord = /\b(qué|cómo|dónde|cuándo|por qué|español)\b/i.test(message);
+  const hasPortugueseWord = /\b(você|não|português|também)\b/i.test(message);
+  
+  if (hasSpanishWord) return 'es';
+  if (hasPortugueseWord) return 'pt';
+  
   return 'en'; // default to English
 }
 
@@ -620,6 +629,15 @@ async function generateTwoPassResponse(messages, model, maxTokens, leadContext, 
   
   // STEP 2: Generate Executive Summary (2 sentences)
   console.log('STEP 2: Generating executive summary...');
+  
+  // Build language-aware system prompt for summary
+  let summarySystemPrompt = 'You generate precise 2-sentence summaries. Follow instructions exactly.';
+  if (language === 'es') {
+    summarySystemPrompt += ' CRITICAL: Output MUST be in Spanish (Español).';
+  } else if (language === 'pt') {
+    summarySystemPrompt += ' CRITICAL: Output MUST be in Portuguese (Português).';
+  }
+  
   const summaryPrompt = `Summarize this answer in EXACTLY 2 sentences:
 
 ${fullAnswer}
@@ -629,13 +647,14 @@ Requirements:
 - Sentence 2: The single most important supporting point or implication
 - Must be exactly 2 sentences - no more, no less
 - Be precise and capture the core insight
+${language === 'es' ? '- MUST be in Spanish (Español)' : language === 'pt' ? '- MUST be in Portuguese (Português)' : ''}
 
 Output only the 2 sentences with no preamble.`;
 
   const summaryResponse = await callAnthropicDirect(
     'claude-sonnet-4-5',
     150,
-    'You generate precise 2-sentence summaries. Follow instructions exactly.',
+    summarySystemPrompt,
     [{ role: 'user', content: summaryPrompt }],
     0.2 // Lower temp for strict adherence
   );
