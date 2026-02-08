@@ -566,6 +566,49 @@
             }
         }
 
+        /* Rate Limit Warning Banner */
+        .rate-limit-warning {
+            display: none;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--error-red);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            margin-bottom: 1rem;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        .rate-limit-warning.warning {
+            background: rgba(247, 147, 26, 0.1);
+            border-color: var(--bitcoin-orange);
+        }
+
+        .rate-limit-warning.show {
+            display: block;
+        }
+
+        .rate-limit-warning p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+        }
+
+        .rate-limit-warning.warning p {
+            color: var(--bitcoin-orange);
+        }
+
+        /* Rate Limit Counter (subtle, top right) */
+        .rate-limit-counter {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--light-slate);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .chat-header {
@@ -592,6 +635,14 @@
                 right: 1rem;
                 left: 1rem;
             }
+
+            .rate-limit-counter {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-top: 0.5rem;
+                display: inline-block;
+            }
         }
     </style>
 </head>
@@ -604,6 +655,9 @@
                 <div class="subtitle">Bitcoin-Native AI | No signup required</div>
             </div>
             <div class="header-actions">
+                <div class="rate-limit-counter" id="rateLimitCounter" style="display: none;">
+                    50 questions/day
+                </div>
                 <button class="icon-button" id="shareButton" title="Share conversation">
                     🔗
                 </button>
@@ -664,6 +718,11 @@
                     <button type="submit" class="email-submit">Send Transcript</button>
                 </form>
                 <button class="email-close" id="emailClose">Maybe later</button>
+            </div>
+
+            <!-- Rate Limit Warning -->
+            <div class="rate-limit-warning" id="rateLimitWarning">
+                <p id="rateLimitWarningText"></p>
             </div>
 
             <div class="input-wrapper">
@@ -855,7 +914,7 @@
 
                 if (!response.ok) {
                     if (response.status === 429) {
-                        showToast('Rate limit reached. Please try again in an hour.', 'error');
+                        showToast(data.error || 'Rate limit reached. Please try again later.', 'error');
                         return;
                     }
                     throw new Error(data.error || 'Failed to send message');
@@ -875,6 +934,11 @@
                 // Increment message count
                 messageCount++;
                 localStorage.setItem('maxi_count', messageCount);
+
+                // Update rate limit display
+                if (data.rateLimit) {
+                    updateRateLimitDisplay(data.rateLimit);
+                }
 
                 // Show email capture after 10 messages
                 if (messageCount === 10 && !localStorage.getItem('maxi_email_captured') && !localStorage.getItem('maxi_email_dismissed')) {
@@ -1084,6 +1148,39 @@
             }).catch(err => {
                 showToast('Failed to copy link', 'error');
             });
+        }
+
+        // ==========================================
+        // RATE LIMIT DISPLAY
+        // ==========================================
+
+        function updateRateLimitDisplay(rateLimit) {
+            const counter = document.getElementById('rateLimitCounter');
+            const warning = document.getElementById('rateLimitWarning');
+            const warningText = document.getElementById('rateLimitWarningText');
+            
+            // Update counter
+            if (rateLimit.dailyRemaining !== undefined) {
+                counter.textContent = `${rateLimit.dailyRemaining}/${rateLimit.dailyLimit} questions today`;
+                counter.style.display = 'block';
+            }
+            
+            // Show warning if present
+            if (rateLimit.warningMessage) {
+                warningText.textContent = rateLimit.warningMessage;
+                warning.classList.add('show');
+                
+                // Style based on severity
+                if (rateLimit.dailyRemaining <= 2) {
+                    warning.classList.remove('warning');
+                    warning.classList.add('critical');
+                } else {
+                    warning.classList.add('warning');
+                    warning.classList.remove('critical');
+                }
+            } else {
+                warning.classList.remove('show');
+            }
         }
 
         // ==========================================

@@ -8,10 +8,14 @@ const https = require('https');
 // ==========================================
 
 const CONFIG = {
-  MAX_MESSAGES_PER_HOUR: 10,
+  MAX_MESSAGES_PER_DAY: 50,
+  MAX_MESSAGES_PER_HOUR: 15, // Burst protection
   MAX_MESSAGE_LENGTH: 500,
+  MIN_MESSAGE_LENGTH: 10,
   SESSION_TIMEOUT_MS: 30 * 60 * 1000, // 30 minutes
+  DAILY_WINDOW_MS: 24 * 60 * 60 * 1000, // 24 hours
   HOURLY_WINDOW_MS: 60 * 60 * 1000, // 1 hour
+  WARNING_AT_REMAINING: [10, 2], // Show warnings at these thresholds
   ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
   SIMPLE_MESSAGE_THRESHOLD: 20, // words
 };
@@ -369,12 +373,14 @@ const sessions = new Map();
 function cleanupOldData() {
   const now = Date.now();
   
+  // Clean up expired daily limits
   for (const [ip, data] of rateLimits.entries()) {
-    if (now - data.windowStart > CONFIG.HOURLY_WINDOW_MS) {
+    if (now - data.dailyWindowStart > CONFIG.DAILY_WINDOW_MS) {
       rateLimits.delete(ip);
     }
   }
   
+  // Clean up inactive sessions
   for (const [sessionId, data] of sessions.entries()) {
     if (now - data.lastActive > CONFIG.SESSION_TIMEOUT_MS) {
       sessions.delete(sessionId);
@@ -386,29 +392,107 @@ function checkRateLimit(ip) {
   cleanupOldData();
   
   const now = Date.now();
-  const limit = rateLimits.get(ip);
+  let limit = rateLimits.get(ip);
   
+  // Initialize if new IP
   if (!limit) {
-    rateLimits.set(ip, { count: 0, windowStart: now });
-    return { allowed: true, remaining: CONFIG.MAX_MESSAGES_PER_HOUR };
+    limit = {
+      dailyCount: 0,
+      dailyWindowStart: now,
+      hourlyCount: 0,
+      hourlyWindowStart: now,
+      lastMessageTime: 0
+    };
+    rateLimits.set(ip, limit);
+    return { 
+      allowed: true, 
+      dailyRemaining: CONFIG.MAX_MESSAGES_PER_DAY,
+      hourlyRemaining: CONFIG.MAX_MESSAGES_PER_HOUR,
+      resetInMs: CONFIG.DAILY_WINDOW_MS,
+      warningLevel: null
+    };
   }
   
-  if (now - limit.windowStart > CONFIG.HOURLY_WINDOW_MS) {
-    rateLimits.set(ip, { count: 0, windowStart: now });
-    return { allowed: true, remaining: CONFIG.MAX_MESSAGES_PER_HOUR };
+  // Reset daily window if expired
+  if (now - limit.dailyWindowStart > CONFIG.DAILY_WINDOW_MS) {
+    limit.dailyCount = 0;
+    limit.dailyWindowStart = now;
   }
   
-  const remaining = CONFIG.MAX_MESSAGES_PER_HOUR - limit.count;
+  // Reset hourly window if expired
+  if (now - limit.hourlyWindowStart > CONFIG.HOURLY_WINDOW_MS) {
+    limit.hourlyCount = 0;
+    limit.hourlyWindowStart = now;
+  }
+  
+  const dailyRemaining = CONFIG.MAX_MESSAGES_PER_DAY - limit.dailyCount;
+  const hourlyRemaining = CONFIG.MAX_MESSAGES_PER_HOUR - limit.hourlyCount;
+  const resetInMs = CONFIG.DAILY_WINDOW_MS - (now - limit.dailyWindowStart);
+  
+  // Check limits
+  if (limit.dailyCount >= CONFIG.MAX_MESSAGES_PER_DAY) {
+    return {
+      allowed: false,
+      dailyRemaining: 0,
+      hourlyRemaining: hourlyRemaining,
+      resetInMs: resetInMs,
+      limitType: 'daily',
+      warningLevel: 'limit-reached'
+    };
+  }
+  
+  if (limit.hourlyCount >= CONFIG.MAX_MESSAGES_PER_HOUR) {
+    return {
+      allowed: false,
+      dailyRemaining: dailyRemaining,
+      hourlyRemaining: 0,
+      resetInMs: CONFIG.HOURLY_WINDOW_MS - (now - limit.hourlyWindowStart),
+      limitType: 'burst',
+      warningLevel: null
+    };
+  }
+  
+  // Determine warning level
+  let warningLevel = null;
+  if (dailyRemaining <= 2) {
+    warningLevel = 'critical';
+  } else if (dailyRemaining <= 10) {
+    warningLevel = 'warning';
+  }
+  
   return {
-    allowed: limit.count < CONFIG.MAX_MESSAGES_PER_HOUR,
-    remaining: Math.max(0, remaining)
+    allowed: true,
+    dailyRemaining: dailyRemaining,
+    hourlyRemaining: hourlyRemaining,
+    resetInMs: resetInMs,
+    warningLevel: warningLevel
   };
 }
 
 function recordMessage(ip) {
-  const limit = rateLimits.get(ip) || { count: 0, windowStart: Date.now() };
-  limit.count++;
+  const now = Date.now();
+  const limit = rateLimits.get(ip) || { 
+    dailyCount: 0, 
+    dailyWindowStart: now,
+    hourlyCount: 0,
+    hourlyWindowStart: now,
+    lastMessageTime: 0
+  };
+  
+  limit.dailyCount++;
+  limit.hourlyCount++;
+  limit.lastMessageTime = now;
   rateLimits.set(ip, limit);
+}
+
+function formatResetTime(ms) {
+  const hours = Math.floor(ms / (60 * 60 * 1000));
+  const minutes = Math.floor((ms % (60 * 60 * 1000)) / (60 * 1000));
+  
+  if (hours > 0) {
+    return `${hours} hour${hours > 1 ? 's' : ''}`;
+  }
+  return `${minutes} minute${minutes > 1 ? 's' : ''}`;
 }
 
 // ==========================================
@@ -861,6 +945,17 @@ exports.handler = async (event, context) => {
       };
     }
     
+    // Minimum length validation
+    if (message.trim().length < CONFIG.MIN_MESSAGE_LENGTH) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({
+          error: `Please ask a complete question (at least ${CONFIG.MIN_MESSAGE_LENGTH} characters).`
+        })
+      };
+    }
+    
     if (message.length > CONFIG.MAX_MESSAGE_LENGTH) {
       return {
         statusCode: 400,
@@ -886,13 +981,27 @@ exports.handler = async (event, context) => {
     const rateLimit = checkRateLimit(clientIP);
     
     if (!rateLimit.allowed) {
+      let errorMessage;
+      
+      if (rateLimit.limitType === 'daily') {
+        errorMessage = `You've reached your daily limit of ${CONFIG.MAX_MESSAGES_PER_DAY} questions. Your limit resets in ${formatResetTime(rateLimit.resetInMs)}. Want unlimited access? Check back tomorrow!`;
+      } else if (rateLimit.limitType === 'burst') {
+        errorMessage = `Please slow down - you can ask up to ${CONFIG.MAX_MESSAGES_PER_HOUR} questions per hour, with ${CONFIG.MAX_MESSAGES_PER_DAY} total per day. Try again in ${formatResetTime(rateLimit.resetInMs)}.`;
+      } else {
+        errorMessage = 'Rate limit exceeded. Please try again later.';
+      }
+      
       return {
         statusCode: 429,
         headers,
         body: JSON.stringify({
-          error: 'Rate limit exceeded. Please try again in an hour.',
-          limit: CONFIG.MAX_MESSAGES_PER_HOUR,
-          remaining: 0
+          error: errorMessage,
+          dailyLimit: CONFIG.MAX_MESSAGES_PER_DAY,
+          dailyRemaining: rateLimit.dailyRemaining,
+          hourlyLimit: CONFIG.MAX_MESSAGES_PER_HOUR,
+          hourlyRemaining: rateLimit.hourlyRemaining,
+          resetInMs: rateLimit.resetInMs,
+          limitType: rateLimit.limitType
         })
       };
     }
@@ -1012,6 +1121,17 @@ exports.handler = async (event, context) => {
       messageCount: session.messageCount
     }));
     
+    // Get updated rate limit info
+    const finalRateLimit = checkRateLimit(clientIP);
+    
+    // Build warning message if needed
+    let warningMessage = null;
+    if (finalRateLimit.warningLevel === 'critical') {
+      warningMessage = `You have ${finalRateLimit.dailyRemaining} questions remaining today. Resets in ${formatResetTime(finalRateLimit.resetInMs)}.`;
+    } else if (finalRateLimit.warningLevel === 'warning') {
+      warningMessage = `You have ${finalRateLimit.dailyRemaining} questions remaining today. Resets in ${formatResetTime(finalRateLimit.resetInMs)}.`;
+    }
+    
     return {
       statusCode: 200,
       headers,
@@ -1022,6 +1142,14 @@ exports.handler = async (event, context) => {
         sessionId,
         messageCount: session.messageCount,
         model: modelSelection.model,
+        rateLimit: {
+          dailyRemaining: finalRateLimit.dailyRemaining,
+          dailyLimit: CONFIG.MAX_MESSAGES_PER_DAY,
+          hourlyRemaining: finalRateLimit.hourlyRemaining,
+          hourlyLimit: CONFIG.MAX_MESSAGES_PER_HOUR,
+          resetInMs: finalRateLimit.resetInMs,
+          warningMessage: warningMessage
+        },
         _meta: {
           costPerMessage: totalCost.total.toFixed(4),
           cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0,
