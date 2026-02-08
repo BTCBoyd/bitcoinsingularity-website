@@ -464,6 +464,143 @@ function selectModel(message) {
 }
 
 // ==========================================
+// MARKDOWN CLEANER (keeps structure, removes excess)
+// ==========================================
+
+function cleanMarkdown(text) {
+  return text
+    // Keep single # headers but remove multiple ###
+    .replace(/^#{4,6}\s+/gm, '**')
+    .replace(/\*\*\*(.+?)\*\*\*/g, '**$1**') // Triple to double bold
+    // Remove excessive spacing
+    .replace(/\n{4,}/g, '\n\n\n')
+    // Clean up list formatting slightly
+    .replace(/^\s*[-*]\s+/gm, '• ')
+    .trim();
+}
+
+// ==========================================
+// TWO-PASS RESPONSE GENERATION
+// ==========================================
+
+async function generateTwoPassResponse(messages, model, maxTokens, leadContext, language) {
+  console.log('=== TWO-PASS GENERATION START ===');
+  
+  // STEP 1: Generate Full Response
+  console.log('STEP 1: Generating full response...');
+  const fullResponse = await callAnthropic(
+    messages,
+    model,
+    1200, // Let Claude be thorough
+    leadContext,
+    language
+  );
+  
+  const fullAnswer = fullResponse.content[0].text;
+  const fullWordCount = fullAnswer.split(/\s+/).length;
+  console.log(`✅ Full response generated: ${fullWordCount} words`);
+  console.log(`Preview: ${fullAnswer.substring(0, 200)}...`);
+  
+  // STEP 2: Generate Executive Summary (2 sentences)
+  console.log('STEP 2: Generating executive summary...');
+  const summaryPrompt = `Summarize this answer in EXACTLY 2 sentences:
+
+${fullAnswer}
+
+Requirements:
+- Sentence 1: Direct answer to the user's question
+- Sentence 2: The single most important supporting point or implication
+- Must be exactly 2 sentences - no more, no less
+- Be precise and capture the core insight
+
+Output only the 2 sentences with no preamble.`;
+
+  const summaryResponse = await callAnthropicDirect(
+    'claude-sonnet-4-5',
+    150,
+    'You generate precise 2-sentence summaries. Follow instructions exactly.',
+    [{ role: 'user', content: summaryPrompt }],
+    0.2 // Lower temp for strict adherence
+  );
+  
+  const execSummary = summaryResponse.content[0].text.trim();
+  const summaryWordCount = execSummary.split(/\s+/).length;
+  console.log(`✅ Summary generated: ${summaryWordCount} words`);
+  console.log(`Summary: ${execSummary}`);
+  
+  console.log('=== TWO-PASS GENERATION COMPLETE ===');
+  
+  return {
+    summary: execSummary,
+    full: cleanMarkdown(fullAnswer),
+    fullResponse: fullResponse,
+    summaryResponse: summaryResponse,
+    wordCounts: {
+      full: fullWordCount,
+      summary: summaryWordCount
+    }
+  };
+}
+
+// ==========================================
+// DIRECT ANTHROPIC API CALL (for summary generation)
+// ==========================================
+
+function callAnthropicDirect(model, maxTokens, systemPrompt, messages, temperature = 0.7) {
+  return new Promise((resolve, reject) => {
+    const requestBody = JSON.stringify({
+      model: model,
+      max_tokens: maxTokens,
+      temperature: temperature,
+      system: systemPrompt,
+      messages: messages
+    });
+    
+    const options = {
+      hostname: 'api.anthropic.com',
+      port: 443,
+      path: '/v1/messages',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': CONFIG.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'Content-Length': Buffer.byteLength(requestBody)
+      }
+    };
+    
+    const req = https.request(options, (res) => {
+      let data = '';
+      
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      res.on('end', () => {
+        if (res.statusCode !== 200) {
+          reject(new Error(`Anthropic API error: ${res.statusCode} - ${data}`));
+          return;
+        }
+        
+        try {
+          const response = JSON.parse(data);
+          resolve(response);
+        } catch (error) {
+          reject(new Error(`Failed to parse Anthropic response: ${error.message}`));
+        }
+      });
+    });
+    
+    req.on('error', (error) => {
+      reject(new Error(`Request failed: ${error.message}`));
+    });
+    
+    req.write(requestBody);
+    req.end();
+  });
+}
+
+// ==========================================
 // ANTHROPIC API INTEGRATION
 // ==========================================
 
@@ -748,7 +885,9 @@ exports.handler = async (event, context) => {
     const modelSelection = selectModel(message);
     
     const startTime = Date.now();
-    const anthropicResponse = await callAnthropic(
+    
+    // TWO-PASS GENERATION: Full response + 2-sentence summary
+    const result = await generateTwoPassResponse(
       session.messages,
       modelSelection.model,
       modelSelection.maxTokens,
@@ -757,42 +896,51 @@ exports.handler = async (event, context) => {
     );
     
     const responseTime = Date.now() - startTime;
-    let assistantMessage = anthropicResponse.content[0].text;
     
-    // Enforce response length (post-processing safety net) - HARD 150 WORD LIMIT
-    assistantMessage = enforceResponseLength(assistantMessage, 150);
-    
-    // Log response metrics
-    logResponseMetrics(assistantMessage, sessionId);
-    
+    // Store FULL response in conversation history (for context in future turns)
     session.messages.push({
       role: 'assistant',
-      content: assistantMessage
+      content: result.full
     });
     
     session.messageCount++;
     recordMessage(clientIP);
     
-    const cost = calculateCost(anthropicResponse.usage, modelSelection.model);
+    // Calculate cost for BOTH API calls
+    const fullCost = calculateCost(result.fullResponse.usage, modelSelection.model);
+    const summaryCost = calculateCost(result.summaryResponse.usage, 'claude-sonnet-4-5');
+    const cost = {
+      input: fullCost.input + summaryCost.input,
+      output: fullCost.output + summaryCost.output,
+      cacheWrite: fullCost.cacheWrite + summaryCost.cacheWrite,
+      cacheRead: fullCost.cacheRead + summaryCost.cacheRead,
+      total: fullCost.total + summaryCost.total
+    };
     
     // Enhanced conversation logging for Boyd to review
-    console.log('=== CONVERSATION LOG ===');
+    console.log('=== CONVERSATION LOG (TWO-PASS) ===');
     console.log(JSON.stringify({
       type: 'conversation',
       timestamp: new Date().toISOString(),
       sessionId,
       conversationTurn: session.messageCount,
       userQuestion: message,
-      maxiResponse: assistantMessage.substring(0, 500) + (assistantMessage.length > 500 ? '...' : ''),
-      responseLength: assistantMessage.length,
+      summary: result.summary,
+      fullResponse: result.full.substring(0, 500) + (result.full.length > 500 ? '...' : ''),
+      wordCounts: result.wordCounts,
       language: language,
       model: modelSelection.model,
       leadIntent: leadContext.isHighIntent,
       cost: cost.total.toFixed(4),
       tokens: {
-        input: anthropicResponse.usage.input_tokens,
-        output: anthropicResponse.usage.output_tokens,
-        cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0
+        full: {
+          input: result.fullResponse.usage.input_tokens,
+          output: result.fullResponse.usage.output_tokens
+        },
+        summary: {
+          input: result.summaryResponse.usage.input_tokens,
+          output: result.summaryResponse.usage.output_tokens
+        }
       },
       responseTime
     }, null, 2));
@@ -803,16 +951,18 @@ exports.handler = async (event, context) => {
       sessionId,
       model: modelSelection.model,
       reasoning: modelSelection.reasoning,
+      twoPass: true,
+      wordCounts: result.wordCounts,
       leadIntent: leadContext.isHighIntent,
       tokens: {
-        input: anthropicResponse.usage.input_tokens,
-        output: anthropicResponse.usage.output_tokens,
-        cacheWrite: anthropicResponse.usage.cache_creation_input_tokens || 0,
-        cacheRead: anthropicResponse.usage.cache_read_input_tokens || 0
+        input: result.fullResponse.usage.input_tokens + result.summaryResponse.usage.input_tokens,
+        output: result.fullResponse.usage.output_tokens + result.summaryResponse.usage.output_tokens,
+        cacheWrite: (result.fullResponse.usage.cache_creation_input_tokens || 0) + (result.summaryResponse.usage.cache_creation_input_tokens || 0),
+        cacheRead: (result.fullResponse.usage.cache_read_input_tokens || 0) + (result.summaryResponse.usage.cache_read_input_tokens || 0)
       },
       cost: cost.total,
       costBreakdown: cost,
-      cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0,
+      cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0,
       responseTime,
       messageCount: session.messageCount
     }));
@@ -821,15 +971,18 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        response: assistantMessage,
+        summary: result.summary,
+        full: result.full,
+        wordCounts: result.wordCounts,
         sessionId,
         messageCount: session.messageCount,
         model: modelSelection.model,
         _meta: {
           costPerMessage: cost.total.toFixed(4),
-          cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0,
+          cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0,
           responseTime,
-          leadIntent: leadContext.isHighIntent
+          leadIntent: leadContext.isHighIntent,
+          twoPass: true
         }
       })
     };
