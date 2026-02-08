@@ -755,6 +755,60 @@
         }
 
         // ==========================================
+        // RESPONSE CLEANING (CLIENT-SIDE ENFORCEMENT)
+        // ==========================================
+
+        function cleanResponse(rawResponse) {
+            let cleaned = rawResponse;
+            
+            // Strip markdown headers (# ## ### etc)
+            cleaned = cleaned.replace(/^#{1,6}\s+.+$/gm, '');
+            
+            // Strip markdown tables (lines with | pipes)
+            cleaned = cleaned.replace(/^\|.+\|$/gm, '');
+            cleaned = cleaned.replace(/^\|[-:\s|]+\|$/gm, '');
+            
+            // Strip horizontal rules (---, ***, ___)
+            cleaned = cleaned.replace(/^[-*_]{3,}$/gm, '');
+            
+            // Strip numbered lists with sub-items (1. 2. 3. etc)
+            // Keep simple numbered lists but remove complex ones
+            cleaned = cleaned.replace(/^\d+\.\s+\*\*.+\*\*$/gm, '');
+            
+            // Remove excessive bold formatting (keep light use)
+            // This regex finds **text** patterns that are used for section headers
+            cleaned = cleaned.replace(/\*\*([^*]+)\*\*:/g, '$1:');
+            
+            // Remove code blocks (```...```)
+            cleaned = cleaned.replace(/```[\s\S]*?```/g, '');
+            
+            // Clean up multiple blank lines (leave max 2)
+            cleaned = cleaned.replace(/\n{3,}/g, '\n\n');
+            
+            // Trim whitespace
+            cleaned = cleaned.trim();
+            
+            // Enforce word limit (150 words max)
+            const words = cleaned.split(/\s+/);
+            if (words.length > 150) {
+                // Find last complete sentence within 150 words
+                const truncated = words.slice(0, 150).join(' ');
+                const lastPeriod = truncated.lastIndexOf('.');
+                const lastQuestion = truncated.lastIndexOf('?');
+                const lastExclamation = truncated.lastIndexOf('!');
+                const lastSentenceEnd = Math.max(lastPeriod, lastQuestion, lastExclamation);
+                
+                if (lastSentenceEnd > truncated.length * 0.8) {
+                    cleaned = truncated.substring(0, lastSentenceEnd + 1);
+                } else {
+                    cleaned = truncated + '...';
+                }
+            }
+            
+            return cleaned;
+        }
+
+        // ==========================================
         // SEND MESSAGE
         // ==========================================
 
@@ -807,8 +861,20 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
+                // Clean the response aggressively (strip headers, tables, enforce length)
+                const cleanedResponse = cleanResponse(data.response);
+                
+                // Log cleaning for debugging
+                if (data.response !== cleanedResponse) {
+                    console.log('Response cleaned:', {
+                        originalLength: data.response.split(/\s+/).length,
+                        cleanedLength: cleanedResponse.split(/\s+/).length,
+                        strippedContent: data.response.length - cleanedResponse.length
+                    });
+                }
+
                 // Add assistant message and scroll to show its TOP (not bottom)
-                const assistantMsg = appendMessage('assistant', data.response, Date.now(), true);
+                const assistantMsg = appendMessage('assistant', cleanedResponse, Date.now(), true);
                 scrollToMessage(assistantMsg);
 
                 // Increment message count
