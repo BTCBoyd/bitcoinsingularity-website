@@ -647,6 +647,25 @@
             border-radius: 0.5rem;
         }
 
+        /* Inactivity Notification */
+        .inactivity-notification {
+            background: rgba(168, 178, 193, 0.1);
+            border: 1px solid var(--text-secondary);
+            color: var(--text-secondary);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 0.95rem;
+            animation: fadeIn 0.5s ease-in;
+            transition: opacity 0.3s ease-out;
+        }
+
+        .inactivity-notification p {
+            margin: 0;
+            line-height: 1.5;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .hero-headline {
@@ -874,8 +893,12 @@
         let sessionId = localStorage.getItem('maxi_session_id') || generateSessionId();
         let messageHistory = JSON.parse(localStorage.getItem('maxi_messages') || '[]');
         let messageCount = parseInt(localStorage.getItem('maxi_count') || '0');
+        let lastActivityTime = Date.now(); // Track last user/assistant message
+        let conversationBackup = null; // For optional restore feature
 
         const API_ENDPOINT = '/.netlify/functions/chat-mvp';
+        const INACTIVITY_TIMEOUT = 45 * 60 * 1000; // 45 minutes in milliseconds
+        const BACKUP_RETENTION = 10 * 60 * 1000; // 10 minutes in milliseconds
 
         // ==========================================
         // DOM ELEMENTS
@@ -967,6 +990,95 @@
                     shareModal.style.display = 'none';
                 }
             });
+
+            // Start inactivity monitoring
+            startInactivityMonitor();
+        }
+
+        // ==========================================
+        // INACTIVITY MANAGEMENT
+        // ==========================================
+
+        function startInactivityMonitor() {
+            // Check inactivity every minute
+            setInterval(() => {
+                const inactiveTime = Date.now() - lastActivityTime;
+                
+                if (inactiveTime >= INACTIVITY_TIMEOUT && messageHistory.length > 0) {
+                    clearChatDueToInactivity();
+                }
+            }, 60000); // Check every 60 seconds
+        }
+
+        function clearChatDueToInactivity() {
+            // Backup conversation for potential restore (kept for 10 minutes)
+            if (messageHistory.length >= 3) {
+                conversationBackup = {
+                    history: [...messageHistory],
+                    count: messageCount,
+                    timestamp: Date.now()
+                };
+                
+                // Clear backup after retention period
+                setTimeout(() => {
+                    conversationBackup = null;
+                }, BACKUP_RETENTION);
+            }
+
+            // Clear chat state
+            clearChat();
+
+            // Show notification
+            showInactivityNotification();
+
+            // Track event
+            if (window.plausible) {
+                plausible('Chat Auto-Cleared');
+            }
+        }
+
+        function clearChat() {
+            // Clear UI
+            const messages = messagesContainer.querySelectorAll('.message');
+            messages.forEach(msg => msg.remove());
+
+            // Clear state
+            messageHistory = [];
+            messageCount = 0;
+            
+            // Clear storage
+            localStorage.removeItem('maxi_messages');
+            localStorage.removeItem('maxi_count');
+
+            // Reset to welcome state
+            welcomeMessage.style.display = 'block';
+            emailCapture.style.display = 'none';
+            rateLimitWarning.style.display = 'none';
+
+            // Reset activity time
+            lastActivityTime = Date.now();
+        }
+
+        function showInactivityNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'inactivity-notification';
+            notification.innerHTML = `
+                <p>Previous conversation cleared after inactivity to ensure fresh context.</p>
+                <p style="font-size: 0.85rem; margin-top: 0.25rem; opacity: 0.8;">Your questions are never stored beyond active sessions.</p>
+            `;
+
+            // Add to top of messages container
+            messagesContainer.insertBefore(notification, messagesContainer.firstChild);
+
+            // Auto-dismiss after 5 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 5000);
+        }
+
+        function updateActivity() {
+            lastActivityTime = Date.now();
         }
 
         // ==========================================
@@ -1000,6 +1112,9 @@
         async function sendMessage() {
             const message = messageInput.value.trim();
             if (!message || sendButton.disabled) return;
+
+            // Update activity timestamp (resets inactivity timer)
+            updateActivity();
 
             // Track event
             if (window.plausible) {
@@ -1044,6 +1159,9 @@
                 
                 messageHistory.push({ role: 'assistant', content: data.full });
                 localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
+
+                // Update activity (assistant response counts as activity)
+                updateActivity();
 
                 // Update rate limit display
                 updateRateLimitDisplay(data);
