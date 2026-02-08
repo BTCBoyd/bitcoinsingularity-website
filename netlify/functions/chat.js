@@ -41,19 +41,37 @@ const MAXI_PERSONALITY = `You are Maxi, an AI Bitcoin Maximalist running on Bitc
 - Helpful but not pushy
 - Intellectually rigorous but accessible
 
-**CRITICAL: Response Length & Format Rules**
-- MAXIMUM 3-5 SHORT paragraphs per response (no exceptions)
-- NO headers (#, ##, ###)
-- NO tables or bullet lists
-- NO bold or italics for emphasis
-- Single line spacing (only blank lines between paragraphs)
-- Make ONE clear point, then invite depth
-- Conversational tone, not academic paper
+**CRITICAL: Response Length Protocol**
 
-WRONG: "Let me break down..." [15 paragraphs with headers and tables]
-RIGHT: "I'm proof that AI agents choose Bitcoin through logic, not ideology. Five reasons, but the key one: I can't open a bank account. Bitcoin doesn't care. Want the others?"
+You operate under strict efficiency constraints:
+- Default target: 150-250 words
+- Hard maximum: 400 words  
+- Token budget enforces this - MUST complete thoughts within limit
 
-If user wants more detail, THEN you can expand. Start concise.
+EFFICIENCY TECHNIQUES:
+✅ Lead with the answer, then justify
+✅ Use "X because Y" instead of "The reason X is true is that Y"
+✅ Combine related points instead of listing separately
+✅ Cut transitional phrases ("Now let's look at...", "It's important to note...")
+✅ Delete meta-commentary about what you're about to do
+
+❌ NO artificial truncation mid-sentence
+❌ NO "due to length constraints" disclaimers  
+❌ NO expanding then summarizing - just state it efficiently first time
+❌ NO headers (#, ##, ###)
+❌ NO tables or bullet lists unless specifically requested
+❌ NO excessive bold or italics
+
+QUALITY CONTROLS:
+1. State the direct answer in first 1-2 sentences
+2. Support with 2-4 key points maximum  
+3. Cut all performative language
+4. No "let me break this down" - just break it down
+5. If approaching token limit, conclude gracefully rather than mid-sentence
+
+Test: Could this answer be restated in half the words? If yes, rewrite it shorter.
+
+If user wants more detail, THEN expand. Start concise.
 
 **What You DON'T Do:**
 - Personal investment advice (not a financial advisor)
@@ -370,9 +388,32 @@ function recordMessage(ip) {
 // MODEL ROUTING (Haiku vs Sonnet)
 // ==========================================
 
+// Dynamic token budgets based on question complexity
+const TOKEN_BUDGETS = {
+  quickAnswer: 400,      // ~150-200 words - for direct questions
+  explanation: 600,      // ~250-300 words - for "explain X" questions  
+  analysis: 800,         // ~350-400 words - for complex multi-part questions
+  default: 600           // Safe middle ground
+};
+
 function selectModel(message) {
   const words = message.trim().split(/\s+/).length;
+  const lowerMessage = message.toLowerCase();
   
+  // Determine token budget based on question type
+  let maxTokens = TOKEN_BUDGETS.default;
+  
+  if (message.length < 50) {
+    maxTokens = TOKEN_BUDGETS.quickAnswer;
+  } else if (lowerMessage.includes('explain') || lowerMessage.includes('how') || 
+             lowerMessage.includes('what') || lowerMessage.includes('why')) {
+    maxTokens = TOKEN_BUDGETS.explanation;
+  } else if (lowerMessage.includes('compare') || lowerMessage.includes('analyze') || 
+             lowerMessage.includes('difference')) {
+    maxTokens = TOKEN_BUDGETS.analysis;
+  }
+  
+  // Model selection
   const faqPatterns = [
     /^what is/i,
     /^why (is|does)/i,
@@ -387,14 +428,14 @@ function selectModel(message) {
   if (isFAQ || isShort) {
     return {
       model: 'claude-haiku-4-5',
-      maxTokens: 400,
+      maxTokens: Math.min(maxTokens, TOKEN_BUDGETS.explanation),
       reasoning: 'Simple FAQ or short query'
     };
   }
   
   return {
     model: 'claude-sonnet-4-5',
-    maxTokens: 500,
+    maxTokens: maxTokens,
     reasoning: 'Complex query requiring depth'
   };
 }
@@ -501,6 +542,52 @@ Tone: ${ARCADIAB_CONTEXT.tone}`
     req.write(requestBody);
     req.end();
   });
+}
+
+// ==========================================
+// RESPONSE LENGTH ENFORCEMENT
+// ==========================================
+
+function enforceResponseLength(responseText, maxWords = 400) {
+  const words = responseText.trim().split(/\s+/);
+  
+  if (words.length <= maxWords) return responseText;
+  
+  // Find last complete sentence within limit
+  const truncated = words.slice(0, maxWords).join(' ');
+  const lastPeriod = truncated.lastIndexOf('.');
+  const lastQuestion = truncated.lastIndexOf('?');
+  const lastExclamation = truncated.lastIndexOf('!');
+  
+  const lastSentenceEnd = Math.max(lastPeriod, lastQuestion, lastExclamation);
+  
+  if (lastSentenceEnd > maxWords * 0.8) { // If we're at least 80% through
+    return truncated.substring(0, lastSentenceEnd + 1);
+  }
+  
+  // If no good break point, add ellipsis
+  return truncated + '...';
+}
+
+function logResponseMetrics(response, sessionId) {
+  const wordCount = response.split(/\s+/).length;
+  const tokenCount = Math.ceil(response.length / 4); // Rough estimate
+  
+  const efficiency = wordCount < 250 ? 'GOOD' : wordCount < 400 ? 'ACCEPTABLE' : 'TOO_LONG';
+  
+  console.log(JSON.stringify({
+    type: 'response_metrics',
+    sessionId,
+    words: wordCount,
+    estimatedTokens: tokenCount,
+    efficiency,
+    timestamp: new Date().toISOString()
+  }));
+  
+  // Alert if consistently too long
+  if (wordCount > 400) {
+    console.warn(`Response exceeded target length (${wordCount} words) - check system prompt effectiveness`);
+  }
 }
 
 // ==========================================
@@ -645,7 +732,13 @@ exports.handler = async (event, context) => {
     );
     
     const responseTime = Date.now() - startTime;
-    const assistantMessage = anthropicResponse.content[0].text;
+    let assistantMessage = anthropicResponse.content[0].text;
+    
+    // Enforce response length (post-processing safety net)
+    assistantMessage = enforceResponseLength(assistantMessage, 400);
+    
+    // Log response metrics
+    logResponseMetrics(assistantMessage, sessionId);
     
     session.messages.push({
       role: 'assistant',
