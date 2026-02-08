@@ -153,6 +153,57 @@
             border-bottom-left-radius: 0.25rem;
         }
 
+        /* Expandable Response */
+        .response-summary {
+            margin-bottom: 0.75rem;
+        }
+
+        .response-full {
+            display: none;
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid rgba(247, 147, 26, 0.2);
+        }
+
+        .response-full.expanded {
+            display: block;
+            animation: expandIn 0.3s ease-out;
+        }
+
+        @keyframes expandIn {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 2000px;
+            }
+        }
+
+        .expand-button {
+            background: transparent;
+            border: 1px solid var(--bitcoin-orange);
+            color: var(--bitcoin-orange);
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .expand-button:hover {
+            background: rgba(247, 147, 26, 0.1);
+        }
+
+        .expand-button.expanded {
+            color: var(--text-secondary);
+            border-color: var(--text-secondary);
+        }
+
         .message-time {
             font-size: 0.75rem;
             color: var(--text-secondary);
@@ -542,97 +593,6 @@
                 left: 1rem;
             }
         }
-
-        /* ============================================
-           EXPANDABLE MESSAGE STYLES
-           ============================================ */
-
-        .exec-summary {
-            font-size: 1.0625rem;
-            line-height: 1.65;
-            color: var(--text-primary);
-            margin-bottom: 0.875rem;
-            font-weight: 500;
-            padding: 0.5rem 0;
-        }
-
-        .expand-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.625rem 1.125rem;
-            background: linear-gradient(135deg, var(--bitcoin-orange) 0%, #ff9f1a 100%);
-            color: var(--dark-slate);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.875rem;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 6px rgba(247, 147, 26, 0.25);
-            margin-bottom: 0.5rem;
-        }
-
-        .expand-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(247, 147, 26, 0.35);
-        }
-
-        .expand-btn:active {
-            transform: translateY(0);
-        }
-
-        .expand-text,
-        .collapse-text {
-            display: flex;
-            align-items: center;
-            gap: 0.375rem;
-        }
-
-        .expand-btn .icon {
-            transition: transform 0.3s ease;
-        }
-
-        .expand-btn .icon.rotated {
-            transform: rotate(180deg);
-        }
-
-        .full-response {
-            margin-top: 0.5rem;
-            padding: 1.5rem;
-            background: linear-gradient(to bottom, var(--light-slate), var(--mid-slate));
-            border-left: 4px solid var(--bitcoin-orange);
-            border-radius: 8px;
-            font-size: 0.9375rem;
-            line-height: 1.7;
-            color: var(--text-primary);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-            animation: slideDown 0.3s ease;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .full-response p {
-            margin-bottom: 1rem;
-        }
-
-        .full-response p:last-child {
-            margin-bottom: 0;
-        }
-
-        .full-response strong {
-            color: var(--bitcoin-orange);
-            font-weight: 600;
-        }
     </style>
 </head>
 <body>
@@ -659,7 +619,6 @@
                 <h2>👋 Hi! I'm Maxi</h2>
                 <p>I'm an AI Bitcoin Maximalist running on mining infrastructure.</p>
                 <p>I specialize in <strong>Bitcoin-AI convergence</strong>, <strong>Austrian economics</strong>, and the path to <strong>sustainable abundance</strong>.</p>
-                <p><strong>Ask me anything in English or Spanish!</strong> / <strong>¡Pregúntame lo que quieras en inglés o español!</strong></p>
                 <p>What would you like to explore?</p>
                 
                 <div class="welcome-suggestions">
@@ -712,7 +671,7 @@
                     type="text" 
                     class="input-field" 
                     id="messageInput" 
-                    placeholder="Ask me anything in English or Spanish / Pregúntame lo que quieras en inglés o español"
+                    placeholder="Ask me about Bitcoin, AI, Austrian economics, or sustainable abundance..."
                     maxlength="500"
                 />
                 <button class="send-button" id="sendButton" title="Send message">
@@ -755,7 +714,7 @@
         let messageHistory = JSON.parse(localStorage.getItem('maxi_messages') || '[]');
         let messageCount = parseInt(localStorage.getItem('maxi_count') || '0');
 
-        const API_ENDPOINT = '/.netlify/functions/chat-simple';
+        const API_ENDPOINT = '/.netlify/functions/chat-mvp';
 
         // ==========================================
         // DOM ELEMENTS
@@ -799,7 +758,14 @@
             if (messageHistory.length > 0) {
                 welcomeMessage.style.display = 'none';
                 messageHistory.forEach(msg => {
-                    appendMessage(msg.role, msg.content, msg.timestamp, false);
+                    // Handle both old (string) and new (object with summary/full) formats
+                    const content = msg.summary ? {
+                        summary: msg.summary,
+                        full: msg.content,
+                        wordCount: msg.content.split(/\s+/).length
+                    } : msg.content;
+                    
+                    appendMessage(msg.role, content, msg.timestamp, false);
                 });
                 scrollToBottom();
                 
@@ -898,8 +864,12 @@
                 // Hide typing indicator
                 typingIndicator.classList.remove('show');
 
-                // Display the summary (clean version)
-                const assistantMsg = appendMessage('assistant', data.summary, Date.now(), true);
+                // Add assistant message with expandable UI
+                const assistantMsg = appendMessage('assistant', {
+                    summary: data.summary,
+                    full: data.full,
+                    wordCount: data.wordCounts?.full || 0
+                }, Date.now(), true);
                 scrollToMessage(assistantMsg);
 
                 // Increment message count
@@ -933,7 +903,61 @@
             
             const bubbleDiv = document.createElement('div');
             bubbleDiv.className = 'message-bubble';
-            bubbleDiv.textContent = content;
+            
+            // Handle expandable responses from assistant
+            if (role === 'assistant' && typeof content === 'object' && content.summary) {
+                // Summary (always visible)
+                const summaryDiv = document.createElement('div');
+                summaryDiv.className = 'response-summary';
+                summaryDiv.textContent = content.summary;
+                bubbleDiv.appendChild(summaryDiv);
+                
+                // Full response (collapsed by default)
+                const fullDiv = document.createElement('div');
+                fullDiv.className = 'response-full';
+                fullDiv.textContent = content.full;
+                bubbleDiv.appendChild(fullDiv);
+                
+                // Expand button
+                const expandBtn = document.createElement('button');
+                expandBtn.className = 'expand-button';
+                expandBtn.textContent = `Read full explanation (${content.wordCount} words) ▼`;
+                expandBtn.addEventListener('click', () => {
+                    const isExpanded = fullDiv.classList.contains('expanded');
+                    
+                    if (isExpanded) {
+                        fullDiv.classList.remove('expanded');
+                        expandBtn.textContent = `Read full explanation (${content.wordCount} words) ▼`;
+                        expandBtn.classList.remove('expanded');
+                        trackEvent('response_collapsed');
+                    } else {
+                        fullDiv.classList.add('expanded');
+                        expandBtn.textContent = `Hide full explanation ▲`;
+                        expandBtn.classList.add('expanded');
+                        trackEvent('response_expanded', { wordCount: content.wordCount });
+                    }
+                });
+                bubbleDiv.appendChild(expandBtn);
+                
+                // Save full text to history for context
+                if (saveToHistory) {
+                    messageHistory.push({ 
+                        role, 
+                        content: content.full, 
+                        summary: content.summary,
+                        timestamp 
+                    });
+                    localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
+                }
+            } else {
+                // Simple text message (user messages or legacy format)
+                bubbleDiv.textContent = typeof content === 'string' ? content : content.summary || content.full || content;
+                
+                if (saveToHistory) {
+                    messageHistory.push({ role, content: typeof content === 'string' ? content : content.full, timestamp });
+                    localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
+                }
+            }
             
             const timeDiv = document.createElement('div');
             timeDiv.className = 'message-time';
@@ -944,120 +968,8 @@
             
             messagesContainer.insertBefore(messageDiv, typingIndicator);
 
-            // Save to history
-            if (saveToHistory) {
-                messageHistory.push({ role, content, timestamp });
-                localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
-            }
-
             // Return the element so we can scroll to it
             return messageDiv;
-        }
-
-        function appendExpandableMessage(data) {
-            console.log('🔍 appendExpandableMessage CALLED');
-            console.log('🔍 data received:', data);
-            
-            const timestamp = Date.now();
-            const messageId = `msg-${timestamp}`;
-            
-            console.log('🔍 Creating messageDiv...');
-            const messageDiv = document.createElement('div');
-            messageDiv.className = 'message assistant';
-            messageDiv.setAttribute('data-timestamp', timestamp);
-            console.log('🔍 messageDiv created:', messageDiv);
-            
-            messageDiv.innerHTML = `
-                <div class="exec-summary">
-                    ${data.summary}
-                </div>
-                <button class="expand-btn" data-message-id="${messageId}" aria-expanded="false">
-                    <span class="expand-text">
-                        <svg class="icon" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                        Read full explanation (${data.wordCounts.full} words)
-                    </span>
-                    <span class="collapse-text" style="display:none;">
-                        <svg class="icon rotated" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
-                        Collapse
-                    </span>
-                </button>
-                <div class="full-response" id="${messageId}" style="display:none;">
-                    ${formatMarkdown(data.full)}
-                </div>
-                <div class="message-time">${formatTime(timestamp)}</div>
-            `;
-            
-            console.log('🔍 innerHTML set, about to insert to DOM');
-            console.log('🔍 messagesContainer:', messagesContainer);
-            console.log('🔍 typingIndicator:', typingIndicator);
-            
-            messagesContainer.insertBefore(messageDiv, typingIndicator);
-            console.log('🔍 Message inserted into DOM successfully');
-            
-            // Add event listener for expand/collapse
-            const expandBtn = messageDiv.querySelector('.expand-btn');
-            expandBtn.addEventListener('click', () => toggleExpand(expandBtn, messageId));
-            
-            // Save to history
-            messageHistory.push({ 
-                role: 'assistant', 
-                content: data.full,
-                summary: data.summary,
-                timestamp 
-            });
-            localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
-            
-            return messageDiv;
-        }
-        
-        function toggleExpand(button, messageId) {
-            const fullResponse = document.getElementById(messageId);
-            const expandText = button.querySelector('.expand-text');
-            const collapseText = button.querySelector('.collapse-text');
-            const isExpanded = button.getAttribute('aria-expanded') === 'true';
-            
-            if (isExpanded) {
-                // Collapse
-                fullResponse.style.display = 'none';
-                expandText.style.display = 'flex';
-                collapseText.style.display = 'none';
-                button.setAttribute('aria-expanded', 'false');
-                
-                trackEvent('response_collapsed', { messageId });
-            } else {
-                // Expand
-                fullResponse.style.display = 'block';
-                expandText.style.display = 'none';
-                collapseText.style.display = 'flex';
-                button.setAttribute('aria-expanded', 'true');
-                
-                // Smooth scroll to show expanded content
-                setTimeout(() => {
-                    fullResponse.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'nearest',
-                        inline: 'nearest'
-                    });
-                }, 100);
-                
-                trackEvent('response_expanded', { 
-                    messageId,
-                    wordCount: fullResponse.textContent.split(/\s+/).length 
-                });
-            }
-        }
-        
-        function formatMarkdown(text) {
-            // Basic markdown to HTML conversion
-            return text
-                .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-                .replace(/\*(.+?)\*/g, '<em>$1</em>')
-                .replace(/\n\n/g, '</p><p>')
-                .replace(/\n/g, '<br>');
         }
 
         function formatTime(timestamp) {
@@ -1205,5 +1117,3 @@
     </script>
 </body>
 </html>
-<!-- Force rebuild 1770526148 -->
-<!-- Cache bust 1770528689566206113 -->
