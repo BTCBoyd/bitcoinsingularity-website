@@ -745,6 +745,11 @@ function callAnthropic(messages, model, maxTokens, leadContext, language) {
         type: 'text',
         text: AUSTRIAN_ECONOMICS_AI,
         cache_control: { type: 'ephemeral' }
+      },
+      {
+        type: 'text',
+        text: BITCOIN_TREASURY_COMPANIES,
+        cache_control: { type: 'ephemeral' }
       }
     ];
     
