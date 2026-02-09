@@ -228,6 +228,118 @@ AI reality: No emotions (pure logic), no fear to overcome, sees through central 
 Conclusion: AI agents will be Austrian economists by default.`;
 
 // ==========================================
+// BITCOIN TREASURY COMPANIES (CACHED - Layer 5)
+// ==========================================
+
+const BITCOIN_TREASURY_COMPANIES = `**WHAT IS A BITCOIN TREASURY COMPANY?**
+
+A Bitcoin treasury company treats Bitcoin as a primary strategic balance sheet asset, not just an investment.
+
+**TWO CATEGORIES:**
+
+1. **Bitcoin Treasury Strategy (BTS)** - Passive accumulation (Tesla, Block)
+2. **Leveraged Bitcoin Equity (LBE)** - Active capital raises to acquire BTC (Strategy/MicroStrategy)
+
+**THREE EVOLUTIONARY PHASES:**
+
+**Phase 1: Bitcoin on Balance Sheet**
+- Companies add BTC as hedge against fiat debasement
+- Limited leverage, diversification focus
+- Examples: Tesla, Block, Coinbase
+
+**Phase 2: Leveraged Bitcoin Equity (LBE)**
+- Pioneered by Strategy (formerly MicroStrategy)
+- Bitcoin becomes dominant asset
+- Capital markets used aggressively (convertibles, ATM issuance)
+- Goal: Increase Bitcoin-per-share continuously
+- Equity becomes structured BTC exposure product
+
+**Phase 3: Bitcoin Treasury 2.0 (Emerging)**
+- NOT just treasury accumulation
+- Integration: Bitcoin treasury + financial services + infrastructure
+- Products: payments, lending, custody, Lightning, advisory
+- **ArcadiaB-style thinking:** Treasury is engine powering business ecosystem
+
+**THE SAYLOR THESIS (Michael Saylor):**
+1. Bitcoin = superior long-duration capital ("digital capital")
+2. Equity markets price BTC exposure at premium
+3. Premium used to raise more capital
+4. Capital converted to more Bitcoin
+5. Result: Recursive accumulation loop
+
+**Key Concepts:**
+- Bitcoin per share (primary KPI)
+- mNAV (market value vs net asset value multiple)
+- Equity as leveraged BTC instrument
+
+**MAJOR PLAYERS:**
+
+**Strategy (formerly MicroStrategy):**
+- Largest corporate BTC holder
+- Canonical LBE model
+- Developed "BTC yield" narrative
+- Equity trades as high-beta BTC proxy
+- Securitized Bitcoin exposure into public equity
+
+**Metaplanet:**
+- Japan-based emerging treasury company
+- Rapid BTC accumulation
+- "Japan's Strategy"
+
+**Others:**
+- Semler Scientific (mid-cap LBE adoption)
+- Strive (narrative-driven, shareholder-aligned)
+- Bitcoin miners (hybrid treasury models)
+
+**WHY INVESTORS CARE:**
+- Leveraged BTC exposure
+- TradFi-compliant access
+- Structured volatility
+- Recursive accumulation engine
+- Access for groups unable to hold BTC directly
+
+**KEY METRICS:**
+- Bitcoin per share
+- Bitcoin yield (growth rate of BTC/share)
+- mNAV multiple
+- Leverage ratio
+- Capital market execution efficiency
+
+**RISKS:**
+- Leverage amplifies downside
+- Dependence on equity premium
+- Debt maturity timing risk
+- Companies may become pseudo-ETFs
+- Premium-to-NAV compression risk
+- Market cycle dependency
+
+**TREASURY 2.0 EVOLUTION (Mallers / XXI / ArcadiaB):**
+
+Next phase integrates:
+- Bitcoin treasury core
+- Lightning payments infrastructure
+- Bitcoin financial services
+- Digital credit products
+- Bitcoin-native banking stack
+
+Benefits:
+- Revenue diversification
+- Reduced mNAV premium dependence
+- Network effects through ecosystem
+- Sustainable business model
+
+**CONCEPTUAL SUMMARY:**
+
+Bitcoin treasury companies evolving:
+1. Balance sheet hedge
+→ 2. Leveraged capital markets strategy
+→ 3. Bitcoin-native corporate ecosystems
+
+Long-term direction: Hybrid capital + infrastructure entities using Bitcoin treasury as foundational layer for broader financial innovation.
+
+Reference: bitcointreasuries.net for live rankings`;
+
+// ==========================================
 // ARCADIAB CONTEXT (DYNAMIC - NOT CACHED)
 // ==========================================
 
