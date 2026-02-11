@@ -1,9 +1,9 @@
-// Netlify Function: Secure Chat API with 6-Layer Security
+// Netlify Function: Secure Chat API with 5-Layer Security
 // Anthropic Claude with full Bitcoin Singularity content + comprehensive security
+// NOTE: Rate limiting uses in-memory storage (resets on cold start)
 
 const https = require('https');
 const crypto = require('crypto');
-const { getStore } = require('@netlify/blobs');
 
 // ==========================================
 // SECURITY LAYER 0: CONFIGURATION
@@ -37,6 +37,22 @@ const SECURITY = {
     'http://localhost:8888' // Netlify dev
   ]
 };
+
+// ==========================================
+// IN-MEMORY RATE LIMIT STORAGE
+// ==========================================
+
+const rateLimitStore = new Map();
+
+// Clean up old entries every 5 minutes
+setInterval(() => {
+  const now = Date.now();
+  for (const [key, data] of rateLimitStore.entries()) {
+    if (now - data.timestamp > 3600000) { // 1 hour old
+      rateLimitStore.delete(key);
+    }
+  }
+}, 300000);
 
 // ==========================================
 // SECURITY LAYER 1: CLOUDFLARE TURNSTILE
@@ -166,11 +182,10 @@ function validateSessionId(sessionId, apiKey) {
 }
 
 // ==========================================
-// SECURITY LAYER 4: RATE LIMITING
+// SECURITY LAYER 4: RATE LIMITING (IN-MEMORY)
 // ==========================================
 
-async function checkRateLimit(apiKey, ipAddress) {
-  const store = getStore('rate-limits');
+function checkRateLimit(apiKey, ipAddress) {
   const now = Date.now();
   const hour = 3600000;
   const day = 86400000;
@@ -180,60 +195,50 @@ async function checkRateLimit(apiKey, ipAddress) {
   const dailyKey = `${apiKey}:${Math.floor(now / day)}`;
   const ipHourlyKey = `ip:${ipAddress}:${Math.floor(now / hour)}`;
   
-  try {
-    // Get current counts
-    const hourlyCount = parseInt(await store.get(hourlyKey) || '0');
-    const dailyCount = parseInt(await store.get(dailyKey) || '0');
-    const ipHourlyCount = parseInt(await store.get(ipHourlyKey) || '0');
-    
-    console.log('[RATE_LIMIT] Current usage - Hourly:', hourlyCount, 'Daily:', dailyCount, 'IP:', ipHourlyCount);
-    
-    // Check limits
-    if (hourlyCount >= SECURITY.HOURLY_LIMIT) {
-      return { 
-        allowed: false, 
-        error: `Hourly limit exceeded (${SECURITY.HOURLY_LIMIT}/hour)`,
-        resetInMs: hour - (now % hour)
-      };
-    }
-    
-    if (dailyCount >= SECURITY.DAILY_LIMIT) {
-      return { 
-        allowed: false, 
-        error: `Daily limit exceeded (${SECURITY.DAILY_LIMIT}/day)`,
-        resetInMs: day - (now % day)
-      };
-    }
-    
-    if (ipHourlyCount >= SECURITY.IP_HOURLY_LIMIT) {
-      return { 
-        allowed: false, 
-        error: `IP rate limit exceeded (${SECURITY.IP_HOURLY_LIMIT}/hour per IP)`,
-        resetInMs: hour - (now % hour)
-      };
-    }
-    
-    // Increment counts with TTL
-    await store.set(hourlyKey, String(hourlyCount + 1), { ttl: Math.ceil(hour / 1000) });
-    await store.set(dailyKey, String(dailyCount + 1), { ttl: Math.ceil(day / 1000) });
-    await store.set(ipHourlyKey, String(ipHourlyCount + 1), { ttl: Math.ceil(hour / 1000) });
-    
+  // Get current counts
+  const hourlyData = rateLimitStore.get(hourlyKey) || { count: 0, timestamp: now };
+  const dailyData = rateLimitStore.get(dailyKey) || { count: 0, timestamp: now };
+  const ipHourlyData = rateLimitStore.get(ipHourlyKey) || { count: 0, timestamp: now };
+  
+  console.log('[RATE_LIMIT] Current usage - Hourly:', hourlyData.count, 'Daily:', dailyData.count, 'IP:', ipHourlyData.count);
+  
+  // Check limits
+  if (hourlyData.count >= SECURITY.HOURLY_LIMIT) {
     return { 
-      allowed: true,
-      remaining: {
-        hourly: SECURITY.HOURLY_LIMIT - hourlyCount - 1,
-        daily: SECURITY.DAILY_LIMIT - dailyCount - 1
-      }
-    };
-  } catch (err) {
-    console.error('[RATE_LIMIT] Error:', err.message);
-    // On error, allow request but log (fail open for user experience)
-    return { 
-      allowed: true, 
-      error: 'Rate limit check failed',
-      remaining: { hourly: 0, daily: 0 }
+      allowed: false, 
+      error: `Hourly limit exceeded (${SECURITY.HOURLY_LIMIT}/hour)`,
+      resetInMs: hour - (now % hour)
     };
   }
+  
+  if (dailyData.count >= SECURITY.DAILY_LIMIT) {
+    return { 
+      allowed: false, 
+      error: `Daily limit exceeded (${SECURITY.DAILY_LIMIT}/day)`,
+      resetInMs: day - (now % day)
+    };
+  }
+  
+  if (ipHourlyData.count >= SECURITY.IP_HOURLY_LIMIT) {
+    return { 
+      allowed: false, 
+      error: `IP rate limit exceeded (${SECURITY.IP_HOURLY_LIMIT}/hour per IP)`,
+      resetInMs: hour - (now % hour)
+    };
+  }
+  
+  // Increment counts
+  rateLimitStore.set(hourlyKey, { count: hourlyData.count + 1, timestamp: now });
+  rateLimitStore.set(dailyKey, { count: dailyData.count + 1, timestamp: now });
+  rateLimitStore.set(ipHourlyKey, { count: ipHourlyData.count + 1, timestamp: now });
+  
+  return { 
+    allowed: true,
+    remaining: {
+      hourly: SECURITY.HOURLY_LIMIT - hourlyData.count - 1,
+      daily: SECURITY.DAILY_LIMIT - dailyData.count - 1
+    }
+  };
 }
 
 // ==========================================
@@ -293,7 +298,7 @@ Mexico's first Bitcoin treasury company (Boyd is CSO). Services:
 
 **Guidelines:**
 - Be concise (3-5 short paragraphs max)
-- Link to arcadiaB when relevant: https://www.kapitalex.com/#/register?ref=FDQEXS1WD6LZ4IQ
+- Link to ArcadiaB when relevant: https://www.kapitalex.com/#/register?ref=FDQEXS1WD6LZ4IQ
 - No shitcoin discussions
 - Facts > speculation
 - Acknowledge uncertainty when appropriate
@@ -349,7 +354,7 @@ async function callAnthropicAPI(messages) {
 }
 
 // ==========================================
-// SESSION STORAGE (In-Memory for MVP)
+// SESSION STORAGE (In-Memory)
 // ==========================================
 
 const sessions = new Map();
@@ -493,7 +498,7 @@ exports.handler = async (event) => {
     }
     
     // Layer 4: Rate Limiting
-    const rateLimitResult = await checkRateLimit(apiKey, ipAddress);
+    const rateLimitResult = checkRateLimit(apiKey, ipAddress);
     if (!rateLimitResult.allowed) {
       return {
         statusCode: 429,
