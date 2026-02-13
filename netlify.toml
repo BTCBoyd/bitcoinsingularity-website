@@ -2,6 +2,9 @@
   functions = "netlify/functions"
   publish = "."
 
+[build.environment]
+  SECRETS_SCAN_OMIT_KEYS = "maxi_38f1bf226678a2863a12c4b5436b786d"
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
