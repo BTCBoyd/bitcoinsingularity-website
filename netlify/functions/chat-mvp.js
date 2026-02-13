@@ -101,6 +101,10 @@ function validateAPIKey(event) {
   const apiKey = event.headers['x-api-key'] || 
                  event.headers['authorization']?.replace('Bearer ', '');
   
+  console.log('[DEBUG] Env CHAT_API_KEYS:', process.env.CHAT_API_KEYS);
+  console.log('[DEBUG] Valid keys Set:', Array.from(SECURITY.VALID_API_KEYS));
+  console.log('[DEBUG] Received key:', apiKey);
+  
   if (!apiKey) {
     console.log('[AUTH] No API key provided');
     return { 
@@ -112,6 +116,7 @@ function validateAPIKey(event) {
   
   if (!SECURITY.VALID_API_KEYS.has(apiKey)) {
     console.log('[AUTH] Invalid API key:', apiKey.substring(0, 8) + '...');
+    console.log('[AUTH] Has check result:', SECURITY.VALID_API_KEYS.has(apiKey));
     return { 
       valid: false,
       statusCode: 403, 
