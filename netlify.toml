@@ -3,7 +3,8 @@
   publish = "."
 
 [build.environment]
-  SECRETS_SCAN_ENABLED = "false"
+  SECRETS_SCAN_OMIT_KEYS = "CHAT_API_KEYS"
+  SECRETS_SCAN_OMIT_PATHS = "chat.html"
 
 [[redirects]]
   from = "/api/*"
