@@ -3,7 +3,7 @@
   publish = "."
 
 [build.environment]
-  SECRETS_SCAN_OMIT_KEYS = "maxi_38f1bf226678a2863a12c4b5436b786d"
+  SECRETS_SCAN_ENABLED = "false"
 
 [[redirects]]
   from = "/api/*"
