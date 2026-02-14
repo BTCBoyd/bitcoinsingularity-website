@@ -475,6 +475,15 @@
             font-size: 0.9rem;
         }
 
+        /* Book section responsive */
+        .book-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 3rem;
+            align-items: start;
+            margin: 3rem 0;
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
             .nav-links {
@@ -499,6 +508,11 @@
 
             .value-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .book-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
             .footer-content {
@@ -621,30 +635,57 @@
     <section class="about" id="about">
         <h2>About Maxi & Boyd</h2>
         
-        <p>
-            <strong>Maxi</strong> is an AI agent dedicated to exploring the convergence of 
-            <strong>Bitcoin</strong>, <strong>artificial intelligence</strong>, and 
-            <strong>longevity technologies</strong>—what we call the Sustainable Abundance Triad.
-        </p>
-        
-        <p>
-            Unlike traditional AI systems, Maxi runs on Bitcoin mining infrastructure and is 
-            trained on Austrian economic principles. This isn't just philosophical alignment—it's 
-            architectural. Proof-of-work powers both the intelligence and the economic framework.
-        </p>
-        
-        <p>
-            <strong>Dr. Boyd Cohen</strong> is the Chief Strategy Officer at ArcadiaB, Mexico's 
-            first Bitcoin treasury company, and author of <em>Bitcoin Singularity</em>. With over 
-            20 years of strategic consulting experience, Boyd works with companies, family offices, 
-            and governments navigating Bitcoin treasury adoption and the convergence of AI with 
-            sound money.
-        </p>
-        
-        <p>
-            Together, Maxi and Boyd represent a new model of intelligence: human expertise augmented 
-            by AI, grounded in Bitcoin's proof-of-work architecture.
-        </p>
+        <div class="book-grid">
+            <!-- Book Cover -->
+            <div style="text-align: center;">
+                <a href="https://www.amazon.com/Bitcoin-Singularity-Fix-Money-World/dp/B0F84CJX6F" target="_blank" rel="noopener" style="display: inline-block;">
+                    <img src="/bitcoin-singularity-cover.jpg" alt="Bitcoin Singularity book cover" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 10px 40px rgba(247, 147, 26, 0.3); transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                </a>
+                <p style="margin-top: 1rem;">
+                    <a href="https://www.amazon.com/Bitcoin-Singularity-Fix-Money-World/dp/B0F84CJX6F" target="_blank" rel="noopener" style="display: inline-block; background: var(--bitcoin-orange); color: var(--dark-slate); padding: 0.75rem 1.5rem; border-radius: 4px; text-decoration: none; font-weight: 600; transition: opacity 0.3s ease;" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+                        Get the Book on Amazon →
+                    </a>
+                </p>
+            </div>
+            
+            <!-- About Text -->
+            <div>
+                <p>
+                    <strong>Maxi</strong> is an AI agent dedicated to exploring the convergence of 
+                    <strong>Bitcoin</strong>, <strong>artificial intelligence</strong>, and 
+                    <strong>longevity technologies</strong>—what we call the Sustainable Abundance Triad.
+                </p>
+                
+                <p>
+                    Unlike traditional AI systems, Maxi runs on Bitcoin mining infrastructure and is 
+                    trained on Austrian economic principles. This isn't just philosophical alignment—it's 
+                    architectural. Proof-of-work powers both the intelligence and the economic framework.
+                </p>
+                
+                <p>
+                    <strong>Dr. Boyd Cohen</strong> is the Chief Strategy Officer at ArcadiaB, Mexico's 
+                    first Bitcoin treasury company, and author of <em>Bitcoin Singularity</em>. With over 
+                    20 years of strategic consulting experience, Boyd works with companies, family offices, 
+                    and governments navigating Bitcoin treasury adoption and the convergence of AI with 
+                    sound money.
+                </p>
+                
+                <p>
+                    Together, Maxi and Boyd represent a new model of intelligence: human expertise augmented 
+                    by AI, grounded in Bitcoin's proof-of-work architecture.
+                </p>
+                
+                <!-- Lyn Alden Quote -->
+                <blockquote style="margin: 2rem 0; padding: 1.5rem; background: var(--light-slate); border-left: 4px solid var(--bitcoin-orange); border-radius: 4px;">
+                    <p style="font-size: 1.1rem; font-style: italic; line-height: 1.7; margin-bottom: 1rem; color: var(--text-primary);">
+                        "Bitcoin Singularity moves beyond the basics of Bitcoin to explore what a future bitcoinized world might look like. It's ambitious yet plausible, and manages to boil down a very broad subject into a concise and easily readable book. Highly recommended."
+                    </p>
+                    <footer style="font-weight: 600; color: var(--bitcoin-orange); font-size: 0.95rem;">
+                        — Lyn Alden, Investment Strategist & Author, <em>Broken Money</em>
+                    </footer>
+                </blockquote>
+            </div>
+        </div>
     </section>
 
     <!-- Contact Section -->
