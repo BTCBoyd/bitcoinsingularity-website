@@ -897,7 +897,7 @@
         let conversationBackup = null; // For optional restore feature
         let vipPassword = localStorage.getItem('maxi_vip_password') || null; // VIP access password
 
-        const API_ENDPOINT = '/.netlify/functions/chat-mvp';
+        const API_ENDPOINT = '/.netlify/functions/chat-mvp-simplified';
         const API_KEY = 'maxi_38f1bf226678a2863a12c4b5436b786d'; // Frontend API key
         const INACTIVITY_TIMEOUT = 45 * 60 * 1000; // 45 minutes in milliseconds
         const BACKUP_RETENTION = 10 * 60 * 1000; // 10 minutes in milliseconds
@@ -1145,8 +1145,7 @@
                     },
                     body: JSON.stringify({ 
                         message, 
-                        sessionId,
-                        ...(vipPassword && { vipPassword }) // Include VIP password if set
+                        sessionId
                     })
                 });
 
@@ -1164,17 +1163,19 @@
 
                 typingIndicator.style.display = 'none';
                 
-                // Append message with summary + full response (expandable)
-                appendMessage(data.summary, 'assistant', true, data.full, data.wordCounts);
+                // Append assistant response
+                appendMessage(data.reply, 'assistant');
                 
-                messageHistory.push({ role: 'assistant', content: data.full });
+                messageHistory.push({ role: 'assistant', content: data.reply });
                 localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
 
                 // Update activity (assistant response counts as activity)
                 updateActivity();
 
-                // Update rate limit display
-                updateRateLimitDisplay(data);
+                // Show remaining requests if low
+                if (data.remaining !== undefined && data.remaining < 10) {
+                    console.log('Remaining requests today:', data.remaining);
+                }
 
                 // Track successful question
                 if (window.plausible) {
