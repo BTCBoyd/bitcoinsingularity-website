@@ -265,7 +265,18 @@
             padding: 1rem 1.25rem;
             border-radius: 1rem;
             word-wrap: break-word;
-            white-space: pre-wrap;
+        }
+
+        .message-bubble p {
+            margin: 0.5rem 0;
+        }
+
+        .message-bubble p:first-child {
+            margin-top: 0;
+        }
+
+        .message-bubble p:last-child {
+            margin-bottom: 0;
         }
 
         .message.user .message-bubble {
@@ -281,21 +292,22 @@
         }
 
         .message-summary {
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        .message-summary p {
+            margin: 0 0 0.5rem 0;
         }
 
         .expand-button {
             background: none;
             border: none;
-            color: var(--bitcoin-orange);
             cursor: pointer;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            padding: 0.5rem 0;
-            text-decoration: underline;
-            transition: opacity 0.2s ease;
+            font-size: 0.9rem;
+            padding: 0.75rem 0 0 0;
+            transition: all 0.2s ease;
+            text-align: left;
+            width: 100%;
         }
 
         .expand-button:hover {
@@ -304,8 +316,20 @@
 
         .full-response {
             margin-top: 0.75rem;
-            padding-top: 0.75rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.6;
+        }
+
+        .full-response p {
+            margin: 0 0 1rem 0;
+        }
+
+        .full-response p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-bubble strong {
+            font-weight: 600;
+            color: var(--bitcoin-orange);
             animation: expandDown 0.3s ease-out;
         }
 
@@ -1214,6 +1238,14 @@
             }
         }
 
+        // Simple markdown parser for clean formatting
+        function parseMarkdown(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Bold
+                .replace(/\n\n/g, '</p><p>')  // Paragraphs
+                .replace(/\n/g, '<br>');  // Line breaks
+        }
+
         function appendMessage(content, role, isExpandable = false, fullContent = null, wordCounts = null) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${role}`;
@@ -1225,23 +1257,23 @@
                 // Calculate word count if not provided
                 const fullWordCount = wordCounts?.full || fullContent.split(/\s+/).length;
                 
-                // Summary (what user sees first)
+                // Summary (what user sees first) - clean, no markdown
                 const summaryDiv = document.createElement('div');
                 summaryDiv.className = 'message-summary';
-                summaryDiv.textContent = content;
+                summaryDiv.innerHTML = '<p>' + parseMarkdown(content) + '</p>';
                 bubbleDiv.appendChild(summaryDiv);
 
-                // Expand button
+                // Expand button - more subtle styling
                 const expandButton = document.createElement('button');
                 expandButton.className = 'expand-button';
-                expandButton.textContent = `Read full explanation (${fullWordCount} words) ▼`;
+                expandButton.innerHTML = `<span style="color: var(--bitcoin-orange); font-size: 0.9rem;">See full answer</span> <span style="opacity: 0.6;">▼</span>`;
                 bubbleDiv.appendChild(expandButton);
 
-                // Full response (hidden initially)
+                // Full response (hidden initially) - parsed markdown
                 const fullDiv = document.createElement('div');
                 fullDiv.className = 'full-response';
                 fullDiv.style.display = 'none';
-                fullDiv.textContent = fullContent;
+                fullDiv.innerHTML = '<p>' + parseMarkdown(fullContent) + '</p>';
                 bubbleDiv.appendChild(fullDiv);
 
                 // Toggle expansion
@@ -1249,9 +1281,10 @@
                 expandButton.addEventListener('click', () => {
                     expanded = !expanded;
                     fullDiv.style.display = expanded ? 'block' : 'none';
-                    expandButton.textContent = expanded 
-                        ? `Hide full explanation ▲` 
-                        : `Read full explanation (${fullWordCount} words) ▼`;
+                    summaryDiv.style.display = expanded ? 'none' : 'block';
+                    expandButton.innerHTML = expanded 
+                        ? `<span style="color: var(--bitcoin-orange); font-size: 0.9rem;">See summary</span> <span style="opacity: 0.6;">▲</span>`
+                        : `<span style="color: var(--bitcoin-orange); font-size: 0.9rem;">See full answer</span> <span style="opacity: 0.6;">▼</span>`;
                     
                     // Track expansion
                     if (expanded && window.plausible) {
@@ -1259,7 +1292,7 @@
                     }
                 });
             } else {
-                bubbleDiv.textContent = content;
+                bubbleDiv.innerHTML = '<p>' + parseMarkdown(content) + '</p>';
             }
 
             messageDiv.appendChild(bubbleDiv);
