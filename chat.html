@@ -897,8 +897,8 @@
         let conversationBackup = null; // For optional restore feature
         let vipPassword = localStorage.getItem('maxi_vip_password') || null; // VIP access password
 
-        const API_ENDPOINT = '/.netlify/functions/chat-mvp-simplified';
-        const API_KEY = 'maxi_38f1bf226678a2863a12c4b5436b786d'; // Frontend API key
+        const API_ENDPOINT = '/.netlify/functions/chat-simple-test';
+        const API_KEY = 'maxi_38f1bf226678a2863a12c4b5436b786d'; // Frontend API key (not used by simple test)
         const INACTIVITY_TIMEOUT = 45 * 60 * 1000; // 45 minutes in milliseconds
         const BACKUP_RETENTION = 10 * 60 * 1000; // 10 minutes in milliseconds
 

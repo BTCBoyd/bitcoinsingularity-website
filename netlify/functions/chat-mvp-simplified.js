@@ -265,11 +265,15 @@ exports.handler = async (event) => {
     };
 
   } catch (error) {
-    console.error('[ERROR]', error.message);
+    console.error('[ERROR] Full error:', error);
+    console.error('[ERROR] Stack:', error.stack);
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: 'Something went wrong. Please try again.' })
+      body: JSON.stringify({ 
+        error: 'Something went wrong. Please try again.',
+        debug: process.env.NODE_ENV === 'development' ? error.message : undefined
+      })
     };
   }
 };
