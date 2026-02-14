@@ -67,15 +67,20 @@ exports.handler = async (event) => {
     console.log('[SIMPLE TEST] Calling Anthropic with:', message.substring(0, 50));
     
     const response = await callAnthropicAPI(message);
-    const reply = response.content[0].text;
+    const fullReply = response.content[0].text;
     
-    console.log('[SIMPLE TEST] Success, reply length:', reply.length);
+    // Generate summary: first 2 sentences
+    const sentences = fullReply.split(/[.!?]+\s+/);
+    const summary = sentences.slice(0, 2).join('. ').trim() + (sentences.length > 2 ? '...' : '');
+    
+    console.log('[SIMPLE TEST] Success, reply length:', fullReply.length);
     
     return {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        reply: reply,
+        summary: summary,
+        full: fullReply,
         test: true
       })
     };

@@ -1163,10 +1163,16 @@
 
                 typingIndicator.style.display = 'none';
                 
-                // Append assistant response
-                appendMessage(data.reply, 'assistant');
+                // Append assistant response with summary/expand
+                if (data.summary && data.full) {
+                    appendMessage(data.summary, 'assistant', true, data.full);
+                    messageHistory.push({ role: 'assistant', content: data.full });
+                } else {
+                    // Fallback for old format
+                    appendMessage(data.reply, 'assistant');
+                    messageHistory.push({ role: 'assistant', content: data.reply });
+                }
                 
-                messageHistory.push({ role: 'assistant', content: data.reply });
                 localStorage.setItem('maxi_messages', JSON.stringify(messageHistory));
 
                 // Update activity (assistant response counts as activity)
