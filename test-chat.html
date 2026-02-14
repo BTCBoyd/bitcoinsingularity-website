@@ -45,7 +45,8 @@
                 }
                 
                 // Display assistant response
-                messages.innerHTML += `<div class="assistant"><strong>Maxi:</strong> ${data.reply}</div>`;
+                const reply = data.full || data.reply || 'No response';
+                messages.innerHTML += `<div class="assistant"><strong>Maxi:</strong> ${reply}</div>`;
                 
             } catch (error) {
                 messages.innerHTML += `<div class="error"><strong>Error:</strong> ${error.message}</div>`;
