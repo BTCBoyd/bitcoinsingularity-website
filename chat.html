@@ -1191,11 +1191,17 @@
             } catch (error) {
                 typingIndicator.style.display = 'none';
                 
+                // Log error for debugging
+                console.error('Chat error:', error);
+                console.error('Error message:', error.message);
+                
                 // Handle rate limit error
                 if (error.message.includes('daily limit') || error.message.includes('slow down')) {
                     showToast(error.message, 'error');
                 } else {
                     showToast('Sorry, something went wrong. Please try again.', 'error');
+                    // Show actual error in dev tools
+                    console.error('Full error details:', error);
                 }
                 
                 // Remove last user message since it failed
@@ -1216,6 +1222,9 @@
             bubbleDiv.className = 'message-bubble';
 
             if (role === 'assistant' && isExpandable && fullContent) {
+                // Calculate word count if not provided
+                const fullWordCount = wordCounts?.full || fullContent.split(/\s+/).length;
+                
                 // Summary (what user sees first)
                 const summaryDiv = document.createElement('div');
                 summaryDiv.className = 'message-summary';
@@ -1225,7 +1234,7 @@
                 // Expand button
                 const expandButton = document.createElement('button');
                 expandButton.className = 'expand-button';
-                expandButton.textContent = `Read full explanation (${wordCounts.full} words) ▼`;
+                expandButton.textContent = `Read full explanation (${fullWordCount} words) ▼`;
                 bubbleDiv.appendChild(expandButton);
 
                 // Full response (hidden initially)
@@ -1242,7 +1251,7 @@
                     fullDiv.style.display = expanded ? 'block' : 'none';
                     expandButton.textContent = expanded 
                         ? `Hide full explanation ▲` 
-                        : `Read full explanation (${wordCounts.full} words) ▼`;
+                        : `Read full explanation (${fullWordCount} words) ▼`;
                     
                     // Track expansion
                     if (expanded && window.plausible) {
