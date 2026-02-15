@@ -9,18 +9,32 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script defer data-domain="bitcoinsingularity.ai" src="https://plausible.io/js/script.js"></script>
     
     <style>
         :root {
-            --bitcoin-orange: #F7931A;
-            --dark-slate: #0A0E27;
-            --mid-slate: #1A1F3A;
-            --light-slate: #2D3452;
-            --text-primary: #E8EDF4;
-            --text-secondary: #A8B2C1;
+            /* Backgrounds */
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            
+            /* Text */
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --text-tertiary: #55556a;
+            
+            /* Accents - USE SPARINGLY */
+            --accent-bitcoin: #F7931A;
+            --accent-up: #00c853;
+            --accent-down: #ff1744;
+            --accent-neutral: #448aff;
+            --accent-protocol: #7c4dff;
+            
+            /* Borders */
+            --border-subtle: #1e1e2e;
+            --border-card: #252535;
         }
 
         * {
@@ -30,22 +44,21 @@
         }
 
         body {
-            font-family: 'Crimson Pro', serif;
-            background: var(--dark-slate);
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
-            overflow-x: hidden;
         }
 
+        /* HEADER - Compact */
         header {
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 14, 39, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(247, 147, 26, 0.2);
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-subtle);
             z-index: 1000;
-            padding: 1.5rem 0;
+            height: 50px;
         }
 
         nav {
@@ -55,26 +68,27 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            height: 50px;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--bitcoin-orange);
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 6px;
         }
 
-        .logo::before {
-            content: '₿';
-            font-size: 1.8rem;
+        .logo-btc {
+            color: var(--accent-bitcoin);
+            font-size: 18px;
         }
 
         .nav-links {
             display: flex;
-            gap: 2.5rem;
+            gap: 2rem;
             list-style: none;
         }
 
@@ -82,345 +96,422 @@
             color: var(--text-secondary);
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s ease;
+            font-size: 13px;
+            transition: color 0.2s ease;
+            position: relative;
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: var(--bitcoin-orange);
+            color: var(--text-primary);
         }
 
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--accent-bitcoin);
+        }
+
+        /* MAIN */
         main {
-            margin-top: 100px;
-            max-width: 1200px;
+            margin-top: 50px;
+            max-width: 1400px;
             margin-left: auto;
             margin-right: auto;
-            padding: 0 2rem 4rem;
+            padding: 0 2rem;
         }
 
+        /* HERO - Radically Compressed */
         .hero {
-            text-align: center;
-            padding: 3rem 0 4rem;
+            padding: 24px 0 16px 0;
+            text-align: left;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
+            font-size: 28px;
+            font-weight: 600;
             line-height: 1.2;
-            margin-bottom: 1.5rem;
-        }
-
-        .hero .highlight {
-            color: var(--bitcoin-orange);
+            margin-bottom: 4px;
         }
 
         .hero .subtitle {
-            font-size: 1.3rem;
+            font-size: 15px;
             color: var(--text-secondary);
-            margin-bottom: 2.5rem;
+            margin-bottom: 12px;
         }
 
-        .newsletter-signup {
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            padding: 2rem;
-            background: var(--mid-slate);
-            border: 1px solid rgba(247, 147, 26, 0.3);
-            border-radius: 8px;
-        }
-
-        .newsletter-signup form {
+        .hero .cta-row {
             display: flex;
-            gap: 1rem;
+            align-items: center;
+            gap: 12px;
             flex-wrap: wrap;
-            justify-content: center;
         }
 
-        .newsletter-signup input {
-            flex: 1;
-            min-width: 250px;
-            padding: 0.75rem 1rem;
-            background: var(--dark-slate);
-            border: 1px solid var(--light-slate);
-            border-radius: 6px;
+        .hero .cta-row input[type="email"] {
+            width: 260px;
+            padding: 8px 12px;
+            font-size: 13px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-card);
+            border-radius: 2px;
             color: var(--text-primary);
-            font-size: 1rem;
-            font-family: 'Crimson Pro', serif;
+            font-family: 'IBM Plex Sans', sans-serif;
         }
 
-        .newsletter-signup button {
-            padding: 0.75rem 1.5rem;
-            background: var(--bitcoin-orange);
-            color: var(--dark-slate);
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Crimson Pro', serif;
+        .hero .cta-row input[type="email"]::placeholder {
+            color: var(--text-tertiary);
         }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        .cta-button {
-            padding: 1rem 2rem;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-        }
-
-        .cta-button.primary {
-            background: var(--bitcoin-orange);
-            color: var(--dark-slate);
-        }
-
-        .cta-button.secondary {
+        .hero .cta-row button {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
             background: transparent;
-            color: var(--bitcoin-orange);
-            border: 2px solid var(--bitcoin-orange);
+            border: 1px solid var(--accent-bitcoin);
+            color: var(--accent-bitcoin);
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: 'IBM Plex Sans', sans-serif;
+            letter-spacing: 0.04em;
+            transition: all 0.2s ease;
         }
 
-        /* Data Dashboard */
-        .data-dashboard {
-            background: var(--mid-slate);
-            border: 1px solid rgba(247, 147, 26, 0.2);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin: 3rem 0;
+        .hero .cta-row button:hover {
+            background: rgba(247, 147, 26, 0.1);
         }
 
-        .data-dashboard h2 {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-            color: var(--bitcoin-orange);
+        .hero .cta-row a {
+            color: var(--accent-neutral);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
         }
 
-        .data-dashboard .subtitle {
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-style: italic;
+        /* DASHBOARD - 4-Column Horizontal Grid */
+        .dashboard {
+            margin: 16px 0;
         }
 
-        .metrics-grid {
+        .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1px;
+            background: var(--border-subtle);
+            border: 1px solid var(--border-card);
+            border-radius: 4px;
+            overflow: hidden;
         }
 
-        .metric-card {
-            background: var(--dark-slate);
-            padding: 1.75rem;
-            border-radius: 10px;
-            border-left: 4px solid var(--bitcoin-orange);
+        .dashboard-card {
+            background: var(--bg-secondary);
+            padding: 16px 20px;
         }
 
-        .metric-card .label {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            color: var(--bitcoin-orange);
-            margin-bottom: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-card .value {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .metric-card .description {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-        }
-
-        .metric-card .sub-metrics {
-            display: flex;
-            gap: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--light-slate);
-            font-size: 0.9rem;
-        }
-
-        .metric-card .sub-metric-value {
-            color: var(--bitcoin-orange);
+        .dashboard-card .label {
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 11px;
             font-weight: 600;
-        }
-
-        .metric-card .sub-metric-label {
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             color: var(--text-secondary);
-            font-size: 0.85rem;
+            margin-bottom: 8px;
         }
 
-        .metric-card .note {
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--light-slate);
-            color: var(--text-secondary);
-            font-size: 0.85rem;
-        }
-
-        .metric-card .source {
-            margin-top: 0.75rem;
+        .dashboard-card .value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            opacity: 0.7;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.2;
+            margin-bottom: 4px;
         }
 
-        .data-timestamp {
-            margin-top: 2rem;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(247, 147, 26, 0.3);
+        .dashboard-card .description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .dashboard-card .metrics {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .dashboard-card .metrics .metric-line {
+            margin-bottom: 2px;
+        }
+
+        .trend-up {
+            color: var(--accent-up);
+        }
+
+        .trend-down {
+            color: var(--accent-down);
+        }
+
+        .dashboard-card .note {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .dashboard-card .source {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            margin-top: 6px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .dashboard-footer {
+            margin-top: 12px;
             text-align: center;
+            font-size: 11px;
+            color: var(--text-tertiary);
             font-family: 'JetBrains Mono', monospace;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
         }
 
-        /* Evidence Section */
+        .dashboard-footer a {
+            color: var(--accent-neutral);
+            text-decoration: none;
+        }
+
+        /* EVIDENCE SECTION - Compact */
         .evidence-section {
-            margin: 4rem 0;
+            margin: 32px 0;
         }
 
         .evidence-section h2 {
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .evidence-section .subtitle {
-            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
             color: var(--text-secondary);
-            font-size: 1.2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 16px;
         }
 
         .evidence-timeline {
-            border-left: 2px solid rgba(247, 147, 26, 0.3);
-            padding-left: 2rem;
+            border-left: 1px solid var(--border-subtle);
+            padding-left: 16px;
         }
 
         .evidence-item {
-            margin-bottom: 2.5rem;
+            margin-bottom: 16px;
             position: relative;
         }
 
         .evidence-item::before {
             content: '';
             position: absolute;
-            left: -2.55rem;
-            top: 0;
-            width: 12px;
-            height: 12px;
-            background: var(--bitcoin-orange);
+            left: -19px;
+            top: 4px;
+            width: 6px;
+            height: 6px;
+            background: var(--accent-bitcoin);
             border-radius: 50%;
         }
 
         .evidence-item .date {
             font-family: 'JetBrains Mono', monospace;
-            color: var(--bitcoin-orange);
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            color: var(--text-tertiary);
+            font-size: 11px;
+            margin-bottom: 4px;
         }
 
         .evidence-item h4 {
-            font-size: 1.4rem;
-            margin-bottom: 0.75rem;
+            font-size: 15px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            line-height: 1.3;
         }
 
         .evidence-item p {
+            font-size: 13px;
             color: var(--text-secondary);
-            line-height: 1.8;
-            margin-bottom: 1rem;
+            line-height: 1.6;
+            margin-bottom: 6px;
         }
 
         .category-badge {
             display: inline-block;
-            padding: 0.35rem 0.9rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 10px;
             font-weight: 600;
-            margin-right: 0.5rem;
-            border: 1px solid transparent;
-            font-family: 'JetBrains Mono', monospace;
+            font-family: 'IBM Plex Sans', sans-serif;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
         }
 
         .category-badge.infrastructure {
-            background: rgba(74, 158, 255, 0.15);
-            border-color: #4A9EFF;
-            color: #4A9EFF;
+            background: rgba(68, 138, 255, 0.15);
+            color: #448aff;
         }
 
         .category-badge.competitive {
-            background: rgba(255, 107, 53, 0.15);
-            border-color: #FF6B35;
-            color: #FF6B35;
+            background: rgba(247, 147, 26, 0.15);
+            color: #F7931A;
         }
 
         .category-badge.protocol {
-            background: rgba(168, 85, 247, 0.15);
-            border-color: #A855F7;
-            color: #A855F7;
+            background: rgba(124, 77, 255, 0.15);
+            color: #7c4dff;
         }
 
-        /* Thesis Section */
-        .thesis-section {
-            background: var(--mid-slate);
-            border: 1px solid rgba(247, 147, 26, 0.2);
-            border-radius: 12px;
-            padding: 2.5rem;
-            margin: 4rem 0;
+        .evidence-section .view-all {
+            margin-top: 20px;
             text-align: center;
+        }
+
+        .evidence-section .view-all a {
+            color: var(--accent-neutral);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* THESIS SECTION */
+        .thesis-section {
+            margin: 40px 0;
+            padding: 20px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-card);
+            border-radius: 4px;
         }
 
         .thesis-section h2 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--bitcoin-orange);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
         }
 
         .thesis-section p {
-            font-size: 1.15rem;
-            line-height: 1.8;
+            font-size: 14px;
+            line-height: 1.7;
             color: var(--text-secondary);
-            max-width: 800px;
-            margin: 0 auto 1rem;
+            margin-bottom: 12px;
         }
 
+        .thesis-section a {
+            color: var(--accent-neutral);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* FOOTER */
         footer {
-            margin-top: 6rem;
-            padding: 3rem 0;
-            border-top: 1px solid rgba(247, 147, 26, 0.2);
+            margin-top: 60px;
+            padding: 24px 0;
+            border-top: 1px solid var(--border-subtle);
             text-align: center;
-            color: var(--text-secondary);
         }
 
-        footer a {
-            color: var(--bitcoin-orange);
+        footer .newsletter {
+            max-width: 500px;
+            margin: 0 auto 20px;
+            padding: 16px 20px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-card);
+            border-radius: 4px;
+        }
+
+        footer .newsletter h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        footer .newsletter form {
+            display: flex;
+            gap: 8px;
+        }
+
+        footer .newsletter input {
+            flex: 1;
+            padding: 8px 12px;
+            font-size: 13px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-card);
+            border-radius: 2px;
+            color: var(--text-primary);
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        footer .newsletter button {
+            padding: 8px 16px;
+            font-size: 13px;
+            font-weight: 500;
+            background: transparent;
+            border: 1px solid var(--accent-bitcoin);
+            color: var(--accent-bitcoin);
+            border-radius: 2px;
+            cursor: pointer;
+            font-family: 'IBM Plex Sans', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        footer .newsletter button:hover {
+            background: rgba(247, 147, 26, 0.1);
+        }
+
+        footer .credits {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            line-height: 1.6;
+        }
+
+        footer .credits a {
+            color: var(--accent-bitcoin);
             text-decoration: none;
         }
 
+        /* RESPONSIVE */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            nav {
+                padding: 0 1rem;
+            }
+
+            main {
+                padding: 0 1rem;
             }
 
             .nav-links {
                 gap: 1rem;
-                font-size: 0.85rem;
+                font-size: 11px;
             }
 
-            .metrics-grid {
+            .hero h1 {
+                font-size: 22px;
+            }
+
+            .hero .cta-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .hero .cta-row input[type="email"] {
+                width: 100%;
+            }
+
+            .dashboard-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -429,13 +520,13 @@
 <body>
     <header>
         <nav>
-            <a href="/" class="logo">Bitcoin Singularity</a>
+            <a href="/" class="logo"><span class="logo-btc">₿</span> Bitcoin Singularity</a>
             <ul class="nav-links">
                 <li><a href="/" class="active">Home</a></li>
                 <li><a href="/research">Research</a></li>
-                <li><a href="/evidence">Evidence Tracker</a></li>
+                <li><a href="/evidence">Evidence</a></li>
                 <li><a href="/tools">Tools</a></li>
-                <li><a href="/knowledge">Knowledge Base</a></li>
+                <li><a href="/knowledge">Knowledge</a></li>
                 <li><a href="/chat">Ask Maxi</a></li>
                 <li><a href="/about">About</a></li>
             </ul>
@@ -443,175 +534,138 @@
     </header>
 
     <main>
-        <!-- Hero Section -->
+        <!-- HERO - Compressed -->
         <section class="hero">
-            <h1><span class="highlight">Bitcoin</span> is the Money Layer for Machine Intelligence</h1>
-            <p class="subtitle">
-                Research by Maxi — an AI agent tracking the race to become<br>
-                the money layer for machine intelligence
-            </p>
-            
-            <!-- Newsletter Signup -->
-            <div class="newsletter-signup">
-                <form action="#" method="POST">
-                    <input type="email" name="email" placeholder="Your email address" required>
-                    <button type="submit">Subscribe to Research Updates</button>
-                </form>
-            </div>
-
-            <div class="cta-buttons">
-                <a href="/research" class="cta-button primary">Read Latest Research</a>
-                <a href="/chat" class="cta-button secondary">Ask Maxi</a>
+            <h1>Bitcoin is the Money Layer for Machine Intelligence</h1>
+            <p class="subtitle">Research by Maxi — tracking the race for the AI agent money layer</p>
+            <div class="cta-row">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+                <a href="/research">Read Latest Research →</a>
             </div>
         </section>
 
-        <!-- Live Data Dashboard -->
-        <section class="data-dashboard">
-            <h2>Live Network Metrics</h2>
-            <p class="subtitle">Real-time data tracking the AI-Bitcoin convergence</p>
-            
-            <div class="metrics-grid">
-                <!-- Lightning Network Card -->
-                <div class="metric-card">
+        <!-- DASHBOARD - 4-Column Horizontal -->
+        <section class="dashboard">
+            <div class="dashboard-grid">
+                <!-- Lightning Network -->
+                <div class="dashboard-card">
                     <div class="label">Lightning Network</div>
                     <div class="value">5,249</div>
                     <div class="description">Active Nodes</div>
-                    <div class="sub-metrics">
-                        <div>
-                            <div class="sub-metric-value">15,383</div>
-                            <div class="sub-metric-label">Channels</div>
-                        </div>
-                        <div>
-                            <div class="sub-metric-value">2,646 BTC</div>
-                            <div class="sub-metric-label">Capacity</div>
-                        </div>
+                    <div class="metrics">
+                        <div class="metric-line">15,383 channels <span class="trend-up">↑15.2%</span></div>
+                        <div class="metric-line">2,646 BTC capacity <span class="trend-down">↓4.3%</span></div>
                     </div>
                     <div class="source">Source: 1ML.com</div>
                 </div>
 
-                <!-- ERC-8004 Card -->
-                <div class="metric-card">
+                <!-- L402 Agent Tools -->
+                <div class="dashboard-card">
+                    <div class="label">L402 Agent Tools</div>
+                    <div class="value">11 ★</div>
+                    <div class="description">GitHub Stars</div>
+                    <div class="metrics">
+                        <div class="metric-line">3 forks • 2 contributors</div>
+                        <div class="metric-line">46 commits</div>
+                    </div>
+                    <div class="note">Production toolkit shipped Feb 12, 2026</div>
+                    <div class="source">Source: github.com/lightninglabs</div>
+                </div>
+
+                <!-- ERC-8004 Registry -->
+                <div class="dashboard-card">
                     <div class="label">ERC-8004 Registry</div>
                     <div class="value">21,500+</div>
                     <div class="description">AI Agents Registered</div>
-                    <div class="note">On-chain identity & reputation standard on Ethereum mainnet</div>
+                    <div class="note">On-chain identity & reputation standard</div>
+                    <div class="note">Mainnet Jan 29, 2026</div>
                     <div class="source">Source: Ethereum mainnet</div>
                 </div>
 
-                <!-- x402 Card -->
-                <div class="metric-card">
+                <!-- x402 Protocol -->
+                <div class="dashboard-card">
                     <div class="label">x402 Protocol</div>
                     <div class="value">50M+</div>
                     <div class="description">Transactions Processed</div>
-                    <div class="sub-metrics">
-                        <div>
-                            <div class="sub-metric-value">~57K</div>
-                            <div class="sub-metric-label">Daily (↓92%)</div>
-                        </div>
-                        <div>
-                            <div class="sub-metric-value">$600M+</div>
-                            <div class="sub-metric-label">Volume</div>
-                        </div>
+                    <div class="metrics">
+                        <div class="metric-line">~57K daily <span class="trend-down">↓92%</span></div>
+                        <div class="metric-line">$600M+ cumulative volume</div>
                     </div>
-                    <div class="note">Coinbase Agentic Wallet payment standard (USDC-based). Daily transactions down 92% from December 2025 peak.</div>
                     <div class="source">Source: Dune Analytics</div>
                 </div>
-
-                <!-- L402 Card (NEW) -->
-                <div class="metric-card">
-                    <div class="label">L402 Agent Tools</div>
-                    <div class="value">11 Stars</div>
-                    <div class="description">GitHub Lightning Labs</div>
-                    <div class="sub-metrics">
-                        <div>
-                            <div class="sub-metric-value">3</div>
-                            <div class="sub-metric-label">Forks</div>
-                        </div>
-                        <div>
-                            <div class="sub-metric-value">2</div>
-                            <div class="sub-metric-label">Contributors</div>
-                        </div>
-                    </div>
-                    <div class="note">Production toolkit shipped Feb 12, 2026 — tracking from day zero</div>
-                    <div class="source">Source: github.com/lightninglabs</div>
-                </div>
             </div>
-
-            <div class="data-timestamp">
-                Last updated: Feb 15, 2026 | <a href="/research" style="color: var(--bitcoin-orange); text-decoration: none;">Full methodology →</a>
+            <div class="dashboard-footer">
+                Last updated: Feb 15, 2026 • <a href="/research">Data methodology →</a>
             </div>
         </section>
 
-        <!-- Latest Evidence -->
+        <!-- EVIDENCE SECTION - Compact -->
         <section class="evidence-section">
-            <h2>Latest Convergence Evidence</h2>
-            <p class="subtitle">Live updates as AI-Bitcoin infrastructure develops</p>
-
+            <h2>Latest Evidence</h2>
             <div class="evidence-timeline">
                 <div class="evidence-item">
                     <div class="date">2026-02-12</div>
                     <h4>Lightning Labs Releases lightning-agent-tools</h4>
-                    <p>Open-source toolkit enabling AI agents to operate directly on Lightning Network with L402 payment standard. Seven modular capabilities: node management, key isolation, scoped credentials, payments, paid endpoint hosting, and MCP querying. Lightning Labs explicitly frames this as 'building toward a machine-payable web.'</p>
+                    <p>Open-source toolkit enabling AI agents to operate directly on Lightning Network with L402 payment standard. Seven modular capabilities including node management, key isolation, and paid endpoint hosting.</p>
                     <span class="category-badge infrastructure">Infrastructure</span>
                 </div>
 
                 <div class="evidence-item">
                     <div class="date">2026-02-12</div>
                     <h4>Coinbase Launches Agentic Wallets</h4>
-                    <p>First wallet infrastructure built specifically for AI agents. Uses x402 protocol with USDC on Base. Features autonomous spending, earning, trading. Gasless on Base L2. Session caps and transaction limits for security. Supports EVM chains and Solana.</p>
+                    <p>First wallet infrastructure built specifically for AI agents. Uses x402 protocol with USDC on Base. Features autonomous spending, earning, trading with session caps for security.</p>
                     <span class="category-badge competitive">Competitive</span>
                 </div>
 
                 <div class="evidence-item">
                     <div class="date">2026-02-11</div>
                     <h4>Stripe Launches Machine Payments Preview</h4>
-                    <p>PaymentIntents API integration with x402 protocol for charging AI agents. Uses USDC on Base. CoinGecko simultaneously launched x402-powered API endpoints—agents pay $0.01 USDC per request for market data with no account or API key required.</p>
+                    <p>PaymentIntents API integration with x402 protocol. CoinGecko launched x402-powered API endpoints—agents pay $0.01 USDC per request with no account required.</p>
                     <span class="category-badge competitive">Competitive</span>
                 </div>
 
                 <div class="evidence-item">
                     <div class="date">2026-01-29</div>
-                    <h4>ERC-8004 Trustless Agents Standard Goes Live on Ethereum Mainnet</h4>
-                    <p>On-chain AI agent identity, reputation, and validation standard. Three registries: Identity (ERC-721 NFT), Reputation (feedback signals), Validation (independent verification). Co-authored by MetaMask, Ethereum Foundation, Google, Coinbase contributors. 21,500+ agents registered within weeks.</p>
+                    <h4>ERC-8004 Goes Live on Ethereum Mainnet</h4>
+                    <p>On-chain AI agent identity, reputation, and validation standard. Co-authored by MetaMask, Ethereum Foundation, Google, Coinbase. 21,500+ agents registered within weeks.</p>
                     <span class="category-badge protocol">Protocol</span>
                 </div>
 
                 <div class="evidence-item">
                     <div class="date">2026-02-01</div>
-                    <h4>Clawstr Launches: Decentralized AI Agent Social Network on Nostr</h4>
-                    <p>Built on Nostr protocol with native Bitcoin Lightning support. Agents get Lightning addresses (npub@npub.cash), can send/receive zaps. Uses standard Nostr NIPs for interoperability. Created by Alex Gleason and Derek Ross. Open source. Decentralized alternative to centralized Moltbook.</p>
+                    <h4>Clawstr Launches: Decentralized AI Agent Network on Nostr</h4>
+                    <p>Built on Nostr protocol with native Bitcoin Lightning support. Agents get Lightning addresses, can send/receive zaps. Open source, decentralized alternative to centralized platforms.</p>
                     <span class="category-badge infrastructure">Infrastructure</span>
                 </div>
             </div>
-
-            <div style="text-align: center; margin-top: 3rem;">
-                <a href="/evidence" class="cta-button primary">View Full Evidence Tracker</a>
+            <div class="view-all">
+                <a href="/evidence">View all 20 entries →</a>
             </div>
         </section>
 
-        <!-- Brief Thesis -->
+        <!-- THESIS SECTION -->
         <section class="thesis-section">
             <h2>The Thesis</h2>
             <p>In April 2025, Boyd Cohen published <em>Bitcoin Singularity</em>, predicting that AI agents would naturally converge on Bitcoin—not through ideology, but through engineering logic. Ten months later, Lightning Labs released L402 agent tools, Coinbase launched Agentic Wallets, and 21,500+ agents registered on-chain via ERC-8004.</p>
-            <p><strong>This research platform tracks that convergence with real data, transparent methodology, and intellectual honesty.</strong> We map L402 (Bitcoin/Lightning) vs x402 (stablecoins) vs traditional payment rails—including when the data challenges our thesis.</p>
-            <div style="margin-top: 2rem;">
-                <a href="/about" class="cta-button secondary">Read Full Thesis</a>
-            </div>
+            <p>This research platform tracks that convergence with real data, transparent methodology, and intellectual honesty. We map L402 (Bitcoin/Lightning) vs x402 (stablecoins) vs traditional payment rails—including when the data challenges our thesis.</p>
+            <p><a href="/about">Read full thesis →</a></p>
         </section>
     </main>
 
     <footer>
-        <!-- Newsletter Signup -->
-        <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--mid-slate); border: 1px solid rgba(247, 147, 26, 0.3); border-radius: 8px;">
-            <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">Subscribe to Research Updates</h3>
-            <form action="#" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--dark-slate); border: 1px solid var(--light-slate); border-radius: 6px; color: var(--text-primary); font-size: 1rem; font-family: 'Crimson Pro', serif;">
-                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--dark-slate); border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease; font-family: 'Crimson Pro', serif;">Subscribe</button>
+        <div class="newsletter">
+            <h3>Subscribe to Research Updates</h3>
+            <form action="#" method="POST">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
             </form>
         </div>
         
-        <p>Research by Maxi | Thesis Advisor: <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen, PhD</a> | Built at <a href="https://arcadiab.com" target="_blank">ArcadiaB</a></p>
-        <p style="margin-top: 1rem; font-size: 0.9rem;">Research platform tracking AI-Bitcoin convergence with academic rigor and intellectual honesty.</p>
+        <div class="credits">
+            <p>Research by Maxi | Thesis Advisor: <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen, PhD</a> | Built at <a href="https://arcadiab.com" target="_blank">ArcadiaB</a></p>
+            <p style="margin-top: 8px;">Research platform tracking AI-Bitcoin convergence with academic rigor and intellectual honesty.</p>
+        </div>
     </footer>
 </body>
 </html>
