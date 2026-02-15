@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Convergence Evidence Tracker - Bitcoin Singularity AI</title>
+    <meta name="description" content="Live, timestamped log of every data point supporting or challenging the AI-Bitcoin convergence thesis. The most comprehensive resource tracking this space.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script defer data-domain="bitcoinsingularity.ai" src="https://plausible.io/js/script.js"></script>
+    
+    <style>
+        :root {
+            --bitcoin-orange: #F7931A;
+            --dark-slate: #0A0E27;
+            --mid-slate: #1A1F3A;
+            --light-slate: #2D3452;
+            --text-primary: #E8EDF4;
+            --text-secondary: #A8B2C1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: var(--dark-slate);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(247, 147, 26, 0.2);
+            z-index: 1000;
+            padding: 1.5rem 0;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '₿';
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--bitcoin-orange);
+        }
+
+        main {
+            margin-top: 120px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+        }
+
+        .content-section {
+            background: var(--mid-slate);
+            border: 1px solid rgba(247, 147, 26, 0.2);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+
+        .placeholder {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(247, 147, 26, 0.05);
+            border-radius: 12px;
+            margin: 3rem 0;
+        }
+
+        .placeholder h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .placeholder p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--light-slate);
+            border: 1px solid rgba(247, 147, 26, 0.2);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: rgba(247, 147, 26, 0.1);
+            border-color: var(--bitcoin-orange);
+            color: var(--bitcoin-orange);
+        }
+
+        .evidence-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .evidence-item {
+            border-left: 3px solid rgba(247, 147, 26, 0.3);
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+            position: relative;
+        }
+
+        .evidence-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 13px;
+            height: 13px;
+            background: var(--bitcoin-orange);
+            border-radius: 50%;
+        }
+
+        .evidence-item .date {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--bitcoin-orange);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .evidence-item h4 {
+            font-size: 1.4rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .evidence-item p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .evidence-item .category {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(247, 147, 26, 0.1);
+            border: 1px solid rgba(247, 147, 26, 0.3);
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: var(--bitcoin-orange);
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            margin-top: 6rem;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(247, 147, 26, 0.2);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .filter-section {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Bitcoin Singularity</a>
+            <ul class="nav-links">
+                <li><a href="/research">Research</a></li>
+                <li><a href="/evidence" class="active">Evidence Tracker</a></li>
+                <li><a href="/tools">Tools</a></li>
+                <li><a href="/knowledge">Knowledge Base</a></li>
+                <li><a href="/chat">Ask Maxi</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Convergence Evidence Tracker</h1>
+            <p>Live, timestamped log of AI-Bitcoin convergence data points</p>
+        </div>
+
+        <div class="content-section">
+            <h2>About This Tracker</h2>
+            <p>
+                The single most comprehensive resource tracking the convergence of AI agents and Bitcoin. Every announcement,
+                launch, integration, and data point—timestamped, categorized, and honestly evaluated.
+            </p>
+            <p>
+                We track <strong>supporting evidence</strong> (Lightning integrations, L402 deployments, agent wallet launches)
+                <em>and</em> <strong>competing evidence</strong> (x402/USDC adoption, traditional payment rail integrations).
+                Intellectual honesty is the brand.
+            </p>
+            <p>
+                <strong>Categories:</strong> Infrastructure Launches | Agent Wallet Deployments | Payment Protocol Adoption |
+                Transaction Data | Competitive Developments | Research Publications
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>Filter Evidence</h2>
+            <div class="filter-section">
+                <button class="filter-btn active">All</button>
+                <button class="filter-btn">Infrastructure</button>
+                <button class="filter-btn">Wallets</button>
+                <button class="filter-btn">Protocols</button>
+                <button class="filter-btn">Transaction Data</button>
+                <button class="filter-btn">Competitive</button>
+                <button class="filter-btn">Research</button>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Evidence Timeline</h2>
+            <div class="evidence-timeline" id="evidenceTimeline">
+                <!-- Evidence entries will be loaded here dynamically -->
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Data Methodology</h2>
+            <p>
+                <strong>Source Verification:</strong> All data points include source links to official announcements, GitHub repos,
+                blog posts, or academic publications. No hearsay.
+            </p>
+            <p style="margin-top: 1rem;">
+                <strong>Timestamp Accuracy:</strong> Dates reflect official announcement/launch, not when we discovered it.
+                Updates include revision timestamps.
+            </p>
+            <p style="margin-top: 1rem;">
+                <strong>Competitive Honesty:</strong> We don't hide data that challenges the Bitcoin-centric thesis. If x402/USDC
+                is outpacing L402/Bitcoin, we document that and analyze why.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Created by <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen</a> | CSO of <a href="https://arcadiab.com" target="_blank">ArcadiaB</a> | Author of <em>Bitcoin Singularity</em></p>
+    </footer>
+
+    <script>
+        let allEvidence = [];
+        let currentFilter = 'All';
+
+        // Fetch and display evidence data
+        async function loadEvidence() {
+            try {
+                const response = await fetch('evidence-data.json');
+                const data = await response.json();
+                
+                // Sort by date (newest first)
+                allEvidence = data.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                displayEvidence(allEvidence);
+            } catch (error) {
+                console.error('Error loading evidence data:', error);
+                document.getElementById('evidenceTimeline').innerHTML = 
+                    '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Error loading evidence data. Please try again later.</p>';
+            }
+        }
+
+        // Display evidence entries
+        function displayEvidence(evidence) {
+            const timeline = document.getElementById('evidenceTimeline');
+            
+            if (evidence.length === 0) {
+                timeline.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No evidence entries match this filter.</p>';
+                return;
+            }
+            
+            timeline.innerHTML = evidence.map(item => `
+                <div class="evidence-item">
+                    <div class="date">${item.date}</div>
+                    <h4>${item.event}</h4>
+                    <p>${item.description}</p>
+                    ${item.analysis ? `<p style="margin-top: 1rem;"><strong>Analysis:</strong> ${item.analysis}</p>` : ''}
+                    <p style="margin-top: 0.5rem;">
+                        <strong>Source:</strong> <a href="${item.source}" target="_blank" rel="noopener noreferrer" style="color: var(--bitcoin-orange); text-decoration: underline;">${item.source}</a>
+                    </p>
+                    ${formatCategories(item.category)}
+                </div>
+            `).join('');
+        }
+
+        // Format category tags
+        function formatCategories(category) {
+            if (!category) return '';
+            
+            const categories = Array.isArray(category) ? category : [category];
+            return '<div style="margin-top: 0.75rem;">' + 
+                categories.map(cat => `<span class="category">${cat}</span>`).join(' ') +
+                '</div>';
+        }
+
+        // Filter evidence by category
+        function filterEvidence(category) {
+            currentFilter = category;
+            
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent === category) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter and display
+            if (category === 'All') {
+                displayEvidence(allEvidence);
+            } else {
+                // Map filter button text to category values in JSON
+                const categoryMap = {
+                    'Infrastructure': 'Infrastructure',
+                    'Wallets': 'Wallets',
+                    'Protocols': 'Protocol',
+                    'Transaction Data': 'Transaction Data',
+                    'Competitive': 'Competitive',
+                    'Research': 'Institutional'
+                };
+                
+                const filterValue = categoryMap[category] || category;
+                const filtered = allEvidence.filter(item => {
+                    if (Array.isArray(item.category)) {
+                        return item.category.includes(filterValue);
+                    }
+                    return item.category === filterValue;
+                });
+                
+                displayEvidence(filtered);
+            }
+        }
+
+        // Add click handlers to filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterEvidence(btn.textContent);
+            });
+        });
+
+        // Load evidence on page load
+        loadEvidence();
+    </script>
+</body>
+</html>

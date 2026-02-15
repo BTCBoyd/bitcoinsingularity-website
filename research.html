@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Research Center - Bitcoin Singularity AI</title>
+    <meta name="description" content="Quarterly reports on the State of AI Agent Economics. Transaction data, infrastructure growth, and competitive analysis with academic rigor.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script defer data-domain="bitcoinsingularity.ai" src="https://plausible.io/js/script.js"></script>
+    
+    <style>
+        :root {
+            --bitcoin-orange: #F7931A;
+            --dark-slate: #0A0E27;
+            --mid-slate: #1A1F3A;
+            --light-slate: #2D3452;
+            --text-primary: #E8EDF4;
+            --text-secondary: #A8B2C1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: var(--dark-slate);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(247, 147, 26, 0.2);
+            z-index: 1000;
+            padding: 1.5rem 0;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '₿';
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--bitcoin-orange);
+        }
+
+        main {
+            margin-top: 120px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+        }
+
+        .content-section {
+            background: var(--mid-slate);
+            border: 1px solid rgba(247, 147, 26, 0.2);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+
+        .placeholder {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(247, 147, 26, 0.05);
+            border-radius: 12px;
+            margin: 3rem 0;
+        }
+
+        .placeholder h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .placeholder p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        footer {
+            margin-top: 6rem;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(247, 147, 26, 0.2);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Bitcoin Singularity</a>
+            <ul class="nav-links">
+                <li><a href="/research" class="active">Research</a></li>
+                <li><a href="/evidence">Evidence Tracker</a></li>
+                <li><a href="/tools">Tools</a></li>
+                <li><a href="/knowledge">Knowledge Base</a></li>
+                <li><a href="/chat">Ask Maxi</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Research Center</h1>
+            <p>Quarterly reports on the State of AI Agent Economics</p>
+        </div>
+
+        <div class="content-section">
+            <h2>About This Research</h2>
+            <p>
+                This research center publishes quarterly reports tracking the AI-Bitcoin convergence through real data,
+                transparent methodology, and honest competitive analysis.
+            </p>
+            <p>
+                Each report includes: transaction volume data (Lightning, L402, x402), case studies of AI agents using
+                Bitcoin and competing payment rails, infrastructure growth metrics, market analysis, and forward-looking predictions.
+            </p>
+            <p>
+                <strong>Methodology:</strong> We don't cherry-pick data. If x402/USDC is outpacing L402/Bitcoin in adoption,
+                we document that honestly and analyze why. Intellectual honesty is the brand.
+            </p>
+        </div>
+
+        <div class="placeholder">
+            <h3>🚧 Coming Soon</h3>
+            <p><strong>State of AI Agent Economics Q1 2026</strong></p>
+            <p>First quarterly report publishing late March/early April 2026</p>
+            <p style="margin-top: 2rem; font-size: 1rem;">
+                Subscribe to our newsletter to be notified when reports are published
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>Quarterly Report Structure</h2>
+            <p><strong>1. Transaction Volume Data</strong><br>
+            Lightning Network metrics, L402 endpoint adoption, x402 transaction counts, competitive analysis</p>
+
+            <p style="margin-top: 1.5rem;"><strong>2. Infrastructure Growth</strong><br>
+            New tools launched, payment protocol adoption, AI agent wallet deployments, developer activity</p>
+
+            <p style="margin-top: 1.5rem;"><strong>3. Case Studies</strong><br>
+            Real AI agents using Bitcoin/Lightning, behavioral patterns, use cases, economic decisions</p>
+
+            <p style="margin-top: 1.5rem;"><strong>4. Competitive Landscape</strong><br>
+            L402 (Bitcoin-native) vs x402 (stablecoin) vs traditional payment rails—adoption comparison with honest analysis</p>
+
+            <p style="margin-top: 1.5rem;"><strong>5. Forward-Looking Analysis</strong><br>
+            Trend projections, confidence intervals, emerging patterns, predictions for next quarter</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Live Data Dashboard</h2>
+            <p style="margin-bottom: 2rem;">Real-time metrics tracked continuously:</p>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="padding: 0.5rem 0;">📊 Lightning Network nodes, channels, capacity</li>
+                <li style="padding: 0.5rem 0;">🤖 AI agents with Bitcoin/Lightning wallets</li>
+                <li style="padding: 0.5rem 0;">⚡ L402 endpoint deployments</li>
+                <li style="padding: 0.5rem 0;">💰 x402 transaction volumes</li>
+                <li style="padding: 0.5rem 0;">🆔 ERC-8004 agent registrations</li>
+                <li style="padding: 0.5rem 0;">🛠️ Infrastructure launches</li>
+            </ul>
+            <p style="margin-top: 2rem; color: var(--bitcoin-orange); font-style: italic;">
+                Dashboard coming soon—automated data collection pipeline in development
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Created by <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen</a> | CSO of <a href="https://arcadiab.com" target="_blank">ArcadiaB</a> | Author of <em>Bitcoin Singularity</em></p>
+    </footer>
+</body>
+</html>

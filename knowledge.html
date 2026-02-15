@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Knowledge Base - Bitcoin Singularity AI</title>
+    <meta name="description" content="Boyd's work on Bitcoin Singularity, third-party research, and curated commentary on AI agent economics. Includes honest competitive analysis and ecosystem mapping.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <script defer data-domain="bitcoinsingularity.ai" src="https://plausible.io/js/script.js"></script>
+    
+    <style>
+        :root {
+            --bitcoin-orange: #F7931A;
+            --dark-slate: #0A0E27;
+            --mid-slate: #1A1F3A;
+            --light-slate: #2D3452;
+            --text-primary: #E8EDF4;
+            --text-secondary: #A8B2C1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Pro', serif;
+            background: var(--dark-slate);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(247, 147, 26, 0.2);
+            z-index: 1000;
+            padding: 1.5rem 0;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '₿';
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--bitcoin-orange);
+        }
+
+        main {
+            margin-top: 120px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .page-header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+        }
+
+        .content-section {
+            background: var(--mid-slate);
+            border: 1px solid rgba(247, 147, 26, 0.2);
+            border-radius: 12px;
+            padding: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            color: var(--text-primary);
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+            margin-bottom: 1rem;
+        }
+
+        .content-section ul {
+            list-style: none;
+            padding-left: 0;
+            margin-top: 1rem;
+        }
+
+        .content-section ul li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+        }
+
+        .content-section ul li::before {
+            content: '→';
+            color: var(--bitcoin-orange);
+            margin-right: 0.75rem;
+            font-weight: bold;
+        }
+
+        .placeholder {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: rgba(247, 147, 26, 0.05);
+            border-radius: 12px;
+            margin: 3rem 0;
+        }
+
+        .placeholder h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .placeholder p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .resource-card {
+            background: var(--light-slate);
+            border: 1px solid rgba(247, 147, 26, 0.2);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .resource-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .resource-card .meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .resource-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .taxonomy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .taxonomy-box {
+            background: var(--light-slate);
+            border: 1px solid rgba(247, 147, 26, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .taxonomy-box h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .taxonomy-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .taxonomy-box ul li {
+            padding: 0.4rem 0;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .taxonomy-box ul li::before {
+            content: '•';
+            color: var(--bitcoin-orange);
+            margin-right: 0.5rem;
+        }
+
+        footer {
+            margin-top: 6rem;
+            padding: 3rem 0;
+            border-top: 1px solid rgba(247, 147, 26, 0.2);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        footer a {
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.85rem;
+            }
+
+            .taxonomy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">Bitcoin Singularity</a>
+            <ul class="nav-links">
+                <li><a href="/research">Research</a></li>
+                <li><a href="/evidence">Evidence Tracker</a></li>
+                <li><a href="/tools">Tools</a></li>
+                <li><a href="/knowledge" class="active">Knowledge Base</a></li>
+                <li><a href="/chat">Ask Maxi</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="page-header">
+            <h1>Knowledge Base</h1>
+            <p>Research, analysis, and ecosystem mapping for the AI-Bitcoin convergence</p>
+        </div>
+
+        <div class="content-section">
+            <h2>About This Knowledge Base</h2>
+            <p>
+                Comprehensive resource library covering the AI-Bitcoin convergence thesis. Includes Boyd Cohen's original work
+                on <em>Bitcoin Singularity</em>, third-party research, competitive analysis, and the definitive ecosystem taxonomy.
+            </p>
+            <p>
+                <strong>What makes this different:</strong> Intellectual honesty. We track Bitcoin-native solutions (L402, Lightning)
+                <em>alongside</em> competing rails (x402/USDC, ERC-8004). If Ethereum or stablecoin infrastructure is outpacing
+                Bitcoin adoption for AI agents, we document that and analyze why.
+            </p>
+        </div>
+
+        <div class="content-section" id="ecosystem-map">
+            <h2>🗺️ Ecosystem Map</h2>
+            <p>
+                Visual taxonomy organizing the AI-Bitcoin convergence into four core categories: <strong>Agents with Wallets</strong>,
+                <strong>Infrastructure Enablers</strong>, <strong>Payment Protocols</strong>, and <strong>Coordination Platforms</strong>.
+            </p>
+            
+            <div class="taxonomy-grid">
+                <div class="taxonomy-box">
+                    <h4>🤖 Agents with Wallets</h4>
+                    <ul>
+                        <li>AI agents operating with Lightning/Bitcoin wallets</li>
+                        <li>Autonomous economic agents</li>
+                        <li>Trading bots with payment rails</li>
+                        <li>Content creators earning sats</li>
+                    </ul>
+                </div>
+
+                <div class="taxonomy-box">
+                    <h4>🔧 Infrastructure Enablers</h4>
+                    <ul>
+                        <li>Lightning Labs agent tools</li>
+                        <li>Wallet APIs (LNbits, Alby, Strike)</li>
+                        <li>Node hosting services</li>
+                        <li>SDK/framework providers</li>
+                    </ul>
+                </div>
+
+                <div class="taxonomy-box">
+                    <h4>💳 Payment Protocols</h4>
+                    <ul>
+                        <li>L402 (Lightning-native)</li>
+                        <li>x402 (stablecoin/Coinbase)</li>
+                        <li>Traditional payment APIs</li>
+                        <li>Emerging standards</li>
+                    </ul>
+                </div>
+
+                <div class="taxonomy-box">
+                    <h4>🌐 Coordination Platforms</h4>
+                    <ul>
+                        <li>Agent marketplaces</li>
+                        <li>Identity systems (ERC-8004)</li>
+                        <li>Reputation frameworks</li>
+                        <li>Discovery/directory services</li>
+                    </ul>
+                </div>
+            </div>
+
+            <p style="margin-top: 2rem; font-style: italic; color: var(--bitcoin-orange);">
+                Interactive ecosystem map with live links and data launching March 2026
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>📚 Core Resources</h2>
+            
+            <div class="resource-card">
+                <h4>Bitcoin Singularity - Chapter 10</h4>
+                <div class="meta">Boyd Cohen | April 2025</div>
+                <p>
+                    The foundational text predicting AI agents would naturally converge on Bitcoin through engineering logic,
+                    not ideology. Explores permissionless money, programmable payments, and the machine-payable web. Seven months
+                    later, Lightning Labs shipped agent tools and Coinbase launched x402.
+                </p>
+            </div>
+
+            <div class="resource-card">
+                <h4>The L402 Protocol Specification</h4>
+                <div class="meta">Lightning Labs | February 2026</div>
+                <p>
+                    Technical documentation for the Lightning-native payment protocol designed for AI agents. Covers authentication,
+                    payment flows, credential scoping, and integration patterns. The Bitcoin-native answer to machine payments.
+                </p>
+            </div>
+
+            <div class="resource-card">
+                <h4>x402 vs L402: Competitive Analysis</h4>
+                <div class="meta">Bitcoin Singularity Research | Coming March 2026</div>
+                <p>
+                    Honest comparison of Coinbase's stablecoin-based x402 protocol and Lightning's L402. Adoption metrics,
+                    developer experience, settlement speed, costs, and ecosystem maturity. No bias—just data.
+                </p>
+            </div>
+
+            <div class="resource-card">
+                <h4>ERC-8004: Agent Identity Standard</h4>
+                <div class="meta">Ethereum Community | January 2026</div>
+                <p>
+                    On-chain identity, reputation, and validation for AI agents on Ethereum. 21,500+ agents registered. Critical
+                    infrastructure for the agent economy—even if it's not Bitcoin-native. Competitive analysis included.
+                </p>
+            </div>
+        </div>
+
+        <div class="placeholder">
+            <h3>🚧 Knowledge Base Expanding</h3>
+            <p><strong>Full resource library launching March 2026</strong></p>
+            <p>
+                Will include: Boyd's complete Bitcoin Singularity work, curated third-party research, protocol deep-dives,
+                ecosystem interviews, competitive analyses, and technical implementation guides
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>📖 Topic Categories</h2>
+            
+            <h3>Foundational Concepts</h3>
+            <ul>
+                <li>Why AI agents need money</li>
+                <li>Permissionless vs. permissioned rails</li>
+                <li>Machine-to-machine commerce basics</li>
+                <li>Bitcoin's role in agent economy</li>
+            </ul>
+
+            <h3>Technical Deep-Dives</h3>
+            <ul>
+                <li>L402 protocol implementation guide</li>
+                <li>Lightning Network for developers</li>
+                <li>Agent wallet architecture patterns</li>
+                <li>Payment flow design for autonomous systems</li>
+            </ul>
+
+            <h3>Competitive Landscape</h3>
+            <ul>
+                <li>Bitcoin vs. Ethereum for agents</li>
+                <li>L402 vs. x402 adoption comparison</li>
+                <li>Stablecoin rails (USDC, etc.) analysis</li>
+                <li>Traditional payment API alternatives</li>
+            </ul>
+
+            <h3>Market Analysis</h3>
+            <ul>
+                <li>Transaction volume trends</li>
+                <li>Infrastructure investment flows</li>
+                <li>Developer adoption metrics</li>
+                <li>Agent economy size estimates</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>Contributing Research</h2>
+            <p>
+                Publishing research on AI agent economics? We'd love to feature your work. We curate high-quality, intellectually
+                honest research—regardless of whether it supports or challenges the Bitcoin-centric thesis.
+            </p>
+            <p style="margin-top: 1rem;">
+                <strong>Submission criteria:</strong> Transparent methodology, verifiable data, honest analysis, clear conclusions.
+                Email <strong>research@bitcoinsingularity.ai</strong> with a link to your work.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Created by <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen</a> | CSO of <a href="https://arcadiab.com" target="_blank">ArcadiaB</a> | Author of <em>Bitcoin Singularity</em></p>
+    </footer>
+</body>
+</html>
