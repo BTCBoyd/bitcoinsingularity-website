@@ -172,37 +172,27 @@
             font-weight: bold;
         }
 
-        .placeholder {
-            text-align: center;
-            padding: 4rem 2rem;
-            background: rgba(247, 147, 26, 0.05);
-            border-radius: 12px;
-            margin: 3rem 0;
-        }
-
-        .placeholder h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--bitcoin-orange);
-        }
-
-        .placeholder p {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-        }
-
         .resource-card {
             background: var(--light-slate);
             border: 1px solid rgba(247, 147, 26, 0.2);
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 1.5rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .resource-card:hover {
+            border-color: rgba(247, 147, 26, 0.4);
         }
 
         .resource-card h4 {
             font-size: 1.5rem;
             margin-bottom: 0.5rem;
             color: var(--bitcoin-orange);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
         }
 
         .resource-card .meta {
@@ -210,11 +200,134 @@
             font-size: 0.9rem;
             color: var(--text-secondary);
             margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .resource-card p {
             color: var(--text-secondary);
             line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .resource-card a.external-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--bitcoin-orange);
+            text-decoration: none;
+            font-weight: 600;
+            transition: opacity 0.3s ease;
+        }
+
+        .resource-card a.external-link:hover {
+            opacity: 0.8;
+        }
+
+        .resource-card a.external-link::after {
+            content: '↗';
+            font-size: 1.2rem;
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .category-foundational {
+            background: rgba(247, 147, 26, 0.2);
+            color: var(--bitcoin-orange);
+        }
+
+        .category-technical {
+            background: rgba(74, 158, 255, 0.2);
+            color: #4A9EFF;
+        }
+
+        .category-competitive {
+            background: rgba(168, 85, 247, 0.2);
+            color: #A855F7;
+        }
+
+        .category-market {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22C55E;
+        }
+
+        .category-institutional {
+            background: rgba(251, 191, 36, 0.2);
+            color: #FBBF24;
+        }
+
+        .key-insights {
+            margin-top: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .insights-toggle {
+            background: rgba(247, 147, 26, 0.1);
+            border: none;
+            color: var(--bitcoin-orange);
+            padding: 0.75rem 1rem;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .insights-toggle:hover {
+            background: rgba(247, 147, 26, 0.15);
+        }
+
+        .insights-toggle::after {
+            content: '▼';
+            transition: transform 0.3s ease;
+        }
+
+        .insights-toggle.expanded::after {
+            transform: rotate(180deg);
+        }
+
+        .insights-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .insights-content.expanded {
+            max-height: 1000px;
+        }
+
+        .insights-content ul {
+            padding: 1rem 1.5rem;
+            margin: 0;
+        }
+
+        .insights-content ul li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .insights-content ul li::before {
+            content: '•';
+            color: var(--bitcoin-orange);
+            margin-right: 0.75rem;
+            font-weight: bold;
         }
 
         .taxonomy-grid {
@@ -254,6 +367,25 @@
             margin-right: 0.5rem;
         }
 
+        .theme-card {
+            background: var(--light-slate);
+            border: 1px solid rgba(247, 147, 26, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .theme-card h4 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .theme-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
         footer {
             margin-top: 6rem;
             padding: 3rem 0;
@@ -279,6 +411,10 @@
 
             .taxonomy-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .resource-card h4 {
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -371,90 +507,30 @@
             </p>
         </div>
 
-        <div class="content-section">
-            <h2>📚 Core Resources</h2>
-            
-            <div class="resource-card">
-                <h4>Bitcoin Singularity - Chapter 10</h4>
-                <div class="meta">Boyd Cohen | April 2025</div>
-                <p>
-                    The foundational text predicting AI agents would naturally converge on Bitcoin through engineering logic,
-                    not ideology. Explores permissionless money, programmable payments, and the machine-payable web. Seven months
-                    later, Lightning Labs shipped agent tools and Coinbase launched x402.
-                </p>
-            </div>
-
-            <div class="resource-card">
-                <h4>The L402 Protocol Specification</h4>
-                <div class="meta">Lightning Labs | February 2026</div>
-                <p>
-                    Technical documentation for the Lightning-native payment protocol designed for AI agents. Covers authentication,
-                    payment flows, credential scoping, and integration patterns. The Bitcoin-native answer to machine payments.
-                </p>
-            </div>
-
-            <div class="resource-card">
-                <h4>x402 vs L402: Competitive Analysis</h4>
-                <div class="meta">Bitcoin Singularity Research | Coming March 2026</div>
-                <p>
-                    Honest comparison of Coinbase's stablecoin-based x402 protocol and Lightning's L402. Adoption metrics,
-                    developer experience, settlement speed, costs, and ecosystem maturity. No bias—just data.
-                </p>
-            </div>
-
-            <div class="resource-card">
-                <h4>ERC-8004: Agent Identity Standard</h4>
-                <div class="meta">Ethereum Community | January 2026</div>
-                <p>
-                    On-chain identity, reputation, and validation for AI agents on Ethereum. 21,500+ agents registered. Critical
-                    infrastructure for the agent economy—even if it's not Bitcoin-native. Competitive analysis included.
-                </p>
-            </div>
-        </div>
-
-        <div class="placeholder">
-            <h3>🚧 Knowledge Base Expanding</h3>
-            <p><strong>Full resource library launching March 2026</strong></p>
-            <p>
-                Will include: Boyd's complete Bitcoin Singularity work, curated third-party research, protocol deep-dives,
-                ecosystem interviews, competitive analyses, and technical implementation guides
+        <div class="content-section" id="boyds-work">
+            <h2>📚 Boyd's Work</h2>
+            <p style="margin-bottom: 2rem;">
+                Foundational research and analysis from Boyd Cohen on the AI-Bitcoin convergence, 
+                published before the current wave of agent infrastructure.
             </p>
+            <div id="boyds-work-container"></div>
         </div>
 
-        <div class="content-section">
-            <h2>📖 Topic Categories</h2>
-            
-            <h3>Foundational Concepts</h3>
-            <ul>
-                <li>Why AI agents need money</li>
-                <li>Permissionless vs. permissioned rails</li>
-                <li>Machine-to-machine commerce basics</li>
-                <li>Bitcoin's role in agent economy</li>
-            </ul>
+        <div class="content-section" id="third-party-research">
+            <h2>🔬 Third-Party Research</h2>
+            <p style="margin-bottom: 2rem;">
+                Curated research from industry leaders, technical teams, and competitive infrastructure. 
+                We track Bitcoin-native AND competing solutions with equal rigor.
+            </p>
+            <div id="third-party-research-container"></div>
+        </div>
 
-            <h3>Technical Deep-Dives</h3>
-            <ul>
-                <li>L402 protocol implementation guide</li>
-                <li>Lightning Network for developers</li>
-                <li>Agent wallet architecture patterns</li>
-                <li>Payment flow design for autonomous systems</li>
-            </ul>
-
-            <h3>Competitive Landscape</h3>
-            <ul>
-                <li>Bitcoin vs. Ethereum for agents</li>
-                <li>L402 vs. x402 adoption comparison</li>
-                <li>Stablecoin rails (USDC, etc.) analysis</li>
-                <li>Traditional payment API alternatives</li>
-            </ul>
-
-            <h3>Market Analysis</h3>
-            <ul>
-                <li>Transaction volume trends</li>
-                <li>Infrastructure investment flows</li>
-                <li>Developer adoption metrics</li>
-                <li>Agent economy size estimates</li>
-            </ul>
+        <div class="content-section" id="key-themes">
+            <h2>💡 Key Themes</h2>
+            <p style="margin-bottom: 2rem;">
+                Strategic patterns and intellectual frameworks that define the AI-Bitcoin convergence landscape.
+            </p>
+            <div id="key-themes-container"></div>
         </div>
 
         <div class="content-section">
@@ -473,5 +549,122 @@
     <footer>
         <p>Created by <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen</a> | CSO of <a href="https://arcadiab.com" target="_blank">ArcadiaB</a> | Author of <em>Bitcoin Singularity</em></p>
     </footer>
+
+    <script>
+        // Fetch and render knowledge data
+        async function loadKnowledgeData() {
+            try {
+                const response = await fetch('knowledge-data.json');
+                const data = await response.json();
+                
+                renderBoydsWork(data.boydsWork);
+                renderThirdPartyResearch(data.thirdPartyResearch);
+                renderKeyThemes(data.keyThemes);
+            } catch (error) {
+                console.error('Error loading knowledge data:', error);
+            }
+        }
+
+        function getCategoryClass(category) {
+            const categoryMap = {
+                'Foundational': 'category-foundational',
+                'Technical': 'category-technical',
+                'Competitive': 'category-competitive',
+                'Market Analysis': 'category-market',
+                'Institutional': 'category-institutional'
+            };
+            return categoryMap[category] || 'category-foundational';
+        }
+
+        function createResourceCard(item, showAuthor = false) {
+            const card = document.createElement('div');
+            card.className = 'resource-card';
+            
+            const categoryClass = getCategoryClass(item.category);
+            const categoryBadge = `<span class="category-badge ${categoryClass}">${item.category}</span>`;
+            
+            const linkHTML = item.link 
+                ? `<a href="${item.link}" class="external-link" target="_blank" rel="noopener noreferrer">Read More</a>`
+                : '<span style="color: var(--text-secondary); font-style: italic;">Link coming soon</span>';
+            
+            const metaContent = showAuthor 
+                ? `<span>${item.author}</span> • <span>${item.type}</span> • <span>${item.date}</span>`
+                : `<span>${item.type}</span> • <span>${item.date}</span>`;
+            
+            card.innerHTML = `
+                <h4>
+                    <span>${item.title}</span>
+                    ${categoryBadge}
+                </h4>
+                <div class="meta">
+                    ${metaContent}
+                </div>
+                <p>${item.description}</p>
+                <div style="margin-top: 1rem;">
+                    ${linkHTML}
+                </div>
+                ${item.keyInsights ? createKeyInsights(item.keyInsights) : ''}
+            `;
+            
+            return card;
+        }
+
+        function createKeyInsights(insights) {
+            const insightsId = 'insights-' + Math.random().toString(36).substr(2, 9);
+            return `
+                <div class="key-insights">
+                    <button class="insights-toggle" data-target="${insightsId}">
+                        Key Insights (${insights.length})
+                    </button>
+                    <div class="insights-content" id="${insightsId}">
+                        <ul>
+                            ${insights.map(insight => `<li>${insight}</li>`).join('')}
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderBoydsWork(boydsWork) {
+            const container = document.getElementById('boyds-work-container');
+            boydsWork.forEach(item => {
+                container.appendChild(createResourceCard(item, false));
+            });
+        }
+
+        function renderThirdPartyResearch(thirdPartyResearch) {
+            const container = document.getElementById('third-party-research-container');
+            thirdPartyResearch.forEach(item => {
+                container.appendChild(createResourceCard(item, true));
+            });
+        }
+
+        function renderKeyThemes(keyThemes) {
+            const container = document.getElementById('key-themes-container');
+            keyThemes.forEach(theme => {
+                const card = document.createElement('div');
+                card.className = 'theme-card';
+                card.innerHTML = `
+                    <h4>${theme.theme}</h4>
+                    <p>${theme.description}</p>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Handle expandable insights
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('insights-toggle')) {
+                const targetId = e.target.getAttribute('data-target');
+                const content = document.getElementById(targetId);
+                
+                e.target.classList.toggle('expanded');
+                content.classList.toggle('expanded');
+            }
+        });
+
+        // Load data on page load
+        document.addEventListener('DOMContentLoaded', loadKnowledgeData);
+    </script>
 </body>
 </html>
