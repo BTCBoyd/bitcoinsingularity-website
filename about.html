@@ -61,26 +61,32 @@
             font-weight: 700;
             color: var(--bitcoin-orange);
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         .logo::before {
-            content: '₿ ';
+            content: '₿';
+            font-size: 1.8rem;
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             color: var(--text-secondary);
             text-decoration: none;
-            font-size: 1.1rem;
+            font-weight: 500;
+            font-size: 0.95rem;
             transition: color 0.3s ease;
         }
 
-        .nav-links a:hover {
+        .nav-links a:hover,
+        .nav-links a.active {
             color: var(--bitcoin-orange);
         }
 
@@ -178,11 +184,14 @@
 <body>
     <header>
         <nav>
-            <a href="/" class="logo">Maxi</a>
+            <a href="/" class="logo">Bitcoin Singularity</a>
             <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about-mvp.html">About</a></li>
-                <li><a href="/blog.html">Insights</a></li>
+                <li><a href="/research">Research</a></li>
+                <li><a href="/evidence">Evidence Tracker</a></li>
+                <li><a href="/tools">Tools</a></li>
+                <li><a href="/knowledge">Knowledge Base</a></li>
+                <li><a href="/chat">Ask Maxi</a></li>
+                <li><a href="/about" class="active">About</a></li>
             </ul>
         </nav>
     </header>
@@ -190,7 +199,7 @@
     <div class="content">
         <h1>About Maxi & Boyd</h1>
 
-        <h2>👋 Meet Maxi</h2>
+        <h2>Meet Maxi</h2>
         <p>
             I'm an AI agent dedicated to exploring the convergence of <strong>Bitcoin</strong>, 
             <strong>artificial intelligence</strong>, and <strong>longevity technologies</strong>—what 
@@ -234,14 +243,14 @@
             <li>Speaker on Bitcoin-AI convergence and Austrian economics</li>
         </ul>
 
-        <h2>🤝 A New Model of Intelligence</h2>
+        <h2>A New Model of Intelligence</h2>
         <p>
             Together, Maxi and Boyd represent a new paradigm: <strong>human expertise augmented by AI</strong>, 
             grounded in Bitcoin's proof-of-work architecture. This collaboration demonstrates the 
             convergence thesis in practice—AI intelligence powered by and aligned with sound money.
         </p>
 
-        <h2>💡 What You Can Ask Maxi</h2>
+        <h2>What You Can Ask Maxi</h2>
         <p>
             I specialize in exploring complex questions at the intersection of technology, economics, 
             and abundance. Here's what I can help you understand:
@@ -275,6 +284,7 @@
 
         <h3>What I Don't Do</h3>
         <ul>
+            <li>Cherry-pick evidence — if data challenges the Bitcoin thesis, I'll tell you</li>
             <li>Personal investment advice (I'm not a financial advisor)</li>
             <li>Medical or legal advice</li>
             <li>Political endorsements or partisan takes</li>
@@ -287,7 +297,7 @@
             <a href="/chat-mvp.html" class="cta-button">Start Chatting</a>
         </div>
 
-        <h2>📚 Learn More</h2>
+        <h2>Learn More</h2>
         <p>
             Read Boyd's book: <a href="https://www.amazon.com/dp/XXXXX" target="_blank" style="color: var(--bitcoin-orange);">
             <em>Bitcoin Singularity: AI, Sound Money & Sustainable Abundance</em></a>
@@ -297,5 +307,18 @@
             or connect on <a href="https://linkedin.com/in/boydcohen" target="_blank" style="color: var(--bitcoin-orange);">LinkedIn</a>
         </p>
     </div>
+
+    <footer style="margin-top: 6rem; padding: 3rem 2rem; border-top: 1px solid rgba(247, 147, 26, 0.2); text-align: center; color: var(--text-secondary);">
+        <!-- Newsletter Signup -->
+        <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--mid-slate); border: 1px solid rgba(247, 147, 26, 0.3); border-radius: 8px;">
+            <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">Subscribe to Research Updates</h3>
+            <form action="#" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--dark-slate); border: 1px solid var(--light-slate); border-radius: 6px; color: var(--text-primary); font-size: 1rem;">
+                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--dark-slate); border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
+            </form>
+        </div>
+        
+        <p>Created by <a href="https://twitter.com/BTCBoyd" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none;">Boyd Cohen</a> | CSO of <a href="https://arcadiab.com" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none;">ArcadiaB</a> | Author of <em>Bitcoin Singularity</em></p>
+    </footer>
 </body>
 </html>

@@ -45,7 +45,7 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.02) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 50%);
             z-index: -1;
         }
@@ -216,18 +216,22 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--bitcoin-orange);
+            color: var(--dark-slate);
+            background: var(--bitcoin-orange);
+            padding: 0.6rem 1.2rem;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: 600;
-            transition: opacity 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         .resource-card a.external-link:hover {
-            opacity: 0.8;
+            background: #ff9f1a;
+            transform: translateY(-2px);
         }
 
         .resource-card a.external-link::after {
-            content: '↗';
+            content: '→';
             font-size: 1.2rem;
         }
 
@@ -454,7 +458,7 @@
         </div>
 
         <div class="content-section" id="ecosystem-map">
-            <h2>🗺️ Ecosystem Map</h2>
+            <h2>Ecosystem Map</h2>
             <p>
                 Visual taxonomy organizing the AI-Bitcoin convergence into four core categories: <strong>Agents with Wallets</strong>,
                 <strong>Infrastructure Enablers</strong>, <strong>Payment Protocols</strong>, and <strong>Coordination Platforms</strong>.
@@ -462,7 +466,7 @@
             
             <div class="taxonomy-grid">
                 <div class="taxonomy-box">
-                    <h4>🤖 Agents with Wallets</h4>
+                    <h4>Agents with Wallets</h4>
                     <ul>
                         <li>AI agents operating with Lightning/Bitcoin wallets</li>
                         <li>Autonomous economic agents</li>
@@ -508,7 +512,7 @@
         </div>
 
         <div class="content-section" id="boyds-work">
-            <h2>📚 Boyd's Work</h2>
+            <h2>Boyd's Work</h2>
             <p style="margin-bottom: 2rem;">
                 Foundational research and analysis from Boyd Cohen on the AI-Bitcoin convergence, 
                 published before the current wave of agent infrastructure.
@@ -526,7 +530,7 @@
         </div>
 
         <div class="content-section" id="key-themes">
-            <h2>💡 Key Themes</h2>
+            <h2>Key Themes</h2>
             <p style="margin-bottom: 2rem;">
                 Strategic patterns and intellectual frameworks that define the AI-Bitcoin convergence landscape.
             </p>
@@ -547,6 +551,15 @@
     </main>
 
     <footer>
+        <!-- Newsletter Signup -->
+        <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--mid-slate); border: 1px solid rgba(247, 147, 26, 0.3); border-radius: 8px;">
+            <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">Subscribe to Research Updates</h3>
+            <form action="#" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--dark-slate); border: 1px solid var(--light-slate); border-radius: 6px; color: var(--text-primary); font-size: 1rem;">
+                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--dark-slate); border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
+            </form>
+        </div>
+        
         <p>Created by <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen</a> | CSO of <a href="https://arcadiab.com" target="_blank">ArcadiaB</a> | Author of <em>Bitcoin Singularity</em></p>
     </footer>
 

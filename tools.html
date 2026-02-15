@@ -46,7 +46,7 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.02) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 50%);
             z-index: -1;
         }
@@ -364,6 +364,14 @@
             color: var(--text-primary);
         }
 
+        .tool-last-updated {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+            opacity: 0.7;
+        }
+
         .loading {
             text-align: center;
             padding: 4rem 2rem;
@@ -487,6 +495,15 @@
     </main>
 
     <footer>
+        <!-- Newsletter Signup -->
+        <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--mid-slate); border: 1px solid rgba(247, 147, 26, 0.3); border-radius: 8px;">
+            <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">Subscribe to Research Updates</h3>
+            <form action="#" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--dark-slate); border: 1px solid var(--light-slate); border-radius: 6px; color: var(--text-primary); font-size: 1rem;">
+                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--dark-slate); border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
+            </form>
+        </div>
+        
         <p>Created by <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen</a> | CSO of <a href="https://arcadiab.com" target="_blank">ArcadiaB</a> | Author of <em>Bitcoin Singularity</em></p>
     </footer>
 
@@ -600,6 +617,7 @@
                                 <div class="tool-review-label">Maxi's Review</div>
                                 <div class="tool-review-text">${tool.review}</div>
                             </div>
+                            <div class="tool-last-updated">Last updated: Feb 2026</div>
                         </div>
                     `;
                 });

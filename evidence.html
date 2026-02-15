@@ -45,7 +45,7 @@
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 20% 50%, rgba(247, 147, 26, 0.02) 0%, transparent 50%),
                 radial-gradient(circle at 80% 80%, rgba(74, 158, 255, 0.03) 0%, transparent 50%);
             z-index: -1;
         }
@@ -242,6 +242,61 @@
             margin-top: 0.5rem;
         }
 
+        /* Category Badge Colors */
+        .category-badge {
+            display: inline-block;
+            padding: 0.35rem 0.9rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid transparent;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .category-badge.infrastructure {
+            background: rgba(74, 158, 255, 0.15);
+            border-color: #4A9EFF;
+            color: #4A9EFF;
+        }
+
+        .category-badge.competitive {
+            background: rgba(255, 107, 53, 0.15);
+            border-color: #FF6B35;
+            color: #FF6B35;
+        }
+
+        .category-badge.protocol {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: #A855F7;
+            color: #A855F7;
+        }
+
+        .category-badge.transaction-data {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: #10B981;
+            color: #10B981;
+        }
+
+        .category-badge.institutional {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: #F59E0B;
+            color: #F59E0B;
+        }
+
+        .category-badge.counter-evidence {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: #EF4444;
+            color: #EF4444;
+        }
+
+        .category-badge.wallets {
+            background: rgba(74, 158, 255, 0.15);
+            border-color: #4A9EFF;
+            color: #4A9EFF;
+        }
+
         footer {
             margin-top: 6rem;
             padding: 3rem 0;
@@ -347,6 +402,15 @@
     </main>
 
     <footer>
+        <!-- Newsletter Signup -->
+        <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--mid-slate); border: 1px solid rgba(247, 147, 26, 0.3); border-radius: 8px;">
+            <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">Subscribe to Research Updates</h3>
+            <form action="#" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--dark-slate); border: 1px solid var(--light-slate); border-radius: 6px; color: var(--text-primary); font-size: 1rem;">
+                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--dark-slate); border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
+            </form>
+        </div>
+        
         <p>Created by <a href="https://twitter.com/BTCBoyd" target="_blank">Boyd Cohen</a> | CSO of <a href="https://arcadiab.com" target="_blank">ArcadiaB</a> | Author of <em>Bitcoin Singularity</em></p>
     </footer>
 
@@ -386,8 +450,8 @@
                     <h4>${item.event}</h4>
                     <p>${item.description}</p>
                     ${item.analysis ? `<p style="margin-top: 1rem;"><strong>Analysis:</strong> ${item.analysis}</p>` : ''}
-                    <p style="margin-top: 0.5rem;">
-                        <strong>Source:</strong> <a href="${item.source}" target="_blank" rel="noopener noreferrer" style="color: var(--bitcoin-orange); text-decoration: underline;">${item.source}</a>
+                    <p style="margin-top: 1rem;">
+                        <a href="${item.source}" target="_blank" rel="noopener noreferrer" style="display: inline-block; padding: 0.6rem 1.2rem; background: var(--bitcoin-orange); color: var(--dark-slate); font-weight: 600; text-decoration: none; border-radius: 6px; transition: all 0.3s ease;">Source →</a>
                     </p>
                     ${formatCategories(item.category)}
                 </div>
@@ -399,8 +463,23 @@
             if (!category) return '';
             
             const categories = Array.isArray(category) ? category : [category];
+            
+            // Map category names to CSS classes
+            const categoryClassMap = {
+                'Infrastructure': 'infrastructure',
+                'Competitive': 'competitive',
+                'Protocol': 'protocol',
+                'Transaction Data': 'transaction-data',
+                'Institutional': 'institutional',
+                'Counter-Evidence': 'counter-evidence',
+                'Wallets': 'wallets'
+            };
+            
             return '<div style="margin-top: 0.75rem;">' + 
-                categories.map(cat => `<span class="category">${cat}</span>`).join(' ') +
+                categories.map(cat => {
+                    const cssClass = categoryClassMap[cat] || 'infrastructure';
+                    return `<span class="category-badge ${cssClass}">${cat}</span>`;
+                }).join(' ') +
                 '</div>';
         }
 
