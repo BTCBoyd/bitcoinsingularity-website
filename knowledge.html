@@ -9,18 +9,18 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script defer data-domain="bitcoinsingularity.ai" src="https://plausible.io/js/script.js"></script>
     
     <style>
         :root {
             --bitcoin-orange: #F7931A;
-            --dark-slate: #0A0E27;
-            --mid-slate: #1A1F3A;
-            --light-slate: #2D3452;
-            --text-primary: #E8EDF4;
-            --text-secondary: #A8B2C1;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
         }
 
         * {
@@ -30,8 +30,8 @@
         }
 
         body {
-            font-family: 'Crimson Pro', serif;
-            background: var(--dark-slate);
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
             line-height: 1.6;
             overflow-x: hidden;
@@ -51,6 +51,7 @@
         }
 
         header {
+    height: 50px;
             position: fixed;
             top: 0;
             width: 100%;
@@ -58,10 +59,11 @@
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(247, 147, 26, 0.2);
             z-index: 1000;
-            padding: 1.5rem 0;
+            padding: 0;
         }
 
         nav {
+    height: 50px;
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 2rem;
@@ -104,7 +106,7 @@
         }
 
         main {
-            margin-top: 120px;
+            margin-top: 50px;
             max-width: 1200px;
             margin-left: auto;
             margin-right: auto;
@@ -112,6 +114,7 @@
         }
 
         .page-header {
+    height: 50px;
             text-align: center;
             margin-bottom: 4rem;
         }
@@ -127,7 +130,7 @@
         }
 
         .content-section {
-            background: var(--mid-slate);
+            background: var(--bg-secondary);
             border: 1px solid rgba(247, 147, 26, 0.2);
             border-radius: 12px;
             padding: 3rem;
@@ -173,7 +176,7 @@
         }
 
         .resource-card {
-            background: var(--light-slate);
+            background: var(--bg-tertiary);
             border: 1px solid rgba(247, 147, 26, 0.2);
             border-radius: 8px;
             padding: 2rem;
@@ -216,7 +219,7 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--dark-slate);
+            color: var(--bg-primary);
             background: var(--bitcoin-orange);
             padding: 0.6rem 1.2rem;
             border-radius: 6px;
@@ -284,7 +287,7 @@
             width: 100%;
             text-align: left;
             cursor: pointer;
-            font-family: 'Crimson Pro', serif;
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
             font-size: 1rem;
             font-weight: 600;
             display: flex;
@@ -342,7 +345,7 @@
         }
 
         .taxonomy-box {
-            background: var(--light-slate);
+            background: var(--bg-tertiary);
             border: 1px solid rgba(247, 147, 26, 0.3);
             border-radius: 8px;
             padding: 1.5rem;
@@ -372,7 +375,7 @@
         }
 
         .theme-card {
-            background: var(--light-slate);
+            background: var(--bg-tertiary);
             border: 1px solid rgba(247, 147, 26, 0.2);
             border-radius: 8px;
             padding: 1.5rem;
@@ -458,7 +461,7 @@
         </div>
 
         <!-- Intellectual Provenance / The Moat -->
-        <div class="content-section" style="background: linear-gradient(135deg, var(--mid-slate) 0%, var(--light-slate) 100%); border: 2px solid var(--bitcoin-orange);">
+        <div class="content-section" style="background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%); border: 2px solid var(--bitcoin-orange);">
             <h2>Why This Research Exists</h2>
             <p style="font-size: 1.15rem; line-height: 1.8; margin-bottom: 2rem;">
                 The AI-Bitcoin convergence is happening right now. Dozens of platforms will launch to track it. Most will fail within six months. 
@@ -523,15 +526,15 @@
 
             <h3 style="font-size: 1.6rem; color: var(--bitcoin-orange); margin: 2.5rem 0 1rem;">Boyd Cohen's Books</h3>
             <div style="display: grid; gap: 1rem; margin-top: 1.5rem;">
-                <div style="padding: 1rem; background: var(--dark-slate); border-radius: 8px; border-left: 4px solid var(--bitcoin-orange);">
+                <div style="padding: 1rem; background: var(--bg-primary); border-radius: 8px; border-left: 4px solid var(--bitcoin-orange);">
                     <h4 style="margin-bottom: 0.5rem;"><a href="https://www.amazon.com/Bitcoin-Singularity-Boyd-Cohen/dp/B0D6Z5B9YH" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none;">Bitcoin Singularity: AI, Sound Money & Sustainable Abundance</a></h4>
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">April 2025 — The book that predicted this convergence 10 months before infrastructure arrived</p>
                 </div>
-                <div style="padding: 1rem; background: var(--dark-slate); border-radius: 8px; border-left: 4px solid var(--bitcoin-orange);">
+                <div style="padding: 1rem; background: var(--bg-primary); border-radius: 8px; border-left: 4px solid var(--bitcoin-orange);">
                     <h4 style="margin-bottom: 0.5rem;"><a href="https://www.amazon.com/Climate-Capitalism-Sustainable-Business-Models/dp/1909293571" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none;">Climate Capitalism: Capitalism in the Age of Climate Change</a></h4>
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">Foundation for understanding how market incentives drive systemic change</p>
                 </div>
-                <div style="padding: 1rem; background: var(--dark-slate); border-radius: 8px; border-left: 4px solid var(--bitcoin-orange);">
+                <div style="padding: 1rem; background: var(--bg-primary); border-radius: 8px; border-left: 4px solid var(--bitcoin-orange);">
                     <h4 style="margin-bottom: 0.5rem;"><em>Abundance Capitalism</em> (unpublished, MBA teaching)</h4>
                     <p style="color: var(--text-secondary); font-size: 0.95rem;">The pre-Bitcoin framework mapping exponential technology convergence toward abundance</p>
                 </div>
@@ -633,11 +636,11 @@
 
     <footer>
         <!-- Newsletter Signup -->
-        <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--mid-slate); border: 1px solid rgba(247, 147, 26, 0.3); border-radius: 8px;">
+        <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--bg-secondary); border: 1px solid rgba(247, 147, 26, 0.3); border-radius: 8px;">
             <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">Subscribe to Research Updates</h3>
             <form action="#" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--dark-slate); border: 1px solid var(--light-slate); border-radius: 6px; color: var(--text-primary); font-size: 1rem;">
-                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--dark-slate); border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
+                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--bg-tertiary); border-radius: 6px; color: var(--text-primary); font-size: 1rem;">
+                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--bg-primary); border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
             </form>
         </div>
         
