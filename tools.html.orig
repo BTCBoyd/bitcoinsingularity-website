@@ -85,7 +85,7 @@
 
         .logo::before {
             content: '₿';
-            font-size: 14px;
+            font-size: 1.8rem;
         }
 
         .nav-links {
@@ -126,7 +126,7 @@
         }
 
         .page-header p {
-            font-size: 14px;
+            font-size: 1.3rem;
             color: var(--text-secondary);
         }
 
@@ -145,7 +145,7 @@
         }
 
         .content-section p {
-            font-size: 13px;
+            font-size: 1.1rem;
             color: var(--text-secondary);
             line-height: 1.9;
             margin-bottom: 1rem;
@@ -168,7 +168,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'IBM Plex Sans', -apple-system, sans-serif;
-            font-size: 12px;
+            font-size: 1rem;
             font-weight: 500;
         }
 
@@ -184,9 +184,9 @@
         }
 
         .tools-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
         }
 
         .category-section {
@@ -194,7 +194,7 @@
         }
 
         .category-section h3 {
-            font-size: 14px;
+            font-size: 1.8rem;
             margin-bottom: 1.5rem;
             color: var(--bitcoin-orange);
             padding-bottom: 0.5rem;
@@ -205,8 +205,8 @@
             background: var(--bg-tertiary);
             border-left: 4px solid;
             border-radius: 8px;
-            padding: 14px 16px;
-            margin-bottom: 0;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
             transition: all 0.3s ease;
         }
 
@@ -363,7 +363,7 @@
         }
 
         .tool-review-text {
-            font-size: 12px;
+            font-size: 1rem;
             line-height: 1.7;
             color: var(--text-primary);
         }
@@ -502,10 +502,10 @@
     <footer>
         <!-- Newsletter Signup -->
         <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--bg-secondary); border: 1px solid rgba(247, 147, 26, 0.3); border-radius: 8px;">
-            <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 14px;">Subscribe to Research Updates</h3>
+            <h3 style="color: var(--bitcoin-orange); margin-bottom: 1rem; font-size: 1.3rem;">Subscribe to Research Updates</h3>
             <form action="#" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--bg-tertiary); border-radius: 6px; color: var(--text-primary); font-size: 12px;">
-                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--bg-primary); border: none; border-radius: 6px; font-weight: 600; font-size: 12px; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
+                <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 0.75rem 1rem; background: var(--bg-primary); border: 1px solid var(--bg-tertiary); border-radius: 6px; color: var(--text-primary); font-size: 1rem;">
+                <button type="submit" style="padding: 0.75rem 1.5rem; background: var(--bitcoin-orange); color: var(--bg-primary); border: none; border-radius: 6px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
             </form>
         </div>
         
