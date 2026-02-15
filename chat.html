@@ -739,6 +739,23 @@
     </style>
 </head>
 <body>
+    <!-- Navigation Header -->
+    <header style="position: sticky; top: 0; width: 100%; background: rgba(10, 14, 39, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(247, 147, 26, 0.2); z-index: 1000; padding: 1.5rem 0;">
+        <nav style="max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <a href="/" style="font-size: 1.5rem; font-weight: 700; color: var(--bitcoin-orange); text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 1.8rem;">₿</span> Bitcoin Singularity
+            </a>
+            <ul style="display: flex; gap: 2.5rem; list-style: none; margin: 0; padding: 0;">
+                <li><a href="/research" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Research</a></li>
+                <li><a href="/evidence" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Evidence Tracker</a></li>
+                <li><a href="/tools" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Tools</a></li>
+                <li><a href="/knowledge" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Knowledge Base</a></li>
+                <li><a href="/chat" style="color: var(--bitcoin-orange); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Ask Maxi</a></li>
+                <li><a href="/about" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
     <!-- Hero Section -->
     <div class="hero-section">
         <h1 class="hero-headline">Bitcoin-Native AI Reasoning by Boyd Cohen</h1>
@@ -796,7 +813,7 @@
         <!-- Chat Header -->
         <div class="chat-header">
             <div>
-                <h1>💬 Ask Maxi Anything</h1>
+                <h1>Ask Maxi Anything</h1>
                 <div class="subtitle">Bitcoin-Native AI | No signup required</div>
             </div>
             <div class="header-actions">
@@ -804,7 +821,7 @@
                     50 questions/day
                 </div>
                 <button class="icon-button" id="shareButton" title="Share conversation">
-                    🔗
+                    Share
                 </button>
                 <a href="/" class="icon-button" title="Back to home">
                     🏠
@@ -815,7 +832,7 @@
         <!-- Messages -->
         <div class="messages-container" id="messagesContainer">
             <div class="welcome-message" id="welcomeMessage">
-                <h2>👋 Hi! I'm Maxi</h2>
+                <h2>Hi! I'm Maxi</h2>
                 <p>I'm an AI Bitcoin Maximalist running on mining infrastructure.</p>
                 <p>I specialize in <strong>Bitcoin-AI convergence</strong>, <strong>Austrian economics</strong>, and the path to <strong>sustainable abundance</strong>.</p>
                 <p>What would you like to explore?</p>
@@ -847,7 +864,7 @@
         <div class="input-container">
             <!-- Email Capture (Shows after 10 messages) -->
             <div class="email-capture" id="emailCapture">
-                <h3>✉️ Want to continue this conversation later?</h3>
+                <h3>Want to continue this conversation later?</h3>
                 <p>Enter your email and we'll send you the full transcript plus weekly Bitcoin-AI insights.</p>
                 <form class="email-form" id="emailForm" name="email-capture" method="POST" data-netlify="true">
                     <input type="hidden" name="form-name" value="email-capture" />
@@ -888,7 +905,7 @@
     <!-- Share Modal -->
     <div class="modal" id="shareModal">
         <div class="modal-content">
-            <h2>🔗 Share This Conversation</h2>
+            <h2>Share This Conversation</h2>
             <p>Copy this link to share your conversation with Maxi:</p>
             <div class="share-link-box" id="shareLinkBox">
                 Generating link...
