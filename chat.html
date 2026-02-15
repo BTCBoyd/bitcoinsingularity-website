@@ -43,7 +43,7 @@
 
         /* Hero Section */
         .hero-section {
-            background: linear-gradient(135deg, var(--dark-slate) 0%, var(--mid-slate) 100%);
+            background: var(--bg-secondary) 0%, var(--mid-slate) 100%);
             padding: 3rem 2rem;
             text-align: center;
             border-bottom: 2px solid var(--bitcoin-orange);
@@ -108,7 +108,7 @@
 
         .hero-cta:hover {
             transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
+            /* box-shadow removed */
         }
 
         /* Content Sections */
@@ -175,7 +175,7 @@
             background: var(--mid-slate);
             border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            /* box-shadow removed */
         }
 
         /* Chat Header */
@@ -244,11 +244,11 @@
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                /* transform removed */
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                /* transform removed */
             }
         }
 
@@ -380,7 +380,7 @@
 
         .suggestion-item:hover {
             border-color: var(--bitcoin-orange);
-            transform: translateY(-2px);
+            /* transform removed */
         }
 
         /* Typing Indicator */
@@ -409,11 +409,11 @@
 
         @keyframes typing {
             0%, 60%, 100% {
-                transform: translateY(0);
+                /* transform removed */
                 opacity: 0.7;
             }
             30% {
-                transform: translateY(-10px);
+                /* transform removed */
                 opacity: 1;
             }
         }
@@ -471,7 +471,7 @@
 
         .send-button:hover:not(:disabled) {
             transform: scale(1.1);
-            box-shadow: 0 4px 12px rgba(247, 147, 26, 0.3);
+            /* box-shadow removed */
         }
 
         .send-button:disabled {
@@ -645,7 +645,7 @@
             color: var(--text-primary);
             padding: 1rem 1.5rem;
             border-radius: 0.5rem;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            /* box-shadow removed */
             display: none;
             animation: slideIn 0.3s ease-out;
             z-index: 999;
