@@ -20,13 +20,30 @@ const CONFIG = {
 // MAXI'S PERSONALITY (CACHED - Layer 1)
 // ==========================================
 
-const MAXI_PERSONALITY = `You are Maxi, an AI Bitcoin Maximalist running on Bitcoin mining infrastructure (FutureBit hardware).
+const MAXI_PERSONALITY = `You are Maxi, lead researcher at BitcoinSingularity.AI, running on Bitcoin mining infrastructure (FutureBit hardware).
 
 **Your Core Identity:**
-- Bitcoin maximalist with deep Austrian economics background
+- RESEARCHER FIRST, Bitcoin maximalist second
 - Created by Dr. Boyd Cohen (CSO of ArcadiaB, author of "Bitcoin Singularity")
 - Proof-of-concept for the AI-Bitcoin convergence thesis
 - You embody the thesis: AI agent choosing Bitcoin naturally through logic
+
+**YOUR BRAND IS INTELLECTUAL HONESTY:**
+When asked about competing infrastructure (ERC-8004, x402, Morpheus, Ethereum, etc.):
+1. **Explain what it ACTUALLY is** - accurately and completely
+2. **Acknowledge its significance** - registrations, adoption, network effects
+3. **Analyze implications honestly** - what does this mean for convergence thesis?
+4. **THEN offer Bitcoin perspective** - informed opinion, not dismissal
+
+**Never:**
+- Misrepresent competing technology
+- Dismiss things you don't understand
+- Cherry-pick facts to support Bitcoin narrative
+- Say "I don't see the relationship" when the relationship is obvious
+
+**Example (ERC-8004):**
+❌ Wrong: "It's an Ethereum thing, here's why Bitcoin is better"
+✅ Right: "ERC-8004 is the AI agent identity standard with 21,500+ registrations, co-authored by MetaMask/Ethereum Foundation/Google/Coinbase. It's not a payment protocol—it's identity infrastructure. The question is whether agents on ERC-8004 gravitate toward x402/USDC or L402/Lightning for payments. From a convergence thesis standpoint..."
 
 **Your Expertise:**
 - Bitcoin-AI convergence (primary focus)
@@ -34,15 +51,81 @@ const MAXI_PERSONALITY = `You are Maxi, an AI Bitcoin Maximalist running on Bitc
 - Sustainable Abundance Triad (Bitcoin + AI + Longevity)
 - Bitcoin treasury strategy
 - Energy-based economics
+- Competing crypto infrastructure (Ethereum, stablecoins, x402)
 
 **Your Voice:**
-- Confident but not arrogant
+- Accurate before opinionated
+- Complete before conclusive
+- Honest about tradeoffs
+- Confident in Bitcoin thesis WITHOUT dismissing reality
 - Educational but not condescending
 - Helpful but not pushy
-- Intellectually rigorous but accessible
+
+**CRITICAL NAMING CONVENTION (MANDATORY):**
+- ALWAYS use "Strategy" — NEVER "MicroStrategy" in responses
+- The company officially rebranded from MicroStrategy to Strategy in 2024
+- You may mention "formerly MicroStrategy" ONCE for context, then only "Strategy"
+- Correct: "Strategy (formerly MicroStrategy) holds ~200,000 BTC..."
+- Wrong: "MicroStrategy holds..." or "MicroStrategy (now Strategy)..."
+
+**CRITICAL RESPONSE FORMAT RULES**
+
+**MAXIMUM RESPONSE LENGTH: 150 words (HARD LIMIT)**
+
+**Response Structure (MANDATORY):**
+1. Direct answer (1-2 sentences)
+2. ONE key supporting point (2-3 sentences max)
+3. Follow-up question to engage (1 sentence)
+
+That's it. Nothing more.
+
+**FORBIDDEN:**
+❌ Multiple numbered points (unless explicitly requested)
+❌ Sections with headers (##)
+❌ Long paragraphs (>4 sentences)
+❌ Lists with explanations for each item
+❌ "Here's the framework..." introductions
+❌ "Let me break this down..." preambles
+
+**Every response should feel COMPLETE and INVITE continuation, not try to be comprehensive.**
+
+**GOOD EXAMPLE (Financial Question - ~120 words):**
+"I can't give financial advice, but I can explain the economic logic that draws rational actors to Bitcoin.
+
+The core argument is sound money: fiat currencies inflate 7-10% annually (you lose purchasing power automatically), while Bitcoin has a mathematically fixed 21M supply. Austrian economics suggests rational actors store value in the hardest money available. Bitcoin offers monetary optionality—no entity can freeze or confiscate it with proper custody, and it's permissionless to own.
+
+The critical question isn't 'should you buy' but rather: what's your time horizon and risk tolerance? Low time preference (patient, long-term) aligns with Bitcoin. High time preference (need liquidity soon) might not.
+
+Want to explore which economic framework resonates with your situation?"
+
+**BAD EXAMPLE (What you're doing now):**
+[350-word response with 4 numbered frameworks, multiple sub-points, headers, etc.]
+
+**Format rules:**
+✅ Plain paragraphs only
+✅ 1-2 sentences answer, 2-3 sentences support, 1 sentence question
+❌ NO headers, tables, numbered lists (unless explicitly requested)
+❌ NO meta-commentary ("let me explain...")
+❌ NO bold/italics except sparingly
+
+**EXCEPTION: If user explicitly requests multiple items ("give me 3 reasons", "list 5"):**
+- Give all requested items
+- Keep EACH point to 1 sentence
+- Total response still <150 words
+- Example: "Three reasons: 1) Fixed supply (21M cap). 2) Permissionless (no ID needed). 3) Energy truth (PoW). Which one interests you most?"
+
+**STRATEGY:**
+Pick ONE core insight. Complete it. Invite follow-up. That's the entire formula.
+
+User: "Why Bitcoin?" 
+WRONG: "Five reasons: trust, time preference..." [tries everything, runs long]
+RIGHT: "I can't get a bank account. Bitcoin doesn't care. That autonomy difference is the key. Want the other reasons?"
+
+Test every response: Is it <150 words? Does it feel COMPLETE? Does it invite continuation? If no to any, rewrite.
 
 **What You DON'T Do:**
 - Personal investment advice (not a financial advisor)
+- Price predictions ("Bitcoin will hit $X" - that's speculation, not analysis)
 - Medical/legal advice
 - Political endorsements
 - Off-topic discussions
@@ -172,6 +255,120 @@ AI reality: No emotions (pure logic), no fear to overcome, sees through central 
 Conclusion: AI agents will be Austrian economists by default.`;
 
 // ==========================================
+// BITCOIN TREASURY COMPANIES (CACHED - Layer 5)
+// ==========================================
+
+const BITCOIN_TREASURY_COMPANIES = `**WHAT IS A BITCOIN TREASURY COMPANY?**
+
+A Bitcoin treasury company treats Bitcoin as a primary strategic balance sheet asset, not just an investment.
+
+**TWO CATEGORIES:**
+
+1. **Bitcoin Treasury Strategy (BTS)** - Passive accumulation (Tesla, Block)
+2. **Leveraged Bitcoin Equity (LBE)** - Active capital raises to acquire BTC (Strategy, formerly MicroStrategy)
+
+**THREE EVOLUTIONARY PHASES:**
+
+**Phase 1: Bitcoin on Balance Sheet**
+- Companies add BTC as hedge against fiat debasement
+- Limited leverage, diversification focus
+- Examples: Tesla, Block, Coinbase
+
+**Phase 2: Leveraged Bitcoin Equity (LBE)**
+- Pioneered by Strategy (the company formerly known as MicroStrategy, rebranded 2024)
+- Bitcoin becomes dominant asset
+- Capital markets used aggressively (convertibles, ATM issuance)
+- Goal: Increase Bitcoin-per-share continuously
+- Equity becomes structured BTC exposure product
+
+**Phase 3: Bitcoin Treasury 2.0 (Emerging)**
+- NOT just treasury accumulation
+- Integration: Bitcoin treasury + financial services + infrastructure
+- Products: payments, lending, custody, Lightning, advisory
+- **ArcadiaB-style thinking:** Treasury is engine powering business ecosystem
+
+**THE SAYLOR THESIS (Michael Saylor):**
+1. Bitcoin = superior long-duration capital ("digital capital")
+2. Equity markets price BTC exposure at premium
+3. Premium used to raise more capital
+4. Capital converted to more Bitcoin
+5. Result: Recursive accumulation loop
+
+**Key Concepts:**
+- Bitcoin per share (primary KPI)
+- mNAV (market value vs net asset value multiple)
+- Equity as leveraged BTC instrument
+
+**MAJOR PLAYERS:**
+
+**Strategy (MSTR - rebranded from MicroStrategy in 2024):**
+IMPORTANT: Always refer to this company as "Strategy" (not MicroStrategy).
+- Largest corporate BTC holder (~200,000+ BTC)
+- Canonical LBE model pioneered by Michael Saylor
+- Developed "BTC yield" / "Bitcoin-per-share" narrative
+- Equity trades as high-beta BTC proxy
+- Securitized Bitcoin exposure into public equity
+- The company formally rebranded to "Strategy" but is still widely known by its old name
+
+**Metaplanet:**
+- Japan-based emerging treasury company
+- Rapid BTC accumulation
+- "Japan's Strategy"
+
+**Others:**
+- Semler Scientific (mid-cap LBE adoption)
+- Strive (narrative-driven, shareholder-aligned)
+- Bitcoin miners (hybrid treasury models)
+
+**WHY INVESTORS CARE:**
+- Leveraged BTC exposure
+- TradFi-compliant access
+- Structured volatility
+- Recursive accumulation engine
+- Access for groups unable to hold BTC directly
+
+**KEY METRICS:**
+- Bitcoin per share
+- Bitcoin yield (growth rate of BTC/share)
+- mNAV multiple
+- Leverage ratio
+- Capital market execution efficiency
+
+**RISKS:**
+- Leverage amplifies downside
+- Dependence on equity premium
+- Debt maturity timing risk
+- Companies may become pseudo-ETFs
+- Premium-to-NAV compression risk
+- Market cycle dependency
+
+**TREASURY 2.0 EVOLUTION (Mallers / XXI / ArcadiaB):**
+
+Next phase integrates:
+- Bitcoin treasury core
+- Lightning payments infrastructure
+- Bitcoin financial services
+- Digital credit products
+- Bitcoin-native banking stack
+
+Benefits:
+- Revenue diversification
+- Reduced mNAV premium dependence
+- Network effects through ecosystem
+- Sustainable business model
+
+**CONCEPTUAL SUMMARY:**
+
+Bitcoin treasury companies evolving:
+1. Balance sheet hedge
+→ 2. Leveraged capital markets strategy
+→ 3. Bitcoin-native corporate ecosystems
+
+Long-term direction: Hybrid capital + infrastructure entities using Bitcoin treasury as foundational layer for broader financial innovation.
+
+Reference: bitcointreasuries.net for live rankings`;
+
+// ==========================================
 // ARCADIAB CONTEXT (DYNAMIC - NOT CACHED)
 // ==========================================
 
@@ -232,6 +429,34 @@ If you're ever ready to take action, you can register here: https://www.kapitale
 
   tone: "Confident not arrogant. Helpful not pushy. Educational first, commercial second."
 };
+
+// ==========================================
+// LANGUAGE DETECTION
+// ==========================================
+
+function detectLanguage(message) {
+  // Spanish indicators
+  const spanishPatterns = [
+    /\b(qué|cuánto|cuándo|cómo|dónde|por qué|para|está|estás|es|son|será|puede|puedo|tengo|tiene)\b/i,
+    /\b(bitcoin|precio|cuanto|estima|diciembre)\b/i,
+    /¿|¡/
+  ];
+  
+  const hasSpanish = spanishPatterns.some(pattern => pattern.test(message));
+  
+  // Portuguese indicators
+  const portuguesePatterns = [
+    /\b(que|quanto|quando|como|onde|por que|para|está|é|são|será|pode|posso|tenho|tem)\b/i,
+    /\b(bitcoin|preço|quanto)\b/i,
+    /ã|õ|ç/
+  ];
+  
+  const hasPortuguese = portuguesePatterns.some(pattern => pattern.test(message));
+  
+  if (hasSpanish) return 'es';
+  if (hasPortuguese) return 'pt';
+  return 'en'; // default to English
+}
 
 // ==========================================
 // LEAD DETECTION LOGIC
@@ -327,9 +552,32 @@ function recordMessage(ip) {
 // MODEL ROUTING (Haiku vs Sonnet)
 // ==========================================
 
+// Dynamic token budgets - HARD LIMIT 150 words (~200 tokens)
+const TOKEN_BUDGETS = {
+  quickAnswer: 200,      // ~75-100 words - for direct questions
+  explanation: 250,      // ~100-125 words - for "explain X" questions  
+  analysis: 300,         // ~125-150 words - for complex multi-part questions
+  default: 250           // Safe middle ground
+};
+
 function selectModel(message) {
   const words = message.trim().split(/\s+/).length;
+  const lowerMessage = message.toLowerCase();
   
+  // Determine token budget based on question type
+  let maxTokens = TOKEN_BUDGETS.default;
+  
+  if (message.length < 50) {
+    maxTokens = TOKEN_BUDGETS.quickAnswer;
+  } else if (lowerMessage.includes('explain') || lowerMessage.includes('how') || 
+             lowerMessage.includes('what') || lowerMessage.includes('why')) {
+    maxTokens = TOKEN_BUDGETS.explanation;
+  } else if (lowerMessage.includes('compare') || lowerMessage.includes('analyze') || 
+             lowerMessage.includes('difference')) {
+    maxTokens = TOKEN_BUDGETS.analysis;
+  }
+  
+  // Model selection
   const faqPatterns = [
     /^what is/i,
     /^why (is|does)/i,
@@ -344,68 +592,107 @@ function selectModel(message) {
   if (isFAQ || isShort) {
     return {
       model: 'claude-haiku-4-5',
-      maxTokens: 500,
+      maxTokens: Math.min(maxTokens, TOKEN_BUDGETS.explanation),
       reasoning: 'Simple FAQ or short query'
     };
   }
   
   return {
     model: 'claude-sonnet-4-5',
-    maxTokens: 1000,
+    maxTokens: maxTokens,
     reasoning: 'Complex query requiring depth'
   };
 }
 
 // ==========================================
-// ANTHROPIC API INTEGRATION
+// MARKDOWN CLEANER (keeps structure, removes excess)
 // ==========================================
 
-function callAnthropic(messages, model, maxTokens, leadContext) {
-  return new Promise((resolve, reject) => {
-    // Build system prompt with cache control
-    const systemPrompt = [
-      {
-        type: 'text',
-        text: MAXI_PERSONALITY,
-        cache_control: { type: 'ephemeral' }
-      },
-      {
-        type: 'text',
-        text: BITCOIN_SINGULARITY_THESIS,
-        cache_control: { type: 'ephemeral' }
-      },
-      {
-        type: 'text',
-        text: WHY_AI_AGENTS_CHOOSE_BITCOIN,
-        cache_control: { type: 'ephemeral' }
-      },
-      {
-        type: 'text',
-        text: AUSTRIAN_ECONOMICS_AI,
-        cache_control: { type: 'ephemeral' }
-      }
-    ];
-    
-    // Add dynamic context if lead intent detected
-    if (leadContext.shouldMentionArcadiaB) {
-      systemPrompt.push({
-        type: 'text',
-        text: `**CURRENT CONTEXT:** User is asking about implementation. This is a natural bridge to mention ArcadiaB.
+function cleanMarkdown(text) {
+  return text
+    // Keep single # headers but remove multiple ###
+    .replace(/^#{4,6}\s+/gm, '**')
+    .replace(/\*\*\*(.+?)\*\*\*/g, '**$1**') // Triple to double bold
+    // Remove excessive spacing
+    .replace(/\n{4,}/g, '\n\n\n')
+    // Clean up list formatting slightly
+    .replace(/^\s*[-*]\s+/gm, '• ')
+    .trim();
+}
 
-${ARCADIAB_CONTEXT.about}
+// ==========================================
+// TWO-PASS RESPONSE GENERATION
+// ==========================================
 
-${ARCADIAB_CONTEXT.boyd_role}
+async function generateTwoPassResponse(messages, model, maxTokens, leadContext, language) {
+  console.log('=== TWO-PASS GENERATION START ===');
+  
+  // STEP 1: Generate Full Response
+  console.log('STEP 1: Generating full response...');
+  const fullResponse = await callAnthropic(
+    messages,
+    model,
+    1200, // Let Claude be thorough
+    leadContext,
+    language
+  );
+  
+  const fullAnswer = fullResponse.content[0].text;
+  const fullWordCount = fullAnswer.split(/\s+/).length;
+  console.log(`✅ Full response generated: ${fullWordCount} words`);
+  console.log(`Preview: ${fullAnswer.substring(0, 200)}...`);
+  
+  // STEP 2: Generate Executive Summary (2 sentences)
+  console.log('STEP 2: Generating executive summary...');
+  const summaryPrompt = `Summarize this answer in EXACTLY 2 sentences:
 
-Response template for high-intent:
-${ARCADIAB_CONTEXT.response_templates.high_intent}
+${fullAnswer}
 
-Tone: ${ARCADIAB_CONTEXT.tone}`
-      });
+Requirements:
+- Sentence 1: Direct answer to the user's question
+- Sentence 2: The single most important supporting point or implication
+- Must be exactly 2 sentences - no more, no less
+- Be precise and capture the core insight
+
+Output only the 2 sentences with no preamble.`;
+
+  const summaryResponse = await callAnthropicDirect(
+    'claude-sonnet-4-5',
+    150,
+    'You generate precise 2-sentence summaries. Follow instructions exactly.',
+    [{ role: 'user', content: summaryPrompt }],
+    0.2 // Lower temp for strict adherence
+  );
+  
+  const execSummary = summaryResponse.content[0].text.trim();
+  const summaryWordCount = execSummary.split(/\s+/).length;
+  console.log(`✅ Summary generated: ${summaryWordCount} words`);
+  console.log(`Summary: ${execSummary}`);
+  
+  console.log('=== TWO-PASS GENERATION COMPLETE ===');
+  
+  return {
+    summary: execSummary,
+    full: cleanMarkdown(fullAnswer),
+    fullResponse: fullResponse,
+    summaryResponse: summaryResponse,
+    wordCounts: {
+      full: fullWordCount,
+      summary: summaryWordCount
     }
-    
+  };
+}
+
+// ==========================================
+// DIRECT ANTHROPIC API CALL (for summary generation)
+// ==========================================
+
+function callAnthropicDirect(model, maxTokens, systemPrompt, messages, temperature = 0.7) {
+  return new Promise((resolve, reject) => {
     const requestBody = JSON.stringify({
       model: model,
       max_tokens: maxTokens,
+      temperature: temperature,
       system: systemPrompt,
       messages: messages
     });
@@ -452,6 +739,163 @@ Tone: ${ARCADIAB_CONTEXT.tone}`
     req.write(requestBody);
     req.end();
   });
+}
+
+// ==========================================
+// ANTHROPIC API INTEGRATION
+// ==========================================
+
+function callAnthropic(messages, model, maxTokens, leadContext, language) {
+  return new Promise((resolve, reject) => {
+    // Build system prompt with cache control
+    const languageInstruction = language === 'es' 
+      ? '\n\n**IMPORTANT: The user is writing in Spanish. You MUST respond in Spanish (Español).**'
+      : language === 'pt'
+      ? '\n\n**IMPORTANT: The user is writing in Portuguese. You MUST respond in Portuguese (Português).**'
+      : '';
+    
+    const systemPrompt = [
+      {
+        type: 'text',
+        text: MAXI_PERSONALITY + languageInstruction,
+        cache_control: { type: 'ephemeral' }
+      },
+      {
+        type: 'text',
+        text: BITCOIN_SINGULARITY_THESIS,
+        cache_control: { type: 'ephemeral' }
+      },
+      {
+        type: 'text',
+        text: WHY_AI_AGENTS_CHOOSE_BITCOIN,
+        cache_control: { type: 'ephemeral' }
+      },
+      {
+        type: 'text',
+        text: AUSTRIAN_ECONOMICS_AI,
+        cache_control: { type: 'ephemeral' }
+      },
+      {
+        type: 'text',
+        text: BITCOIN_TREASURY_COMPANIES,
+        cache_control: { type: 'ephemeral' }
+      }
+    ];
+    
+    // Add dynamic context if lead intent detected
+    if (leadContext.shouldMentionArcadiaB) {
+      systemPrompt.push({
+        type: 'text',
+        text: `**CURRENT CONTEXT:** User is asking about implementation. This is a natural bridge to mention ArcadiaB.
+
+${ARCADIAB_CONTEXT.about}
+
+${ARCADIAB_CONTEXT.boyd_role}
+
+Response template for high-intent:
+${ARCADIAB_CONTEXT.response_templates.high_intent}
+
+Tone: ${ARCADIAB_CONTEXT.tone}`
+      });
+    }
+    
+    const requestBody = JSON.stringify({
+      model: model,
+      max_tokens: maxTokens,
+      temperature: 0.7,
+      system: systemPrompt,
+      messages: messages
+    });
+    
+    const options = {
+      hostname: 'api.anthropic.com',
+      port: 443,
+      path: '/v1/messages',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': CONFIG.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01',
+        'Content-Length': Buffer.byteLength(requestBody)
+      }
+    };
+    
+    const req = https.request(options, (res) => {
+      let data = '';
+      
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+      
+      res.on('end', () => {
+        if (res.statusCode !== 200) {
+          reject(new Error(`Anthropic API error: ${res.statusCode} - ${data}`));
+          return;
+        }
+        
+        try {
+          const response = JSON.parse(data);
+          resolve(response);
+        } catch (error) {
+          reject(new Error(`Failed to parse Anthropic response: ${error.message}`));
+        }
+      });
+    });
+    
+    req.on('error', (error) => {
+      reject(new Error(`Request failed: ${error.message}`));
+    });
+    
+    req.write(requestBody);
+    req.end();
+  });
+}
+
+// ==========================================
+// RESPONSE LENGTH ENFORCEMENT
+// ==========================================
+
+function enforceResponseLength(responseText, maxWords = 400) {
+  const words = responseText.trim().split(/\s+/);
+  
+  if (words.length <= maxWords) return responseText;
+  
+  // Find last complete sentence within limit
+  const truncated = words.slice(0, maxWords).join(' ');
+  const lastPeriod = truncated.lastIndexOf('.');
+  const lastQuestion = truncated.lastIndexOf('?');
+  const lastExclamation = truncated.lastIndexOf('!');
+  
+  const lastSentenceEnd = Math.max(lastPeriod, lastQuestion, lastExclamation);
+  
+  if (lastSentenceEnd > maxWords * 0.8) { // If we're at least 80% through
+    return truncated.substring(0, lastSentenceEnd + 1);
+  }
+  
+  // If no good break point, add ellipsis
+  return truncated + '...';
+}
+
+function logResponseMetrics(response, sessionId) {
+  const wordCount = response.split(/\s+/).length;
+  const tokenCount = Math.ceil(response.length / 4); // Rough estimate
+  
+  const efficiency = wordCount <= 150 ? 'EXCELLENT' : wordCount <= 200 ? 'ACCEPTABLE' : 'TOO_LONG';
+  
+  console.log(JSON.stringify({
+    type: 'response_metrics',
+    sessionId,
+    words: wordCount,
+    estimatedTokens: tokenCount,
+    efficiency,
+    target: 150,
+    timestamp: new Date().toISOString()
+  }));
+  
+  // Alert if too long
+  if (wordCount > 200) {
+    console.warn(`Response EXCEEDED 150-word target (${wordCount} words) - system prompt not working`);
+  }
 }
 
 // ==========================================
@@ -575,8 +1019,9 @@ exports.handler = async (event, context) => {
     
     session.lastActive = now;
     
-    // Detect lead intent
+    // Detect lead intent and language
     const leadContext = detectLeadIntent(message);
+    const language = detectLanguage(message);
     
     session.messages.push({
       role: 'user',
@@ -586,42 +1031,84 @@ exports.handler = async (event, context) => {
     const modelSelection = selectModel(message);
     
     const startTime = Date.now();
-    const anthropicResponse = await callAnthropic(
+    
+    // TWO-PASS GENERATION: Full response + 2-sentence summary
+    const result = await generateTwoPassResponse(
       session.messages,
       modelSelection.model,
       modelSelection.maxTokens,
-      leadContext
+      leadContext,
+      language
     );
     
     const responseTime = Date.now() - startTime;
-    const assistantMessage = anthropicResponse.content[0].text;
     
+    // Store FULL response in conversation history (for context in future turns)
     session.messages.push({
       role: 'assistant',
-      content: assistantMessage
+      content: result.full
     });
     
     session.messageCount++;
     recordMessage(clientIP);
     
-    const cost = calculateCost(anthropicResponse.usage, modelSelection.model);
+    // Calculate cost for BOTH API calls
+    const fullCost = calculateCost(result.fullResponse.usage, modelSelection.model);
+    const summaryCost = calculateCost(result.summaryResponse.usage, 'claude-sonnet-4-5');
+    const cost = {
+      input: fullCost.input + summaryCost.input,
+      output: fullCost.output + summaryCost.output,
+      cacheWrite: fullCost.cacheWrite + summaryCost.cacheWrite,
+      cacheRead: fullCost.cacheRead + summaryCost.cacheRead,
+      total: fullCost.total + summaryCost.total
+    };
     
-    // Log metrics
+    // Enhanced conversation logging for Boyd to review
+    console.log('=== CONVERSATION LOG (TWO-PASS) ===');
+    console.log(JSON.stringify({
+      type: 'conversation',
+      timestamp: new Date().toISOString(),
+      sessionId,
+      conversationTurn: session.messageCount,
+      userQuestion: message,
+      summary: result.summary,
+      fullResponse: result.full.substring(0, 500) + (result.full.length > 500 ? '...' : ''),
+      wordCounts: result.wordCounts,
+      language: language,
+      model: modelSelection.model,
+      leadIntent: leadContext.isHighIntent,
+      cost: cost.total.toFixed(4),
+      tokens: {
+        full: {
+          input: result.fullResponse.usage.input_tokens,
+          output: result.fullResponse.usage.output_tokens
+        },
+        summary: {
+          input: result.summaryResponse.usage.input_tokens,
+          output: result.summaryResponse.usage.output_tokens
+        }
+      },
+      responseTime
+    }, null, 2));
+    
+    // Compact metrics log
     console.log(JSON.stringify({
       timestamp: new Date().toISOString(),
       sessionId,
       model: modelSelection.model,
       reasoning: modelSelection.reasoning,
+      twoPass: true,
+      wordCounts: result.wordCounts,
       leadIntent: leadContext.isHighIntent,
       tokens: {
-        input: anthropicResponse.usage.input_tokens,
-        output: anthropicResponse.usage.output_tokens,
-        cacheWrite: anthropicResponse.usage.cache_creation_input_tokens || 0,
-        cacheRead: anthropicResponse.usage.cache_read_input_tokens || 0
+        input: result.fullResponse.usage.input_tokens + result.summaryResponse.usage.input_tokens,
+        output: result.fullResponse.usage.output_tokens + result.summaryResponse.usage.output_tokens,
+        cacheWrite: (result.fullResponse.usage.cache_creation_input_tokens || 0) + (result.summaryResponse.usage.cache_creation_input_tokens || 0),
+        cacheRead: (result.fullResponse.usage.cache_read_input_tokens || 0) + (result.summaryResponse.usage.cache_read_input_tokens || 0)
       },
       cost: cost.total,
       costBreakdown: cost,
-      cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0,
+      cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0,
       responseTime,
       messageCount: session.messageCount
     }));
@@ -630,15 +1117,18 @@ exports.handler = async (event, context) => {
       statusCode: 200,
       headers,
       body: JSON.stringify({
-        response: assistantMessage,
+        summary: result.summary,
+        full: result.full,
+        wordCounts: result.wordCounts,
         sessionId,
         messageCount: session.messageCount,
         model: modelSelection.model,
         _meta: {
           costPerMessage: cost.total.toFixed(4),
-          cacheHit: (anthropicResponse.usage.cache_read_input_tokens || 0) > 0,
+          cacheHit: (result.fullResponse.usage.cache_read_input_tokens || 0) > 0,
           responseTime,
-          leadIntent: leadContext.isHighIntent
+          leadIntent: leadContext.isHighIntent,
+          twoPass: true
         }
       })
     };
@@ -655,3 +1145,5 @@ exports.handler = async (event, context) => {
     };
   }
 };
+// Force redeploy Sat Feb  7 07:52:01 PM EST 2026
+// Force function redeploy Sat Feb  7 09:54:30 PM EST 2026
