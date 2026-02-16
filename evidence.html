@@ -76,7 +76,7 @@
         .logo {
             font-size: 0.85rem;
             font-weight: 700;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -95,7 +95,7 @@
         }
 
         .nav-links a {
-            color: var(--text-secondary);
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
             transition: color 0.3s ease;
@@ -103,7 +103,7 @@
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
 
         main {
@@ -127,7 +127,7 @@
 
         .page-header p {
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
 
         .content-section {
@@ -141,14 +141,14 @@
         .content-section h2 {
             font-size: 16px;
             margin-bottom: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             text-transform: uppercase;
             letter-spacing: 0.08em;
         }
 
         .content-section p {
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             line-height: 1.5;
             margin-bottom: 0.5rem;
         }
@@ -164,11 +164,11 @@
         .placeholder h3 {
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
 
         .placeholder p {
-            color: var(--text-secondary);
+            color: var(--text-primary);
             font-size: 0.9rem;
         }
 
@@ -184,7 +184,7 @@
             background: var(--bg-tertiary);
             border: 1px solid var(--border-card);
             border-radius: 8px;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -193,8 +193,8 @@
         .filter-btn:hover,
         .filter-btn.active {
             background: rgba(247, 147, 26, 0.1);
-            border-color: var(--text-secondary);
-            color: var(--text-secondary);
+            border-color: var(--text-primary);
+            color: var(--text-primary);
         }
 
         .evidence-timeline {
@@ -222,7 +222,7 @@
 
         .evidence-item .date {
             font-family: 'JetBrains Mono', monospace;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             font-size: 0.9rem;
             margin-bottom: 0.5rem;
         }
@@ -233,7 +233,7 @@
         }
 
         .evidence-item p {
-            color: var(--text-secondary);
+            color: var(--text-primary);
             line-height: 1.5;
         }
 
@@ -244,7 +244,7 @@
             border: 1px solid var(--border-card);
             border-radius: 4px;
             font-size: 0.85rem;
-            color: var(--text-secondary);
+            color: var(--text-primary);
             margin-top: 0.5rem;
         }
 
@@ -308,11 +308,11 @@
             padding: 1rem 0;
             border-top: 1px solid rgba(247, 147, 26, 0.2);
             text-align: center;
-            color: var(--text-secondary);
+            color: var(--text-primary);
         }
 
         footer a {
-            color: var(--text-secondary);
+            color: var(--text-primary);
             text-decoration: none;
         }
 
@@ -411,10 +411,10 @@
     <footer>
         <!-- Newsletter Signup -->
         <div style="max-width: 500px; margin: 0 auto 2rem; padding: 2rem; background: var(--bg-secondary); border: 1px solid var(--border-card); border-radius: 8px;">
-            <h3 style="color: var(--text-secondary); margin-bottom: 0.5rem; font-size: 0.85rem;">Subscribe to Research Updates</h3>
+            <h3 style="color: var(--text-primary); margin-bottom: 0.5rem; font-size: 0.85rem;">Subscribe to Research Updates</h3>
             <form action="https://app.kit.com/forms/9092630/subscriptions" method="POST" style="display: flex; gap: 1rem; flex-wrap: wrap;">
                 <input type="email" name="email" placeholder="Your email address" required style="flex: 1; min-width: 250px; padding: 1rem 1rem; background: var(--bg-primary); border: 1px solid var(--bg-tertiary); border-radius: 6px; color: var(--text-primary); font-size: 0.9rem;">
-                <button type="submit" style="padding: 1rem 1.5rem; background: transparent; color: var(--bitcoin-orange); border: 1px solid var(--border-subtle); border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
+                <button type="submit" style="padding: 1rem 1.5rem; background: transparent; color: var(--text-primary); border: 1px solid var(--border-subtle); border-radius: 6px; font-weight: 600; font-size: 0.9rem; cursor: pointer; transition: all 0.3s ease;">Subscribe</button>
             </form>
         </div>
         
@@ -438,7 +438,7 @@
             } catch (error) {
                 console.error('Error loading evidence data:', error);
                 document.getElementById('evidenceTimeline').innerHTML = 
-                    '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">Error loading evidence data. Please try again later.</p>';
+                    '<p style="color: var(--text-primary); text-align: center; padding: 2rem;">Error loading evidence data. Please try again later.</p>';
             }
         }
 
@@ -447,7 +447,7 @@
             const timeline = document.getElementById('evidenceTimeline');
             
             if (evidence.length === 0) {
-                timeline.innerHTML = '<p style="color: var(--text-secondary); text-align: center; padding: 2rem;">No evidence entries match this filter.</p>';
+                timeline.innerHTML = '<p style="color: var(--text-primary); text-align: center; padding: 2rem;">No evidence entries match this filter.</p>';
                 return;
             }
             
