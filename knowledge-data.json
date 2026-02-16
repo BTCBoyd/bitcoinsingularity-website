@@ -146,10 +146,10 @@
     {
       "title": "L402 vs x402: Competitive Analysis",
       "author": "BitcoinSingularity.AI Research",
-      "type": "Comparative Analysis",
+      "type": "Comparative Analysis (Coming Soon)",
       "date": "2026-02-15",
       "description": "Honest comparison of Bitcoin-native (L402) and stablecoin-based (x402) machine payment protocols. L402 advantages: permissionless, no corporate dependency, Lightning privacy, Bitcoin's monetary properties. x402 advantages: USD-denominated stability, corporate backing (Coinbase/Stripe), larger ecosystem, 50M+ transaction head start. The question: do agents optimize for sovereignty (Bitcoin) or stability+support (stablecoins)?",
-      "link": "/research/l402-vs-x402",
+      "link": null,
       "category": "Competitive",
       "keyInsights": [
         "L402: Bitcoin-native, permissionless, millisecond settlement, fractions-of-cent cost",
