@@ -503,34 +503,17 @@
         // Fetch current Bitcoin supply
         async function fetchBitcoinData() {
             try {
-                // Get current block height from Blockstream API
-                const response = await fetch('https://blockstream.info/api/blocks/tip/height');
-                const blockHeight = parseInt(await response.text());
+                // Get circulating supply from blockchain.info charts API
+                const response = await fetch('https://api.blockchain.info/charts/total-bitcoins?timespan=1days&format=json');
+                const data = await response.json();
+                const currentSupply = data.values[data.values.length - 1].y;
                 
-                // Calculate supply from block height
-                const currentSupply = calculateSupplyAtBlock(blockHeight);
                 updateDisplay(currentSupply);
             } catch (error) {
                 console.error('Error fetching Bitcoin data:', error);
                 // Fallback to estimate
-                updateDisplay(19850000); // Approximate current supply
+                updateDisplay(19991000); // Current approximate supply
             }
-        }
-
-        // Calculate Bitcoin supply at a given block height
-        function calculateSupplyAtBlock(height) {
-            let supply = 0;
-            let currentReward = 50;
-            let halvingInterval = 210000;
-            
-            for (let h = 0; h < height; h++) {
-                if (h > 0 && h % halvingInterval === 0) {
-                    currentReward = currentReward / 2;
-                }
-                supply += currentReward;
-            }
-            
-            return supply;
         }
 
         function updateDisplay(currentSupply) {
