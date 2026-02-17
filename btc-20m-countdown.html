@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20 Million Bitcoin Countdown - BitcoinSingularity.AI</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .countdown-hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+        }
+
+        .countdown-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--bitcoin-orange);
+        }
+
+        .countdown-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-tertiary);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .stat-subvalue {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 2rem 0;
+            position: relative;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--bitcoin-orange) 0%, #f7a91a 100%);
+            transition: width 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 1rem;
+            font-weight: 700;
+            color: var(--bg-primary);
+        }
+
+        .countdown-timer {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 3rem 0;
+        }
+
+        .time-unit {
+            text-align: center;
+        }
+
+        .time-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--bitcoin-orange);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .time-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 0.5rem;
+        }
+
+        .party-info {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--bitcoin-orange);
+            margin: 3rem auto;
+            max-width: 600px;
+        }
+
+        .party-info h3 {
+            color: var(--bitcoin-orange);
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .countdown-title {
+                font-size: 1.8rem;
+            }
+            
+            .time-value {
+                font-size: 2rem;
+            }
+            
+            .stat-value {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="/" class="logo">
+                <img src="assets/logo-white.png" alt="Bitcoin Singularity" style="height: 40px;">
+            </a>
+            <ul class="nav-links">
+                <li><a href="/research">Research</a></li>
+                <li><a href="/evidence">Evidence Tracker</a></li>
+                <li><a href="/tools">Tools</a></li>
+                <li><a href="/knowledge">Knowledge Base</a></li>
+                <li><a href="/chat">Ask Maxi</a></li>
+                <li><a href="/about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="countdown-hero">
+        <h1 class="countdown-title">🎉 20 MILLION BITCOIN COUNTDOWN</h1>
+        <p class="countdown-subtitle">Historic milestone approaching - join us in Monterrey to celebrate</p>
+
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-label">Bitcoin Mined</div>
+                <div class="stat-value" id="btc-mined"><span class="loading">Loading...</span></div>
+                <div class="stat-subvalue">out of 21,000,000 maximum</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Remaining Until 20M</div>
+                <div class="stat-value" id="btc-remaining"><span class="loading">Loading...</span></div>
+                <div class="stat-subvalue" id="blocks-remaining">Loading blocks...</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">Estimated Date</div>
+                <div class="stat-value" id="target-date" style="font-size: 1.5rem;"><span class="loading">Calculating...</span></div>
+                <div class="stat-subvalue" id="target-time">Loading...</div>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-bar">
+                <span id="progress-percent">0%</span>
+            </div>
+        </div>
+
+        <div class="countdown-timer">
+            <div class="time-unit">
+                <div class="time-value" id="days">--</div>
+                <div class="time-label">Days</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="hours">--</div>
+                <div class="time-label">Hours</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="minutes">--</div>
+                <div class="time-label">Minutes</div>
+            </div>
+            <div class="time-unit">
+                <div class="time-value" id="seconds">--</div>
+                <div class="time-label">Seconds</div>
+            </div>
+        </div>
+
+        <div class="party-info">
+            <h3>🎊 Celebration in Monterrey, Mexico</h3>
+            <p>Join the Bitcoin community in Monterrey to celebrate this historic milestone! Details coming soon.</p>
+            <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
+                Hosted by ArcadiaB & BitcoinSingularity.AI
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Constants
+        const TARGET_SUPPLY = 20000000; // 20 million BTC
+        const MAX_SUPPLY = 21000000;
+        const BLOCK_TIME_SECONDS = 600; // ~10 minutes average
+        const SATOSHIS_PER_BTC = 100000000;
+
+        // Current block reward (changes at halving)
+        const CURRENT_BLOCK_REWARD = 3.125; // BTC per block (post-2024 halving)
+
+        let targetTimestamp = null;
+
+        // Fetch current Bitcoin supply
+        async function fetchBitcoinData() {
+            try {
+                // Get current supply in satoshis from blockchain.com
+                const response = await fetch('https://blockchain.info/q/totalbc');
+                const totalSatoshis = await response.text();
+                const currentSupply = parseInt(totalSatoshis) / SATOSHIS_PER_BTC;
+
+                updateDisplay(currentSupply);
+            } catch (error) {
+                console.error('Error fetching Bitcoin data:', error);
+                // Fallback to estimate
+                updateDisplay(19850000); // Approximate current supply
+            }
+        }
+
+        function updateDisplay(currentSupply) {
+            // Calculate remaining
+            const remaining = TARGET_SUPPLY - currentSupply;
+            const percentComplete = (currentSupply / TARGET_SUPPLY) * 100;
+
+            // Calculate blocks remaining (approximately)
+            const blocksRemaining = Math.ceil(remaining / CURRENT_BLOCK_REWARD);
+            const secondsRemaining = blocksRemaining * BLOCK_TIME_SECONDS;
+            targetTimestamp = Date.now() + (secondsRemaining * 1000);
+
+            // Update stats
+            document.getElementById('btc-mined').textContent = currentSupply.toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+
+            document.getElementById('btc-remaining').textContent = remaining.toLocaleString('en-US', {
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+
+            document.getElementById('blocks-remaining').textContent = 
+                `~${blocksRemaining.toLocaleString()} blocks remaining`;
+
+            // Update progress bar
+            document.getElementById('progress-bar').style.width = `${percentComplete}%`;
+            document.getElementById('progress-percent').textContent = `${percentComplete.toFixed(2)}%`;
+
+            // Update target date
+            const targetDate = new Date(targetTimestamp);
+            document.getElementById('target-date').textContent = targetDate.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric'
+            });
+            document.getElementById('target-time').textContent = targetDate.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            });
+
+            // Start countdown
+            updateCountdown();
+        }
+
+        function updateCountdown() {
+            if (!targetTimestamp) return;
+
+            const now = Date.now();
+            const diff = targetTimestamp - now;
+
+            if (diff <= 0) {
+                // Milestone reached!
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+
+            requestAnimationFrame(updateCountdown);
+        }
+
+        // Initialize
+        fetchBitcoinData();
+
+        // Refresh data every 10 minutes
+        setInterval(fetchBitcoinData, 10 * 60 * 1000);
+    </script>
+</body>
+</html>
