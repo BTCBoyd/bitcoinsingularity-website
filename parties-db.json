@@ -13,6 +13,20 @@
       "flagship": true,
       "approved": true,
       "submittedAt": "2026-02-16T22:04:00Z"
+    },
+    "testcity-1771363811878": {
+      "city": "Test City",
+      "country": "Test Country",
+      "lat": 0,
+      "lng": 0,
+      "venue": "Test Venue",
+      "organizer": "Test Organizer",
+      "date": "March 15, 2026",
+      "contact": "test@test.com",
+      "description": "Test submission",
+      "flagship": false,
+      "approved": true,
+      "submittedAt": "2026-02-17T21:30:11.785Z"
     }
   }
 }
