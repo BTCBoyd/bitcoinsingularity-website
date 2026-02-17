@@ -611,23 +611,45 @@
         });
 
         // Party data (will be populated from database/form submissions)
-        const parties = [
-            {
-                city: 'Monterrey',
-                country: 'Mexico',
-                lat: 25.6866,
-                lng: -100.3161,
-                venue: 'LaCuraduría',
-                organizer: 'Bitcoin Network Monterrey / ArcadiaB / BitcoinSingularity.AI',
-                date: 'March 12, 2026, 7:30 PM',
-                contact: 'https://linktr.ee/btcnetworkmty',
-                description: 'The flagship 20 Million Bitcoin celebration in Monterrey, Mexico. Join the Bitcoin community to celebrate this historic milestone!',
-                flagship: true
+        let parties = [];
+
+        // Load parties from JSON file (auto-updates without rebuild)
+        async function loadParties() {
+            try {
+                const response = await fetch('/parties-db.json?t=' + Date.now());
+                const data = await response.json();
+                parties = Object.values(data.parties || {}).filter(p => p.approved !== false);
+                renderParties();
+            } catch (error) {
+                console.error('Error loading parties:', error);
+                // Fallback to hardcoded party
+                parties = [
+                    {
+                        city: 'Monterrey',
+                        country: 'Mexico',
+                        lat: 25.6866,
+                        lng: -100.3161,
+                        venue: 'LaCuraduría',
+                        organizer: 'Bitcoin Network Monterrey / ArcadiaB / BitcoinSingularity.AI',
+                        date: 'March 12, 2026, 7:30 PM',
+                        contact: 'https://linktr.ee/btcnetworkmty',
+                        description: 'The flagship 20 Million Bitcoin celebration in Monterrey, Mexico.',
+                        flagship: true
+                    }
+                ];
+                renderParties();
             }
-        ];
+        }
 
         // Add markers to map
         function renderParties() {
+            // Clear existing markers
+            map.eachLayer(layer => {
+                if (layer instanceof L.Marker) {
+                    map.removeLayer(layer);
+                }
+            });
+            
             parties.forEach(party => {
                 const marker = L.marker([party.lat, party.lng], {
                     icon: bitcoinIcon
@@ -734,8 +756,8 @@
             }
         });
 
-        // Initialize map
-        renderParties();
+        // Initialize map and load parties
+        loadParties();
     </script>
 </body>
 </html>
