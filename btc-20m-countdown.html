@@ -602,19 +602,20 @@
 
         // Party data (will be populated from database/form submissions)
         const parties = [
-            {
-                city: 'Monterrey',
-                country: 'Mexico',
-                lat: 25.6866,
-                lng: -100.3161,
-                venue: 'TBA',
-                organizer: 'ArcadiaB & BitcoinSingularity.AI',
-                date: 'March 12, 2026',
-                contact: 'https://arcadiab.com',
-                description: 'Flagship 20M Bitcoin celebration! Details coming soon.',
-                flagship: true
-            }
-            // More parties will be added here from submissions
+            // Parties will be added here from submissions
+            // Example format:
+            // {
+            //     city: 'City Name',
+            //     country: 'Country',
+            //     lat: 25.6866,
+            //     lng: -100.3161,
+            //     venue: 'Venue Name',
+            //     organizer: 'Organizer',
+            //     date: 'March 12, 2026',
+            //     contact: 'https://example.com or npub...',
+            //     description: 'Description here',
+            //     flagship: false
+            // }
         ];
 
         // Add markers to map
@@ -648,6 +649,20 @@
         // Render party list below map
         function renderPartyList() {
             const listContainer = document.getElementById('parties-list');
+            
+            if (parties.length === 0) {
+                listContainer.innerHTML = `
+                    <h3 style="text-align: center; color: var(--text-primary); margin-bottom: 1.5rem;">
+                        Registered Parties (0)
+                    </h3>
+                    <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                        <p style="font-size: 1.2rem; margin-bottom: 1rem;">🎉 Be the first to host a 20M Bitcoin party!</p>
+                        <p>Fill out the form above to register your celebration.</p>
+                    </div>
+                `;
+                return;
+            }
+            
             const partiesHTML = parties.map(party => `
                 <div class="party-card">
                     <h4>${party.flagship ? '⭐ ' : ''}${party.city}, ${party.country}</h4>
