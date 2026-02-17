@@ -424,9 +424,7 @@
 
         <div class="add-party-form">
             <h3>🎉 Host a 20M Bitcoin Party in Your City</h3>
-            <form id="party-submission-form" name="bitcoin-party" method="POST" data-netlify="true">
-                <input type="hidden" name="form-name" value="bitcoin-party" />
-                <input type="hidden" name="subject" value="🎉 New 20M Bitcoin Party Submission" />
+            <form id="party-submission-form">
                 <p style="display:none;">
                     <label>Don't fill this out if you're human: <input name="bot-field" /></label>
                 </p>
@@ -703,20 +701,31 @@
             submitButton.disabled = true;
             submitButton.textContent = 'Sending...';
             
+            // Get form data
+            const formData = {
+                city: document.getElementById('city').value,
+                country: document.getElementById('country').value,
+                venue: document.getElementById('venue').value,
+                date: document.getElementById('date').value,
+                organizer: document.getElementById('organizer').value,
+                contact: document.getElementById('contact').value,
+                description: document.getElementById('description').value
+            };
+            
             try {
-                const formData = new FormData(form);
-                
-                const response = await fetch('/', {
+                const response = await fetch('/api/submit-party', {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams(formData).toString()
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
                 });
                 
-                if (response.ok) {
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
                     alert('Thank you for submitting your party! 🎉\n\nYour submission has been sent to our team.\n\nYou will be added to the map within 24 hours after review.\n\nShare this countdown page with your community!');
                     form.reset();
                 } else {
-                    throw new Error('Form submission failed');
+                    throw new Error(result.error || 'Form submission failed');
                 }
             } catch (error) {
                 alert('Oops! There was an error submitting your party.\n\nPlease email your details directly to: boyd@arcadiab.com');
