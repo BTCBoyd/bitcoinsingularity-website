@@ -423,7 +423,13 @@
 
         <div class="add-party-form">
             <h3>🎉 Host a 20M Bitcoin Party in Your City</h3>
-            <form id="party-submission-form">
+            <form id="party-submission-form" name="bitcoin-party" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/btc-20m-countdown.html?success=true">
+                <!-- Netlify Forms -->
+                <input type="hidden" name="form-name" value="bitcoin-party" />
+                <p style="display:none;">
+                    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </p>
+                
                 <div class="form-group">
                     <label for="city">City *</label>
                     <input type="text" id="city" name="city" required placeholder="e.g., Monterrey">
@@ -687,55 +693,12 @@
             `;
         }
 
-        // Handle form submission
-        document.getElementById('party-submission-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const submitButton = e.target.querySelector('.submit-btn');
-            submitButton.disabled = true;
-            submitButton.textContent = 'Sending...';
-            
-            const formData = new FormData();
-            
-            // Web3Forms configuration
-            formData.append('access_key', '8c9d4f5e-3b2a-1c8d-7e6f-5a4b3c2d1e0f');
-            formData.append('subject', '🎉 New 20M Bitcoin Party Submission');
-            formData.append('from_name', 'BitcoinSingularity.AI Party Form');
-            formData.append('redirect', 'https://bitcoinsingularity.ai/btc-20m-countdown.html');
-            
-            // Party details
-            formData.append('City', document.getElementById('city').value);
-            formData.append('Country', document.getElementById('country').value);
-            formData.append('Venue', document.getElementById('venue').value || 'Not specified');
-            formData.append('Date/Time', document.getElementById('date').value);
-            formData.append('Organizer', document.getElementById('organizer').value);
-            formData.append('Contact', document.getElementById('contact').value);
-            formData.append('Description', document.getElementById('description').value || 'No description provided');
-            formData.append('Submitted', new Date().toISOString());
-
-            try {
-                // Send email to boyd@arcadiab.com via Web3Forms
-                const response = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                const result = await response.json();
-                
-                if (result.success) {
-                    alert('Thank you for submitting your party! 🎉\n\nYour submission has been sent to our team.\n\nYou will be added to the map within 24 hours after review.\n\nIn the meantime, share the countdown page with your community!');
-                    e.target.reset();
-                } else {
-                    throw new Error('Submission failed');
-                }
-            } catch (error) {
-                alert('Oops! There was an error submitting your party. Please email your details directly to: boyd@arcadiab.com');
-                console.error('Submission error:', error);
-            } finally {
-                submitButton.disabled = false;
-                submitButton.textContent = 'Submit Party';
-            }
-        });
+        // Show success message if form was submitted
+        if (window.location.search.includes('success=true')) {
+            alert('Thank you for submitting your party! 🎉\n\nYour submission has been sent to our team.\n\nYou will be added to the map within 24 hours after review.\n\nIn the meantime, share the countdown page with your community!');
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
 
         // Initialize map
         renderParties();
