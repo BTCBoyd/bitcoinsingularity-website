@@ -4,13 +4,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>20 Million Bitcoin Countdown - BitcoinSingularity.AI</title>
-    <link rel="stylesheet" href="css/global.css">
-    <link rel="stylesheet" href="css/components.css">
+    
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
     <style>
+        :root {
+            --bitcoin-orange: #F7931A;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --success-green: #10B981;
+            --error-red: #EF4444;
+            --border-subtle: rgba(136, 136, 160, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 1rem 0;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
         .countdown-hero {
             text-align: center;
             padding: 4rem 2rem;
-            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            background: var(--bg-primary);
         }
 
         .countdown-title {
@@ -117,12 +180,135 @@
             border-radius: 1rem;
             border: 1px solid var(--bitcoin-orange);
             margin: 3rem auto;
-            max-width: 600px;
+            max-width: 800px;
         }
 
         .party-info h3 {
             color: var(--bitcoin-orange);
             margin-bottom: 1rem;
+        }
+
+        .map-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .map-section h2 {
+            text-align: center;
+            color: var(--bitcoin-orange);
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        #party-map {
+            height: 500px;
+            border-radius: 1rem;
+            border: 1px solid var(--border-subtle);
+            margin-bottom: 2rem;
+        }
+
+        .add-party-form {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-radius: 1rem;
+            border: 1px solid var(--border-subtle);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .add-party-form h3 {
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 0.5rem;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--bitcoin-orange);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bitcoin-orange);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .submit-btn:hover {
+            opacity: 0.9;
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .form-note {
+            margin-top: 1rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .parties-list {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+
+        .party-card {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            border: 1px solid var(--border-subtle);
+            margin-bottom: 1rem;
+        }
+
+        .party-card h4 {
+            color: var(--bitcoin-orange);
+            margin-bottom: 0.5rem;
+        }
+
+        .party-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0.25rem 0;
         }
 
         .loading {
@@ -212,13 +398,76 @@
         </div>
 
         <div class="party-info">
-            <h3>🎊 Celebration in Monterrey, Mexico</h3>
-            <p>Join the Bitcoin community in Monterrey to celebrate this historic milestone! Details coming soon.</p>
-            <p style="margin-top: 1rem; color: var(--text-secondary); font-size: 0.9rem;">
-                Hosted by ArcadiaB & BitcoinSingularity.AI
+            <h3>🎊 Global Bitcoin Celebration</h3>
+            <p>This is a historic milestone for Bitcoin! Join celebrations happening around the world, or host your own party in your city.</p>
+            <p style="margin-top: 1rem; font-weight: 600;">
+                📍 Flagship event in Monterrey, Mexico - Hosted by ArcadiaB & BitcoinSingularity.AI
             </p>
         </div>
     </div>
+
+    <!-- Global Party Map Section -->
+    <section class="map-section">
+        <h2>🌍 20M Bitcoin Party Map</h2>
+        <p style="text-align: center; color: var(--text-secondary); margin-bottom: 2rem;">
+            Find a celebration near you or add your own!
+        </p>
+
+        <div id="party-map"></div>
+
+        <div class="add-party-form">
+            <h3>🎉 Host a 20M Bitcoin Party in Your City</h3>
+            <form id="party-submission-form">
+                <div class="form-group">
+                    <label for="city">City *</label>
+                    <input type="text" id="city" name="city" required placeholder="e.g., Monterrey">
+                </div>
+
+                <div class="form-group">
+                    <label for="country">Country *</label>
+                    <input type="text" id="country" name="country" required placeholder="e.g., Mexico">
+                </div>
+
+                <div class="form-group">
+                    <label for="venue">Venue Name (optional)</label>
+                    <input type="text" id="venue" name="venue" placeholder="e.g., Bitcoin Café">
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date & Time *</label>
+                    <input type="datetime-local" id="date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="organizer">Organizer Name *</label>
+                    <input type="text" id="organizer" name="organizer" required placeholder="Your name or organization">
+                </div>
+
+                <div class="form-group">
+                    <label for="contact">Contact (Email, Nostr, or Website) *</label>
+                    <input type="text" id="contact" name="contact" required placeholder="npub... or email@example.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description (optional)</label>
+                    <textarea id="description" name="description" placeholder="Tell us about your celebration..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Party</button>
+                
+                <p class="form-note">
+                    Submissions are manually approved to prevent spam. Your party will appear on the map within 24 hours.
+                </p>
+            </form>
+        </div>
+
+        <div class="parties-list" id="parties-list">
+            <h3 style="text-align: center; color: var(--text-primary); margin-bottom: 1.5rem;">
+                Registered Parties
+            </h3>
+            <!-- Party cards will be inserted here by JavaScript -->
+        </div>
+    </section>
 
     <script>
         // Constants
@@ -326,6 +575,131 @@
 
         // Refresh data every 10 minutes
         setInterval(fetchBitcoinData, 10 * 60 * 1000);
+    </script>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Party Map Script -->
+    <script>
+        // Initialize map centered on world
+        const map = L.map('party-map').setView([20, 0], 2);
+
+        // Add tile layer (map style)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; OpenStreetMap contributors',
+            maxZoom: 19
+        }).addTo(map);
+
+        // Bitcoin orange marker icon
+        const bitcoinIcon = L.divIcon({
+            className: 'custom-marker',
+            html: '<div style="background: #F7931A; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2px solid #fff;">₿</div>',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+        });
+
+        // Party data (will be populated from database/form submissions)
+        const parties = [
+            {
+                city: 'Monterrey',
+                country: 'Mexico',
+                lat: 25.6866,
+                lng: -100.3161,
+                venue: 'TBA',
+                organizer: 'ArcadiaB & BitcoinSingularity.AI',
+                date: 'March 12, 2026',
+                contact: 'https://arcadiab.com',
+                description: 'Flagship 20M Bitcoin celebration! Details coming soon.',
+                flagship: true
+            }
+            // More parties will be added here from submissions
+        ];
+
+        // Add markers to map
+        function renderParties() {
+            parties.forEach(party => {
+                const marker = L.marker([party.lat, party.lng], {
+                    icon: bitcoinIcon
+                }).addTo(map);
+
+                // Popup content
+                const popupContent = `
+                    <div style="color: #0a0a0f; min-width: 200px;">
+                        <h4 style="margin: 0 0 0.5rem 0; color: #F7931A;">
+                            ${party.flagship ? '⭐ ' : ''}${party.city}, ${party.country}
+                        </h4>
+                        ${party.venue ? `<p style="margin: 0.25rem 0;"><strong>Venue:</strong> ${party.venue}</p>` : ''}
+                        <p style="margin: 0.25rem 0;"><strong>Date:</strong> ${party.date}</p>
+                        <p style="margin: 0.25rem 0;"><strong>Organizer:</strong> ${party.organizer}</p>
+                        ${party.description ? `<p style="margin: 0.5rem 0 0 0; font-size: 0.9rem;">${party.description}</p>` : ''}
+                        ${party.contact ? `<p style="margin: 0.5rem 0 0 0;"><a href="${party.contact}" target="_blank" style="color: #F7931A;">Contact/Info →</a></p>` : ''}
+                    </div>
+                `;
+
+                marker.bindPopup(popupContent);
+            });
+
+            // Also render party list
+            renderPartyList();
+        }
+
+        // Render party list below map
+        function renderPartyList() {
+            const listContainer = document.getElementById('parties-list');
+            const partiesHTML = parties.map(party => `
+                <div class="party-card">
+                    <h4>${party.flagship ? '⭐ ' : ''}${party.city}, ${party.country}</h4>
+                    ${party.venue ? `<p><strong>Venue:</strong> ${party.venue}</p>` : ''}
+                    <p><strong>Date:</strong> ${party.date}</p>
+                    <p><strong>Organizer:</strong> ${party.organizer}</p>
+                    ${party.description ? `<p style="margin-top: 0.5rem;">${party.description}</p>` : ''}
+                    ${party.contact ? `<p><a href="${party.contact}" target="_blank" style="color: var(--bitcoin-orange); text-decoration: none;">Contact/Info →</a></p>` : ''}
+                </div>
+            `).join('');
+
+            listContainer.innerHTML = `
+                <h3 style="text-align: center; color: var(--text-primary); margin-bottom: 1.5rem;">
+                    Registered Parties (${parties.length})
+                </h3>
+                ${partiesHTML}
+            `;
+        }
+
+        // Handle form submission
+        document.getElementById('party-submission-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = {
+                city: document.getElementById('city').value,
+                country: document.getElementById('country').value,
+                venue: document.getElementById('venue').value,
+                date: document.getElementById('date').value,
+                organizer: document.getElementById('organizer').value,
+                contact: document.getElementById('contact').value,
+                description: document.getElementById('description').value,
+                timestamp: Date.now()
+            };
+
+            // For now, show success message (later: send to backend/database)
+            alert('Thank you for submitting your party! 🎉\n\nYour submission will be reviewed and added to the map within 24 hours.\n\nIn the meantime, share the countdown page with your community!');
+            
+            // Log submission (for now - later will send to backend)
+            console.log('Party submission:', formData);
+            
+            // Reset form
+            e.target.reset();
+            
+            // TODO: Send to backend API
+            // await fetch('/api/submit-party', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(formData)
+            // });
+        });
+
+        // Initialize map
+        renderParties();
     </script>
 </body>
 </html>
