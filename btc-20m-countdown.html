@@ -503,17 +503,39 @@
         // Fetch current Bitcoin supply
         async function fetchBitcoinData() {
             try {
-                // Get circulating supply from blockchain.info charts API
-                const response = await fetch('https://api.blockchain.info/charts/total-bitcoins?timespan=1days&format=json');
-                const data = await response.json();
-                const currentSupply = data.values[data.values.length - 1].y;
+                // Get current block height from Mempool.space (updates every block)
+                const response = await fetch('https://mempool.space/api/blocks/tip/height');
+                const blockHeight = parseInt(await response.text());
                 
+                // Calculate exact supply from block height
+                const currentSupply = calculateBitcoinSupply(blockHeight);
                 updateDisplay(currentSupply);
             } catch (error) {
                 console.error('Error fetching Bitcoin data:', error);
                 // Fallback to estimate
-                updateDisplay(19991000); // Current approximate supply
+                updateDisplay(19991000);
             }
+        }
+
+        // Calculate exact Bitcoin supply at given block height
+        function calculateBitcoinSupply(height) {
+            const HALVING_INTERVAL = 210000;
+            let totalSupply = 0;
+            let currentReward = 50; // Starting reward
+            
+            // Calculate supply for each halving epoch
+            let epoch = 0;
+            while (epoch * HALVING_INTERVAL < height) {
+                const epochStart = epoch * HALVING_INTERVAL;
+                const epochEnd = Math.min((epoch + 1) * HALVING_INTERVAL, height);
+                const blocksInEpoch = epochEnd - epochStart;
+                
+                totalSupply += blocksInEpoch * currentReward;
+                currentReward = currentReward / 2;
+                epoch++;
+            }
+            
+            return totalSupply;
         }
 
         function updateDisplay(currentSupply) {
@@ -592,8 +614,8 @@
         // Initialize
         fetchBitcoinData();
 
-        // Refresh data every 10 minutes
-        setInterval(fetchBitcoinData, 10 * 60 * 1000);
+        // Refresh data every 2 minutes (catch new blocks quickly)
+        setInterval(fetchBitcoinData, 2 * 60 * 1000);
     </script>
 
     <!-- Leaflet JS -->
