@@ -424,9 +424,9 @@
 
         <div class="add-party-form">
             <h3>🎉 Host a 20M Bitcoin Party in Your City</h3>
-            <form id="party-submission-form" name="bitcoin-party" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/party-success.html">
-                <!-- Netlify Forms -->
+            <form id="party-submission-form" name="bitcoin-party" method="POST" data-netlify="true">
                 <input type="hidden" name="form-name" value="bitcoin-party" />
+                <input type="hidden" name="subject" value="🎉 New 20M Bitcoin Party Submission" />
                 <p style="display:none;">
                     <label>Don't fill this out if you're human: <input name="bot-field" /></label>
                 </p>
@@ -693,6 +693,39 @@
                 ${partiesHTML}
             `;
         }
+
+        // Handle form submission with proper Netlify Forms encoding
+        const form = document.getElementById('party-submission-form');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitButton = form.querySelector('.submit-btn');
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            
+            try {
+                const formData = new FormData(form);
+                
+                const response = await fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(formData).toString()
+                });
+                
+                if (response.ok) {
+                    alert('Thank you for submitting your party! 🎉\n\nYour submission has been sent to our team.\n\nYou will be added to the map within 24 hours after review.\n\nShare this countdown page with your community!');
+                    form.reset();
+                } else {
+                    throw new Error('Form submission failed');
+                }
+            } catch (error) {
+                alert('Oops! There was an error submitting your party.\n\nPlease email your details directly to: boyd@arcadiab.com');
+                console.error('Form error:', error);
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Submit Party';
+            }
+        });
 
         // Initialize map
         renderParties();
