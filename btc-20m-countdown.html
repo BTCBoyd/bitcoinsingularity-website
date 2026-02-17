@@ -349,6 +349,7 @@
                 <li><a href="/tools">Tools</a></li>
                 <li><a href="/knowledge">Knowledge Base</a></li>
                 <li><a href="/chat">Ask Maxi</a></li>
+                <li><a href="/btc-20m-countdown.html" class="countdown-link">₿ 20M Party</a></li>
                 <li><a href="/about">About</a></li>
             </ul>
         </nav>
@@ -423,7 +424,7 @@
 
         <div class="add-party-form">
             <h3>🎉 Host a 20M Bitcoin Party in Your City</h3>
-            <form id="party-submission-form" name="bitcoin-party" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/btc-20m-countdown.html?success=true">
+            <form id="party-submission-form" name="bitcoin-party" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/party-success.html">
                 <!-- Netlify Forms -->
                 <input type="hidden" name="form-name" value="bitcoin-party" />
                 <p style="display:none;">
@@ -691,13 +692,6 @@
                 </h3>
                 ${partiesHTML}
             `;
-        }
-
-        // Show success message if form was submitted
-        if (window.location.search.includes('success=true')) {
-            alert('Thank you for submitting your party! 🎉\n\nYour submission has been sent to our team.\n\nYou will be added to the map within 24 hours after review.\n\nIn the meantime, share the countdown page with your community!');
-            // Clean up URL
-            window.history.replaceState({}, document.title, window.location.pathname);
         }
 
         // Initialize map
