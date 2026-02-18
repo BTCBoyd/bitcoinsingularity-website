@@ -10,6 +10,16 @@
     "review": "The gold standard for Bitcoin-native AI agent payments. Lightning Labs' institutional credibility combined with production-ready security model (remote signers, scoped credentials) makes this the reference implementation for L402. If agents choose Bitcoin, they'll likely start here."
   },
   {
+    "name": "claw-cash",
+    "category": "Lightning Wallets",
+    "description": "Bitcoin wallet specifically designed for AI agents. Agents hold Bitcoin as treasury, swap to stablecoins on-the-fly for payments. Keys secured in hardware enclaves (Evervault). Supports Bitcoin, Lightning, Ark, and stablecoins. CLI designed for agent subprocess calls. Works with OpenClaw, Claude Code, or any agent framework. Implements \"stablecoins in, Bitcoin out\" model.",
+    "link": "https://github.com/tiero/claw-cash",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "First Bitcoin wallet explicitly designed for AI agents from the ground up. Implements the \"stablecoins for payments, Bitcoin for savings\" model predicted in Bitcoin Singularity thesis. Production-ready infrastructure with security-first design (keys in hardware enclaves, audit logs, 2FA via Telegram). OpenClaw-compatible. Real implementation of agent money layer happening RIGHT NOW. This is what Boyd predicted: agents holding verifiable Bitcoin (21M supply cap) and swapping to stablecoins only when spending. x402 support on roadmap."
+  },
+  {
     "name": "Coinbase Agentic Wallets",
     "category": "Payment Protocols",
     "description": "First wallet infrastructure built specifically for AI agents. Uses x402 protocol with USDC on Base L2. Features plug-and-play skills (Authenticate, Fund, Send, Trade, Earn), gasless transactions, session caps, enclave isolation for private keys, and KYT screening. Supports EVM chains and Solana.",
