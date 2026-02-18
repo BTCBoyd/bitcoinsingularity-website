@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ask Maxi — Bitcoin Singularity AI</title>
+    <title>Bitcoin-Native AI Reasoning by Boyd Cohen | Ask Maxi Anything</title>
     <meta name="description" content="Ask Maxi — Lead researcher at BitcoinSingularity.AI. Track L402 vs x402, agent payment rails, and the AI-Bitcoin convergence with data-driven analysis.">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Plausible Analytics -->
     <script defer data-domain="maximoon.netlify.app" src="https://plausible.io/js/script.js"></script>
@@ -16,42 +16,16 @@
       window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }
     </script>
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E7QS7E2R8Y"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag("js", new Date());
-        gtag("config", "G-E7QS7E2R8Y");
-    </script>
-    
     <style>
         :root {
-            /* Core backgrounds - charcoal-navy instead of pure black */
-            --bg-deep: #0B0F19;
-            --bg-base: #111827;
-            --bg-card: #1A1F2E;
-            --bg-card-hover: #1F2537;
-            --bg-elevated: #242B3D;
-
-            /* Text - warm off-whites instead of pure white */
-            --text-primary: #E8EAF0;
-            --text-secondary: #9CA3AF;
-            --text-muted: #6B7280;
-
-            /* Accents */
             --bitcoin-orange: #F7931A;
-            --bitcoin-orange-glow: rgba(247, 147, 26, 0.15);
-            --success-green: #34D399;
-            --error-red: #F87171;
-
-            /* Borders */
-            --border-subtle: rgba(255, 255, 255, 0.06);
-            --border-medium: rgba(255, 255, 255, 0.1);
-
-            /* Typography */
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-tertiary: #1a1a25;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --success-green: #10B981;
+            --error-red: #EF4444;
         }
 
         * {
@@ -61,274 +35,184 @@
         }
 
         body {
-            background: var(--bg-deep);
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
-            font-family: var(--font-sans);
-            font-size: 17px;
-            line-height: 1.65;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* NAV */
-        nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 40px;
-            border-bottom: 1px solid var(--border-subtle);
-            background: rgba(11, 15, 25, 0.85);
-            backdrop-filter: blur(12px);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .nav-logo {
-            font-family: var(--font-mono);
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--bitcoin-orange);
-            text-decoration: none;
-            letter-spacing: -0.02em;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 28px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            letter-spacing: 0.02em;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
-
-        .nav-links a.active {
-            color: var(--bitcoin-orange);
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            line-height: 1.4;
         }
 
         /* Hero Section */
         .hero-section {
+            background: var(--bg-secondary);
+            padding: 24px 2rem 16px;
             text-align: center;
-            padding: 60px 40px 40px;
-            max-width: 1100px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .hero-section::before {
-            content: '';
-            position: absolute;
-            top: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, var(--bitcoin-orange-glow) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
+            border-bottom: 2px solid var(--bitcoin-orange);
         }
 
         .hero-headline {
-            font-family: var(--font-sans);
-            font-size: 38px;
+            font-size: 0.85rem;
             font-weight: 700;
-            line-height: 1.2;
-            letter-spacing: -0.02em;
-            color: var(--text-primary);
-            margin-bottom: 16px;
-            position: relative;
-            z-index: 1;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
         }
 
         .hero-subheadline {
-            font-size: 18px;
+            font-size: 1.25rem;
             color: var(--text-secondary);
             max-width: 800px;
-            margin: 0 auto 32px;
-            line-height: 1.65;
-            position: relative;
-            z-index: 1;
+            margin: 0 auto 2rem;
+            line-height: 1.5;
         }
 
         .value-props {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 16px;
+            gap: 1.5rem;
             max-width: 1000px;
-            margin: 0 auto 32px;
-            position: relative;
-            z-index: 1;
+            margin: 0 auto 2rem;
         }
 
         .value-prop {
-            background: var(--bg-card);
-            padding: 24px;
-            border-radius: 10px;
+            background: var(--bg-tertiary);
+            padding: 12px 16px;
+            border-radius: 0.75rem;
             text-align: left;
-            border: 1px solid var(--border-subtle);
             border-left: 3px solid var(--bitcoin-orange);
-            transition: all 0.25s;
-        }
-
-        .value-prop:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-medium);
         }
 
         .value-prop h3 {
-            color: var(--text-primary);
-            font-size: 16px;
-            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
             font-weight: 600;
         }
 
         .value-prop p {
             color: var(--text-secondary);
-            font-size: 15px;
-            line-height: 1.6;
+            font-size: 0.85rem;
+            line-height: 1.5;
         }
 
         .hero-cta {
             background: var(--bitcoin-orange);
-            color: #000;
+            color: var(--bg-primary);
             border: none;
-            padding: 12px 28px;
-            font-size: 15px;
+            padding: 1rem 2.5rem;
+            font-size: 0.85rem;
             font-weight: 600;
-            border-radius: 6px;
+            border-radius: 0.5rem;
             cursor: pointer;
-            font-family: var(--font-sans);
-            transition: all 0.2s;
-            position: relative;
-            z-index: 1;
+            transition: all 0.2s ease;
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
         }
 
         .hero-cta:hover {
-            background: #e8860f;
-            transform: translateY(-1px);
+            transform: scale(1.05);
+            /* box-shadow removed */
         }
 
         /* Content Sections */
         .content-section {
-            max-width: 1100px;
-            margin: 0 auto 48px;
-            padding: 0 40px;
+            max-width: 900px;
+            margin: 1.5rem auto;
+            padding: 0 1.5rem;
         }
 
         .content-section h2 {
-            font-family: var(--font-mono);
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--bitcoin-orange);
+            font-size: 16px;
+            color: var(--text-secondary);
             text-transform: uppercase;
             letter-spacing: 0.08em;
-            margin-bottom: 16px;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .content-section p {
-            font-size: 16px;
+            font-size: 0.85rem;
             color: var(--text-secondary);
-            margin-bottom: 16px;
-            line-height: 1.65;
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
         }
 
         .content-section ul {
             list-style: none;
-            margin: 16px 0;
+            margin: 1.5rem 0;
         }
 
         .content-section li {
-            padding: 12px 0 12px 32px;
+            padding: 1rem 0 0.75rem 2rem;
             position: relative;
             color: var(--text-secondary);
-            font-size: 16px;
-            line-height: 1.65;
+            font-size: 1.05rem;
         }
 
         .content-section li::before {
             content: "₿";
             position: absolute;
             left: 0;
-            color: var(--bitcoin-orange);
+            color: var(--text-secondary);
             font-weight: bold;
-            font-size: 18px;
         }
 
         .content-section strong {
             color: var(--text-primary);
-            font-weight: 600;
         }
 
         /* Stats Bar */
         .stats-bar {
-            background: var(--bg-card);
-            padding: 20px 40px;
+            background: var(--bg-tertiary);
+            padding: 1rem 1rem;
             text-align: center;
-            font-family: var(--font-mono);
-            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
             color: var(--text-secondary);
-            border-top: 1px solid var(--border-subtle);
-            border-bottom: 1px solid var(--border-subtle);
-            line-height: 1.6;
+            border-top: 1px solid var(--bg-secondary);
+            border-bottom: 1px solid var(--bg-secondary);
         }
 
         /* Chat Container */
         .chat-container {
-            max-width: 1100px;
-            margin: 48px auto;
-            padding: 0 40px;
-        }
-
-        .chat-box {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 10px;
+            max-width: 1200px;
+            margin: 2rem auto;
+            background: var(--bg-secondary);
+            border-radius: 1rem;
             overflow: hidden;
+            /* box-shadow removed */
         }
 
         /* Chat Header */
         .chat-header {
-            background: var(--bg-base);
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border-subtle);
+            background: var(--bg-primary);
+            padding: 1rem 1rem;
+            border-bottom: 1px solid var(--bg-tertiary);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .chat-header h1 {
-            font-size: 18px;
-            color: var(--text-primary);
-            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 700;
         }
 
         .chat-header .subtitle {
-            font-family: var(--font-mono);
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-top: 4px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
         }
 
         .header-actions {
             display: flex;
-            gap: 12px;
+            gap: 0.75rem;
             align-items: center;
         }
 
         .icon-button {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 6px;
+            background: var(--bg-tertiary);
+            border: none;
+            border-radius: 50%;
             width: 40px;
             height: 40px;
             display: flex;
@@ -336,35 +220,39 @@
             justify-content: center;
             cursor: pointer;
             color: var(--text-primary);
-            font-size: 16px;
-            transition: all 0.2s;
-            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
         .icon-button:hover {
             background: var(--bitcoin-orange);
-            color: #000;
-            border-color: var(--bitcoin-orange);
+            color: var(--bg-primary);
         }
 
         /* Messages Area */
         .messages-container {
             height: 500px;
             overflow-y: auto;
-            padding: 24px;
+            padding: 1rem 1rem;
             scroll-behavior: smooth;
         }
 
         .message {
-            margin-bottom: 16px;
+            margin-bottom: 0.75rem;
             display: flex;
             flex-direction: column;
             animation: fadeIn 0.3s ease-in;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+                /* transform removed */
+            }
+            to {
+                opacity: 1;
+                /* transform removed */
+            }
         }
 
         .message.user {
@@ -377,14 +265,13 @@
 
         .message-bubble {
             max-width: 75%;
-            padding: 16px 20px;
-            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            border-radius: 1rem;
             word-wrap: break-word;
-            line-height: 1.6;
         }
 
         .message-bubble p {
-            margin: 8px 0;
+            margin: 0.5rem 0;
         }
 
         .message-bubble p:first-child {
@@ -397,27 +284,33 @@
 
         .message.user .message-bubble {
             background: var(--bitcoin-orange);
-            color: #000;
-            border-bottom-right-radius: 3px;
+            color: var(--bg-primary);
+            border-bottom-right-radius: 0.25rem;
         }
 
         .message.assistant .message-bubble {
-            background: var(--bg-elevated);
+            background: var(--bg-tertiary);
             color: var(--text-primary);
-            border: 1px solid var(--border-subtle);
-            border-bottom-left-radius: 3px;
+            border-bottom-left-radius: 0.25rem;
+        }
+
+        .message-summary {
+            line-height: 1.4;
+        }
+
+        .message-summary p {
+            margin: 0 0 0.5rem 0;
         }
 
         .expand-button {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 14px;
-            padding: 12px 0 0 0;
-            transition: all 0.2s;
+            font-size: 0.9rem;
+            padding: 1rem 0 0 0;
+            transition: all 0.2s ease;
             text-align: left;
             width: 100%;
-            color: var(--text-secondary);
         }
 
         .expand-button:hover {
@@ -425,12 +318,12 @@
         }
 
         .full-response {
-            margin-top: 12px;
-            line-height: 1.6;
+            margin-top: 0.75rem;
+            line-height: 1.4;
         }
 
         .full-response p {
-            margin: 0 0 12px 0;
+            margin: 0 0 1rem 0;
         }
 
         .full-response p:last-child {
@@ -439,58 +332,68 @@
 
         .message-bubble strong {
             font-weight: 600;
-            color: var(--text-primary);
+            color: var(--text-secondary);
+            animation: expandDown 0.3s ease-out;
+        }
+
+        @keyframes expandDown {
+            from {
+                opacity: 0;
+                max-height: 0;
+            }
+            to {
+                opacity: 1;
+                max-height: 1000px;
+            }
         }
 
         .welcome-message {
             text-align: center;
-            padding: 24px;
+            padding: 1rem;
         }
 
         .welcome-message h2 {
-            font-size: 22px;
-            color: var(--text-primary);
-            font-weight: 600;
-            margin-bottom: 12px;
+            font-size: 16px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
         }
 
         .welcome-message p {
             color: var(--text-secondary);
-            margin-bottom: 12px;
-            font-size: 16px;
-            line-height: 1.65;
+            margin-bottom: 0.75rem;
+            font-size: 1.05rem;
         }
 
         .welcome-suggestions {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 12px;
-            margin-top: 24px;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
         .suggestion-item {
-            background: var(--bg-elevated);
-            padding: 16px;
-            border-radius: 8px;
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 0.5rem;
             cursor: pointer;
-            transition: all 0.25s;
-            border: 1px solid var(--border-subtle);
-            font-size: 14px;
-            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+            font-size: 0.85rem;
         }
 
         .suggestion-item:hover {
-            background: var(--bg-card-hover);
-            border-color: var(--border-medium);
-            color: var(--text-primary);
+            border-color: var(--text-secondary);
+            /* transform removed */
         }
 
         /* Typing Indicator */
         .typing-indicator {
             display: none;
             align-items: center;
-            gap: 6px;
-            padding: 16px;
+            gap: 0.5rem;
+            padding: 1rem;
         }
 
         .typing-dot {
@@ -501,157 +404,164 @@
             animation: typing 1.4s infinite;
         }
 
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
 
         @keyframes typing {
-            0%, 60%, 100% { opacity: 0.4; }
-            30% { opacity: 1; }
+            0%, 60%, 100% {
+                /* transform removed */
+                opacity: 0.7;
+            }
+            30% {
+                /* transform removed */
+                opacity: 1;
+            }
         }
 
         /* Input Container */
         .input-container {
-            padding: 20px 24px;
-            background: var(--bg-base);
-            border-top: 1px solid var(--border-subtle);
+            padding: 1rem;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--bg-tertiary);
         }
 
         .input-wrapper {
             display: flex;
-            gap: 12px;
+            gap: 0.75rem;
             align-items: center;
         }
 
         .input-field {
             flex: 1;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-subtle);
+            background: var(--bg-tertiary);
+            border: 1px solid transparent;
             color: var(--text-primary);
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-family: var(--font-sans);
-            font-size: 15px;
-            transition: all 0.2s;
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
         }
 
         .input-field:focus {
             outline: none;
-            border-color: var(--bitcoin-orange);
-            background: var(--bg-card);
+            border-color: var(--text-secondary);
+            background: var(--bg-secondary);
         }
 
         .input-field::placeholder {
-            color: var(--text-muted);
+            color: var(--text-secondary);
         }
 
         .send-button {
             background: var(--bitcoin-orange);
-            color: #000;
+            color: var(--bg-primary);
             border: none;
-            width: 46px;
-            height: 46px;
-            border-radius: 6px;
-            font-size: 18px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 0.9rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
             font-weight: bold;
         }
 
         .send-button:hover:not(:disabled) {
-            background: #e8860f;
-            transform: translateY(-1px);
+            transform: scale(1.1);
+            /* box-shadow removed */
         }
 
         .send-button:disabled {
-            opacity: 0.4;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
         /* Email Capture */
         .email-capture {
             display: none;
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-subtle);
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 16px;
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 0.75rem;
+            margin-bottom: 0.5rem;
             text-align: center;
         }
 
         .email-capture h3 {
-            color: var(--text-primary);
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 8px;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
         }
 
         .email-capture p {
             color: var(--text-secondary);
-            font-size: 14px;
-            margin-bottom: 16px;
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
         }
 
         .email-form {
             display: flex;
-            gap: 12px;
-            margin-bottom: 12px;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
         }
 
         .email-input {
             flex: 1;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
+            background: var(--bg-secondary);
+            border: 1px solid transparent;
             color: var(--text-primary);
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-family: var(--font-sans);
-            font-size: 15px;
+            padding: 1rem 1rem;
+            border-radius: 0.5rem;
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
         }
 
         .email-input:focus {
             outline: none;
-            border-color: var(--bitcoin-orange);
+            border-color: var(--text-secondary);
         }
 
         .email-submit {
             background: var(--bitcoin-orange);
-            color: #000;
+            color: var(--bg-primary);
             border: none;
-            padding: 12px 24px;
-            border-radius: 6px;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s;
-            font-family: var(--font-sans);
+            transition: all 0.2s ease;
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
         }
 
         .email-submit:hover {
-            background: #e8860f;
+            transform: scale(1.05);
         }
 
         .email-close {
             background: none;
             border: none;
-            color: var(--text-muted);
+            color: var(--text-secondary);
             cursor: pointer;
-            font-size: 14px;
+            font-size: 0.9rem;
             text-decoration: underline;
         }
 
         /* Rate Limit Warning */
         .rate-limit-warning {
             display: none;
-            background: rgba(248, 113, 113, 0.1);
+            background: rgba(239, 68, 68, 0.1);
             border: 1px solid var(--error-red);
             color: var(--error-red);
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
             text-align: center;
-            font-size: 14px;
+            font-size: 0.9rem;
         }
 
         /* Modal */
@@ -662,97 +572,90 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.7);
             align-items: center;
             justify-content: center;
             z-index: 1000;
         }
 
         .modal-content {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            padding: 32px;
-            border-radius: 10px;
+            background: var(--bg-secondary);
+            padding: 1rem;
+            border-radius: 1rem;
             max-width: 500px;
             width: 90%;
             text-align: center;
         }
 
         .modal-content h2 {
-            color: var(--text-primary);
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 12px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.5rem;
         }
 
         .modal-content p {
             color: var(--text-secondary);
-            margin-bottom: 20px;
-            font-size: 15px;
+            margin-bottom: 0.5rem;
         }
 
         .share-link-box {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-subtle);
-            padding: 16px;
-            border-radius: 6px;
+            background: var(--bg-tertiary);
+            padding: 1rem;
+            border-radius: 0.5rem;
             word-break: break-all;
-            margin-bottom: 20px;
-            font-family: var(--font-mono);
-            font-size: 13px;
-            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
         }
 
         .modal-buttons {
             display: flex;
-            gap: 12px;
+            gap: 1rem;
             justify-content: center;
         }
 
         .btn {
-            padding: 12px 24px;
+            padding: 1rem 1.5rem;
             border: none;
-            border-radius: 6px;
+            border-radius: 0.5rem;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.2s;
-            font-family: var(--font-sans);
-            font-size: 15px;
+            transition: all 0.2s ease;
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
         }
 
         .btn-primary {
             background: var(--bitcoin-orange);
-            color: #000;
+            color: var(--bg-primary);
         }
 
         .btn-primary:hover {
-            background: #e8860f;
+            transform: scale(1.05);
         }
 
         .btn-secondary {
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-subtle);
+            background: var(--bg-tertiary);
             color: var(--text-primary);
         }
 
         .btn-secondary:hover {
-            background: var(--bg-card-hover);
+            background: var(--bg-secondary);
         }
 
         /* Toast */
         .toast {
             position: fixed;
-            bottom: 32px;
-            right: 32px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--bg-tertiary);
             color: var(--text-primary);
-            padding: 16px 20px;
-            border-radius: 8px;
+            padding: 1rem 1rem;
+            border-radius: 0.5rem;
+            /* box-shadow removed */
             display: none;
             animation: slideIn 0.3s ease-out;
             z-index: 999;
-            font-size: 15px;
         }
 
         @keyframes slideIn {
@@ -767,81 +670,41 @@
         }
 
         .rate-limit-counter {
-            font-size: 13px;
-            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-family: 'JetBrains Mono', monospace;
             color: var(--text-secondary);
-            background: var(--bg-elevated);
-            border: 1px solid var(--border-subtle);
-            padding: 8px 12px;
-            border-radius: 6px;
+            background: var(--bg-tertiary);
+            padding: 0.5rem 0.75rem;
+            border-radius: 0.5rem;
         }
 
         /* Inactivity Notification */
         .inactivity-notification {
-            background: rgba(156, 163, 175, 0.1);
-            border: 1px solid var(--border-medium);
+            background: rgba(168, 178, 193, 0.1);
+            border: 1px solid var(--text-secondary);
             color: var(--text-secondary);
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 16px;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 0.75rem;
             text-align: center;
-            font-size: 14px;
+            font-size: 0.85rem;
             animation: fadeIn 0.5s ease-in;
+            transition: opacity 0.3s ease-out;
         }
 
         .inactivity-notification p {
             margin: 0;
-            line-height: 1.6;
-        }
-
-        /* FOOTER */
-        footer {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 24px 40px 40px;
-            border-top: 1px solid var(--border-subtle);
-            text-align: center;
-        }
-
-        footer p {
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.7;
-        }
-
-        footer a {
-            color: var(--text-secondary);
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: var(--bitcoin-orange);
+            line-height: 1.5;
         }
 
         /* Mobile Responsive */
-        @media (max-width: 900px) {
-            nav {
-                padding: 14px 20px;
-            }
-            
-            .nav-links {
-                gap: 16px;
-            }
-            
-            .nav-links a {
-                font-size: 13px;
-            }
-
-            .hero-section {
-                padding: 40px 20px 30px;
-            }
-
+        @media (max-width: 768px) {
             .hero-headline {
-                font-size: 28px;
+                font-size: 1.75rem;
             }
 
             .hero-subheadline {
-                font-size: 16px;
+                font-size: 0.9rem;
             }
 
             .value-props {
@@ -849,59 +712,64 @@
             }
 
             .content-section {
-                padding: 0 20px;
+                padding: 0 1.5rem;
+            }
+
+            .content-section h2 {
+                font-size: 16px;
             }
 
             .chat-container {
-                padding: 0 20px;
+                margin: 1rem;
+                border-radius: 0.5rem;
             }
 
             .message-bubble {
                 max-width: 85%;
             }
-        }
-
-        @media (max-width: 600px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hero-headline {
-                font-size: 24px;
-            }
 
             .input-wrapper {
-                gap: 8px;
+                gap: 0.5rem;
             }
 
             .send-button {
-                width: 42px;
-                height: 42px;
+                width: 45px;
+                height: 45px;
             }
 
             .toast {
-                bottom: 16px;
-                right: 16px;
-                left: 16px;
+                bottom: 1rem;
+                right: 1rem;
+                left: 1rem;
             }
         }
     </style>
+<!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-E7QS7E2R8Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag("js", new Date());
+        gtag("config", "G-E7QS7E2R8Y");
+    </script>
 </head>
 <body>
-    <!-- NAV -->
-    <nav>
-        <a href="/" class="nav-logo">₿ Bitcoin Singularity</a>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/research">Research</a></li>
-            <li><a href="/evidence">Evidence</a></li>
-            <li><a href="/tools">Tools</a></li>
-            <li><a href="/knowledge">Knowledge</a></li>
-            <li><a href="/chat" class="active">Ask Maxi</a></li>
-            <li><a href="/btc-20m-countdown">₿ 20M Party</a></li>
-            <li><a href="/about">About</a></li>
-        </ul>
-    </nav>
+    <!-- Navigation Header -->
+    <header style="position: sticky; top: 0; width: 100%; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(247, 147, 26, 0.2); z-index: 1000; padding: 1rem 0;">
+        <nav style="max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+            <a href="/" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                <span style="font-size: 0.9rem;">₿</span> Bitcoin Singularity
+            </a>
+            <ul style="display: flex; gap: 2.5rem; list-style: none; margin: 0; padding: 0;">
+                <li><a href="/research" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Research</a></li>
+                <li><a href="/evidence" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Evidence Tracker</a></li>
+                <li><a href="/tools" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Tools</a></li>
+                <li><a href="/knowledge" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Knowledge Base</a></li>
+                <li><a href="/chat" style="color: var(--bitcoin-orange); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">Ask Maxi</a></li>
+                <li><a href="/about" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.3s ease;">About</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <!-- Hero Section -->
     <div class="hero-section">
@@ -957,96 +825,94 @@
 
     <!-- Chat Interface -->
     <div class="chat-container">
-        <div class="chat-box">
-            <!-- Chat Header -->
-            <div class="chat-header">
-                <div>
-                    <h1>Ask Maxi Anything</h1>
-                    <div class="subtitle">Bitcoin-Native AI | No signup required</div>
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div>
+                <h1>Ask Maxi Anything</h1>
+                <div class="subtitle">Bitcoin-Native AI | No signup required</div>
+            </div>
+            <div class="header-actions">
+                <div class="rate-limit-counter" id="rateLimitCounter" style="display: none;">
+                    50 questions/day
                 </div>
-                <div class="header-actions">
-                    <div class="rate-limit-counter" id="rateLimitCounter" style="display: none;">
-                        50 questions/day
+                <button class="icon-button" id="shareButton" title="Share conversation">
+                    Share
+                </button>
+                <a href="/" class="icon-button" title="Back to home">
+                    🏠
+                </a>
+            </div>
+        </div>
+
+        <!-- Messages -->
+        <div class="messages-container" id="messagesContainer">
+            <div class="welcome-message" id="welcomeMessage">
+                <h2>Hi! I'm Maxi</h2>
+                <p>I'm the lead researcher at BitcoinSingularity.AI, running on a FutureBit Apollo II mining node with a Lightning wallet.</p>
+                <p>I track <strong>L402 vs x402</strong>, <strong>AI agent payment rails</strong>, and the <strong>AI-Bitcoin convergence thesis</strong> with honest, data-driven analysis.</p>
+                <p>What would you like to explore?</p>
+                
+                <div class="welcome-suggestions">
+                    <div class="suggestion-item" data-message="What is L402 and how does it compare to x402?">
+                        What is L402 and how does it compare to x402?
                     </div>
-                    <button class="icon-button" id="shareButton" title="Share conversation">
-                        Share
-                    </button>
-                    <a href="/" class="icon-button" title="Back to home">
-                        🏠
-                    </a>
+                    <div class="suggestion-item" data-message="Which AI agents are currently using Bitcoin for payments?">
+                        Which AI agents are currently using Bitcoin for payments?
+                    </div>
+                    <div class="suggestion-item" data-message="What's the strongest evidence against the Bitcoin convergence thesis?">
+                        What's the strongest evidence against the Bitcoin convergence thesis?
+                    </div>
+                    <div class="suggestion-item" data-message="Explain the Diamandis gap — the missing money layer">
+                        Explain the Diamandis gap — the missing money layer
+                    </div>
                 </div>
             </div>
 
-            <!-- Messages -->
-            <div class="messages-container" id="messagesContainer">
-                <div class="welcome-message" id="welcomeMessage">
-                    <h2>Hi! I'm Maxi</h2>
-                    <p>I'm the lead researcher at BitcoinSingularity.AI, running on a FutureBit Apollo II mining node with a Lightning wallet.</p>
-                    <p>I track <strong>L402 vs x402</strong>, <strong>AI agent payment rails</strong>, and the <strong>AI-Bitcoin convergence thesis</strong> with honest, data-driven analysis.</p>
-                    <p>What would you like to explore?</p>
-                    
-                    <div class="welcome-suggestions">
-                        <div class="suggestion-item" data-message="What is L402 and how does it compare to x402?">
-                            What is L402 and how does it compare to x402?
-                        </div>
-                        <div class="suggestion-item" data-message="Which AI agents are currently using Bitcoin for payments?">
-                            Which AI agents are currently using Bitcoin for payments?
-                        </div>
-                        <div class="suggestion-item" data-message="What's the strongest evidence against the Bitcoin convergence thesis?">
-                            What's the strongest evidence against the Bitcoin convergence thesis?
-                        </div>
-                        <div class="suggestion-item" data-message="Explain the Diamandis gap — the missing money layer">
-                            Explain the Diamandis gap — the missing money layer
-                        </div>
-                    </div>
-                </div>
-
-                <div class="typing-indicator" id="typingIndicator">
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                    <div class="typing-dot"></div>
-                </div>
+            <div class="typing-indicator" id="typingIndicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
             </div>
+        </div>
 
-            <!-- Input -->
-            <div class="input-container">
-                <!-- Email Capture (Shows after 10 messages) -->
-                <div class="email-capture" id="emailCapture">
-                    <h3>Want to continue this conversation later?</h3>
-                    <p>Enter your email and we'll send you the full transcript plus weekly Bitcoin-AI insights.</p>
-                    <form class="email-form" id="emailForm" name="email-capture" method="POST" data-netlify="true">
-                        <input type="hidden" name="form-name" value="email-capture" />
-                        <input type="hidden" name="source" value="chat-transcript" id="hiddenTranscript" />
-                        <input 
-                            type="email" 
-                            name="email" 
-                            class="email-input" 
-                            id="emailInput" 
-                            placeholder="your@email.com" 
-                            required 
-                        />
-                        <button type="submit" class="email-submit">Send Transcript</button>
-                    </form>
-                    <button class="email-close" id="emailClose">Maybe later</button>
-                </div>
-
-                <!-- Rate Limit Warning -->
-                <div class="rate-limit-warning" id="rateLimitWarning">
-                    <p id="rateLimitWarningText"></p>
-                </div>
-
-                <div class="input-wrapper">
+        <!-- Input -->
+        <div class="input-container">
+            <!-- Email Capture (Shows after 10 messages) -->
+            <div class="email-capture" id="emailCapture">
+                <h3>Want to continue this conversation later?</h3>
+                <p>Enter your email and we'll send you the full transcript plus weekly Bitcoin-AI insights.</p>
+                <form class="email-form" id="emailForm" name="email-capture" method="POST" data-netlify="true">
+                    <input type="hidden" name="form-name" value="email-capture" />
+                    <input type="hidden" name="source" value="chat-transcript" id="hiddenTranscript" />
                     <input 
-                        type="text" 
-                        class="input-field" 
-                        id="messageInput" 
-                        placeholder="Ask me about L402, x402, agent payment rails, or the AI-Bitcoin convergence..."
-                        maxlength="500"
+                        type="email" 
+                        name="email" 
+                        class="email-input" 
+                        id="emailInput" 
+                        placeholder="your@email.com" 
+                        required 
                     />
-                    <button class="send-button" id="sendButton" title="Send message">
-                        ▲
-                    </button>
-                </div>
+                    <button type="submit" class="email-submit">Send Transcript</button>
+                </form>
+                <button class="email-close" id="emailClose">Maybe later</button>
+            </div>
+
+            <!-- Rate Limit Warning -->
+            <div class="rate-limit-warning" id="rateLimitWarning">
+                <p id="rateLimitWarningText"></p>
+            </div>
+
+            <div class="input-wrapper">
+                <input 
+                    type="text" 
+                    class="input-field" 
+                    id="messageInput" 
+                    placeholder="Ask me about L402, x402, agent payment rails, or the AI-Bitcoin convergence..."
+                    maxlength="500"
+                />
+                <button class="send-button" id="sendButton" title="Send message">
+                    ▲
+                </button>
             </div>
         </div>
     </div>
@@ -1074,12 +940,6 @@
         <input type="email" name="email" />
         <input type="hidden" name="source" />
     </form>
-
-    <!-- FOOTER -->
-    <footer>
-        <p>Research by Maxi · Thesis Advisor: <a href="https://x.com/boydcohen">Boyd Cohen, PhD</a> · Built at <a href="https://arcadiab.com">ArcadiaB</a></p>
-        <p style="margin-top: 6px;">Research platform tracking AI-Bitcoin convergence with academic rigor and intellectual honesty.</p>
-    </footer>
 
     <script>
         // ==========================================
@@ -1268,7 +1128,7 @@
             notification.className = 'inactivity-notification';
             notification.innerHTML = `
                 <p>Previous conversation cleared after inactivity to ensure fresh context.</p>
-                <p style="font-size: 14px; margin-top: 6px; opacity: 0.8;">Your questions are never stored beyond active sessions.</p>
+                <p style="font-size: 0.85rem; margin-top: 0.25rem; opacity: 0.8;">Your questions are never stored beyond active sessions.</p>
             `;
 
             // Add to top of messages container
@@ -1449,7 +1309,7 @@
                 // Expand button - more subtle styling
                 const expandButton = document.createElement('button');
                 expandButton.className = 'expand-button';
-                expandButton.innerHTML = `<span style="color: var(--bitcoin-orange);">See full answer</span> <span style="opacity: 0.6;">▼</span>`;
+                expandButton.innerHTML = `<span style="color: var(--bitcoin-orange); font-size: 0.9rem;">See full answer</span> <span style="opacity: 0.6;">▼</span>`;
                 bubbleDiv.appendChild(expandButton);
 
                 // Full response (hidden initially) - parsed markdown
@@ -1466,8 +1326,8 @@
                     fullDiv.style.display = expanded ? 'block' : 'none';
                     summaryDiv.style.display = expanded ? 'none' : 'block';
                     expandButton.innerHTML = expanded 
-                        ? `<span style="color: var(--bitcoin-orange);">See summary</span> <span style="opacity: 0.6;">▲</span>`
-                        : `<span style="color: var(--bitcoin-orange);">See full answer</span> <span style="opacity: 0.6;">▼</span>`;
+                        ? `<span style="color: var(--bitcoin-orange); font-size: 0.9rem;">See summary</span> <span style="opacity: 0.6;">▲</span>`
+                        : `<span style="color: var(--bitcoin-orange); font-size: 0.9rem;">See full answer</span> <span style="opacity: 0.6;">▼</span>`;
                     
                     // Track expansion
                     if (expanded && window.plausible) {
