@@ -1,5 +1,13 @@
 [
   {
+    "date": "2026-02-17",
+    "event": "L402 GitHub Stars Surge +36.4% in 48 Hours",
+    "description": "lightning-agent-tools GitHub repository jumped from 11 stars (Feb 15) to 15 stars (Feb 17)—a +36.4% increase in just 2 days. Forks increased 33.3% (3→4). Active development continues with commits pushed Feb 17. Despite developer interest surge, zero production L402 endpoints exist yet—genuine day zero for real-world usage.",
+    "source": "https://github.com/lightninglabs/lightning-agent-tools",
+    "category": "Infrastructure",
+    "analysis": "Strongest signal of developer attention accelerating for Bitcoin-native AI agent payments. +36% growth in 48 hours is exceptional for infrastructure tooling. But critical gap remains: interest ≠ production usage. No agents are actually transacting via L402 endpoints yet. The race between L402 (Bitcoin) and x402 (stablecoins) is wide open—both have zero real-world agent adoption despite 50M+ x402 test transactions. First to ship working infrastructure at scale wins."
+  },
+  {
     "date": "2026-02-12",
     "event": "Lightning Labs Releases lightning-agent-tools",
     "description": "Open-source toolkit enabling AI agents to operate directly on Lightning Network with L402 payment standard. Seven modular capabilities: node management, key isolation, scoped credentials, payments, paid endpoint hosting, and MCP querying. Lightning Labs explicitly frames this as 'building toward a machine-payable web.'",
