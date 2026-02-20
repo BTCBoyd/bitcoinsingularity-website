@@ -442,7 +442,8 @@
     <header>
         <nav>
             <a href="/" class="logo">Bitcoin Singularity</a>
-            <ul class="nav-links">
+            <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="nav-links">
                 <li><a href="/research">Research</a></li>
                 <li><a href="/evidence">Evidence Tracker</a></li>
                 <li><a href="/tools">Tools</a></li>
@@ -452,6 +453,11 @@
                 <li><a href="/about">About</a></li>
             </ul>
         </nav>
+<script>
+  document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+</script>
     </header>
 
     <main>

@@ -502,14 +502,55 @@
     .data-grid { padding: 0 20px; }
   }
 
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: #e8e8e8;
+    border-radius: 2px;
+    transition: all 0.2s;
+  }
+
   @media (max-width: 600px) {
     .data-grid { grid-template-columns: 1fr; }
     .hero { padding: 50px 20px 40px; }
     .hero h1 { font-size: 28px; }
-    .nav-links { display: none; }
     .hero-actions { flex-direction: column; align-items: center; }
     .subscribe-form { flex-direction: column; }
     .thesis-block { padding: 24px; }
+    .hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 56px;
+      left: 0;
+      right: 0;
+      background: #0d0f14;
+      border-bottom: 1px solid rgba(247,147,26,0.2);
+      flex-direction: column;
+      padding: 16px 24px;
+      gap: 0;
+      z-index: 100;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { list-style: none; }
+    .nav-links a {
+      display: block;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 15px;
+    }
+    .nav-links li:last-child a { border-bottom: none; }
+    nav { position: relative; }
   }
 
   /* Subtle animation on load */
@@ -538,7 +579,10 @@
 <!-- NAV -->
 <nav>
   <a href="/" class="nav-logo">₿ Bitcoin Singularity</a>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="/" class="active">Home</a></li>
     <li><a href="/research">Research</a></li>
     <li><a href="/evidence">Evidence</a></li>
@@ -549,6 +593,11 @@
     <li><a href="/about">About</a></li>
   </ul>
 </nav>
+<script>
+  document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('nav-links').classList.toggle('open');
+  });
+</script>
 
 <!-- HERO -->
 <section class="hero">
