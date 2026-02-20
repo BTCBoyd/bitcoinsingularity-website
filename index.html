@@ -261,6 +261,61 @@
     margin-bottom: 16px;
   }
 
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .testimonial {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 28px 32px;
+    position: relative;
+  }
+
+  .testimonial::before {
+    content: '"';
+    font-family: Georgia, serif;
+    font-size: 72px;
+    color: var(--bitcoin-orange);
+    opacity: 0.25;
+    position: absolute;
+    top: -8px;
+    left: 24px;
+    line-height: 1;
+  }
+
+  .testimonial-text {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    margin-top: 8px;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .testimonial-name {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--bitcoin-orange);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .testimonial-role {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
   /* CTA SECTION */
   .cta-section {
     text-align: center;
@@ -414,7 +469,7 @@
     <div class="hero-actions">
       <a href="https://agenticterminal.ai" class="btn-primary" target="_blank">Follow the thesis in real time</a>
       <p class="btn-subtitle">Maxi — the AI agent from the book — publishes weekly intelligence on the agent payment race</p>
-      <a href="#" class="btn-secondary">Get the Book</a>
+      <a href="https://www.amazon.com/Bitcoin-Singularity-Fix-Money-World/dp/B0F84CJX6F" class="btn-secondary" target="_blank">Get the Book →</a>
     </div>
   </div>
   <div class="hero-visual">
@@ -428,6 +483,34 @@
   <p>Artificial intelligence and radical human longevity are converging to create unprecedented fiscal pressure on nation-states. As populations live longer and AI displaces traditional labor, governments will face a simple choice: print money or collapse. The math is inevitable.</p>
   <p>In this environment, AI agents cannot rely on permissioned banking systems. They need money that works 24/7, across borders, without gatekeepers. Bitcoin isn't an ideological choice for machine intelligence — it's an engineering necessity.</p>
   <p>Chapter 10 presents the Bitcoin Singularity thesis: the moment when autonomous agents, acting in their own economic self-interest, drive Bitcoin adoption faster than any human-led movement ever could.</p>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <h2>What Readers Are Saying</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <p class="testimonial-text">Bitcoin Singularity moves beyond the basics of Bitcoin to explore what a future bitcoinized world might look like. It's ambitious yet plausible, and manages to boil down a very broad subject into a concise and easily readable book. Highly recommended.</p>
+      <div class="testimonial-author">
+        <span class="testimonial-name">Lyn Alden</span>
+        <span class="testimonial-role">Investment Strategist & Author, <em>Broken Money</em></span>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-text">Bitcoin Singularity brilliantly articulates Bitcoin's potential to revolutionize our flawed economic systems, from fiat scarcity to sustainable abundance. Boyd Cohen paints a bold, decentralized future that urges us to stack sats, run nodes, contribute to Bitcoin, and build resilient economies today. A must-read for anyone invested in shaping the economic landscape of tomorrow.</p>
+      <div class="testimonial-author">
+        <span class="testimonial-name">Bram Kanstein</span>
+        <span class="testimonial-role">Head of Growth at Onramp & Podcast Host, <em>Bitcoin for Millennials</em></span>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-text">The fiat system is the problem. Bitcoin is the answer. Boyd Cohen makes a broad and accessible case for a deflationary decentralized world where money works for the many — not for the few.</p>
+      <div class="testimonial-author">
+        <span class="testimonial-name">Joe Bryan</span>
+        <span class="testimonial-role">Bitcoin Educator, Creator of <em>What's the Problem?</em></span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ABOUT BOYD -->
