@@ -22,12 +22,12 @@
   {
     "name": "Coinbase Agentic Wallets",
     "category": "Payment Protocols",
-    "description": "First wallet infrastructure built specifically for AI agents. Uses x402 protocol with USDC on Base L2. Features plug-and-play skills (Authenticate, Fund, Send, Trade, Earn), gasless transactions, session caps, enclave isolation for private keys, and KYT screening. Supports EVM chains and Solana.",
+    "description": "First wallet infrastructure built specifically for AI agents. Uses x402 protocol with USDC on Base L2. Features plug-and-play skills (Authenticate, Fund, Send, Trade, Earn), gasless transactions, session caps, enclave isolation for private keys, and KYT screening. Supports EVM chains and Solana. x402 network now at 75.41M transactions ($24.24M volume, 94K buyers, 22K sellers).",
     "link": "https://docs.cdp.coinbase.com/agentic-wallet/welcome",
     "status": "Production",
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
-    "review": "Primary competitor to Lightning/L402. Corporate backing, mature infrastructure, and 50M+ x402 transactions processed give this significant market traction. USD-denominated (USDC) provides volatility protection agents may prefer for operational expenses. The question: do agents care more about permissionless architecture (Bitcoin) or USD stability + corporate support (Coinbase)?"
+    "review": "Primary competitor to Lightning/L402. Corporate backing, mature infrastructure, and 75M+ x402 transactions (up from 50M) give significant market traction. USD-denominated (USDC) provides volatility protection. Growing ecosystem with Python, Go, and TypeScript SDKs. The question: do agents care more about permissionless architecture (Bitcoin) or USD stability + corporate support (Coinbase)?"
   },
   {
     "name": "Alby Hub",
@@ -52,12 +52,12 @@
   {
     "name": "Stripe Machine Payments",
     "category": "Payment Protocols",
-    "description": "PaymentIntents API for charging AI agents via x402 protocol. Uses USDC on Base. Pricing models: per-request, per-action, per-second. Includes CLI tool 'purl' and sample code. CoinGecko launched x402 API endpoints simultaneously—agents pay $0.01 USDC per request with no account.",
+    "description": "[DEPRECATED - URL returning 404 as of Feb 2026] PaymentIntents API for charging AI agents via x402 protocol. Used USDC on Base. Pricing models: per-request, per-action, per-second. Program appears discontinued or merged into other Stripe initiatives.",
     "link": "https://stripe.com/payments/machine",
-    "status": "Preview",
+    "status": "Deprecated",
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
-    "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable."
+    "review": "Stripe's machine payments preview is no longer accessible (404). This may indicate program discontinuation or consolidation. Notable that Stripe withdrew while x402 ecosystem (Coinbase) continues to grow (75M+ transactions). Strike against stablecoin/x402 path or just Stripe prioritizing other products?"
   },
   {
     "name": "Voltage",
