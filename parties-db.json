@@ -13,6 +13,20 @@
       "flagship": true,
       "approved": true,
       "submittedAt": "2026-02-16T22:04:00Z"
+    },
+    "santaana-1771901427505": {
+      "city": "Santa Ana",
+      "country": "El Salvador",
+      "lat": 13.9947753,
+      "lng": -89.5566069,
+      "venue": "Beats Coffe ",
+      "organizer": "Comunidad bitcoin Santa Ana",
+      "date": "2026-03-09T17:00",
+      "contact": "npub19cs22xraa2xq8x9jxfas4gkqv0wj8dapuhmth9hzj9xxc5c9f6yqzquca5",
+      "description": "Meetup mensual donde celebraremos el minado del btc 20,000,000",
+      "flagship": false,
+      "approved": true,
+      "submittedAt": "2026-02-24T02:50:27.406Z"
     }
   }
 }
