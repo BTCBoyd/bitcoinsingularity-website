@@ -67,24 +67,26 @@
             position: fixed;
             top: 0;
             width: 100%;
-            background: rgba(10, 14, 39, 0.95);
+            height: 50px;
+            background: rgba(10, 10, 15, 0.95);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(247, 147, 26, 0.2);
             z-index: 1000;
-            padding: 1.5rem 0;
+            padding: 0;
         }
 
         nav {
+            height: 50px;
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 0.85rem;
             font-weight: 700;
             color: var(--text-primary);
             text-decoration: none;
@@ -95,7 +97,7 @@
 
         .logo::before {
             content: '₿';
-            font-size: 1.8rem;
+            font-size: 0.9rem;
         }
 
         .nav-links {
@@ -107,12 +109,8 @@
         .nav-links a {
             color: var(--text-primary);
             text-decoration: none;
-            font-size: 1.1rem;
-            transition: color 0.3s ease;
             font-weight: 500;
-            min-height: 44px;
-            display: inline-flex;
-            align-items: center;
+            transition: color 0.3s ease;
         }
 
         .nav-links a:hover {
@@ -209,7 +207,7 @@
 
         /* Blog Hero */
         .blog-hero {
-            margin-top: 100px;
+            margin-top: 60px;
             padding: 4rem 2rem;
             text-align: center;
             max-width: 900px;
@@ -438,7 +436,7 @@
             }
 
             .blog-hero {
-                margin-top: 80px;
+                margin-top: 60px;
                 padding: 3rem 1.5rem;
             }
 
@@ -526,7 +524,7 @@
     <!-- Header -->
     <header>
         <nav>
-            <a href="/" class="logo">₿ Bitcoin Singularity</a>
+            <a href="/" class="logo">Bitcoin Singularity</a>
             <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   <ul class="nav-links" id="nav-links">
                 <li><a href="/">Home</a></li>
