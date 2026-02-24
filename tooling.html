@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tooling — Bitcoin Singularity</title>
+<meta name="description" content="Curated directory of Lightning wallets, payment protocols, and infrastructure for AI agents. Bitcoin-native tooling for the machine economy.">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script defer data-domain="bitcoinsingularity.ai" src="https://plausible.io/js/script.js"></script>
+<style>
+:root {
+  --bg-deep: #0d0f14;
+  --bg-card: #151920;
+  --bg-card-hover: #1a1f28;
+  --bitcoin-orange: #f7931a;
+  --bitcoin-orange-glow: rgba(247, 147, 26, 0.15);
+  --text-primary: #e8e8e8;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-medium: rgba(255, 255, 255, 0.1);
+  --accent-blue: #4A9EFF;
+  --accent-blue-dim: rgba(59, 130, 246, 0.15);
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV — minimal */
+nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-logo {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--bitcoin-orange);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+}
+
+.nav-links a.active {
+  color: var(--bitcoin-orange);
+}
+
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 40px;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.page-header h1 {
+  font-size: 38px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 12px;
+}
+
+.page-header p {
+  font-size: 18px;
+  color: var(--text-secondary);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--bitcoin-orange);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.content-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.content-section h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-primary);
+}
+
+.content-section p {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.filter-controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 10px 20px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-sans);
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: var(--bitcoin-orange-glow);
+  border-color: var(--bitcoin-orange);
+  color: var(--bitcoin-orange);
+}
+
+.tools-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.tool-card {
+  background: var(--bg-deep);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.tool-card.bitcoin-native {
+  border-left: 3px solid var(--bitcoin-orange);
+}
+
+.tool-card.crypto-generic {
+  border-left: 3px solid var(--accent-blue);
+}
+
+.tool-card:hover {
+  border-color: var(--border-medium);
+  background: var(--bg-card-hover);
+}
+
+.tool-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tool-title {
+  flex: 1;
+  min-width: 200px;
+}
+
+.tool-card h4 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.tool-card.bitcoin-native h4 a {
+  color: var(--bitcoin-orange);
+  text-decoration: none;
+}
+
+.tool-card.crypto-generic h4 a {
+  color: var(--accent-blue);
+  text-decoration: none;
+}
+
+.tool-card h4 a:hover {
+  opacity: 0.8;
+}
+
+.tool-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+.badge.status {
+  background: rgba(76, 175, 80, 0.2);
+  border: 1px solid rgba(76, 175, 80, 0.4);
+  color: #81C784;
+}
+
+.badge.status.beta {
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  color: #f59e0b;
+}
+
+.badge.status.alpha {
+  background: rgba(168, 85, 247, 0.2);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: #BA68C8;
+}
+
+.badge.status.preview {
+  background: rgba(59, 130, 246, 0.2);
+  border: 1px solid rgba(59, 130, 246, 0.4);
+  color: var(--accent-blue);
+}
+
+.badge.classification.bitcoin-native {
+  background: var(--bitcoin-orange-glow);
+  border: 1px solid var(--bitcoin-orange);
+  color: var(--bitcoin-orange);
+}
+
+.badge.classification.crypto-generic {
+  background: var(--accent-blue-dim);
+  border: 1px solid var(--accent-blue);
+  color: var(--accent-blue);
+}
+
+.tool-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 16px 0;
+}
+
+.tool-review {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.tool-review-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  color: var(--bitcoin-orange);
+}
+
+.tool-card.crypto-generic .tool-review-label {
+  color: var(--accent-blue);
+}
+
+.tool-review-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.tool-last-updated {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 12px;
+}
+
+.loading {
+  text-align: center;
+  padding: 48px;
+  color: var(--text-secondary);
+}
+
+.error {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  color: #EF5350;
+}
+
+.btn-bitcoin {
+  background: var(--bitcoin-orange);
+  color: #000;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-bitcoin:hover {
+  background: #e8860f;
+}
+
+.category-section h3 {
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+footer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.footer-nav a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.footer-nav a:hover {
+  color: var(--bitcoin-orange);
+}
+
+footer p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+footer a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+footer a:hover {
+  color: var(--bitcoin-orange);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 4px;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--bitcoin-orange);
+  border-radius: 2px;
+}
+
+@media (max-width: 900px) {
+  main { padding: 40px 20px; }
+  .tools-container { grid-template-columns: 1fr; }
+  .page-header h1 { font-size: 28px; }
+  nav { padding: 16px 20px; }
+  .nav-links { 
+    gap: 16px; 
+    display: none;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    padding: 20px;
+    flex-direction: column;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .nav-links.open { display: flex; }
+  .hamburger { display: flex; }
+  .filter-controls { justify-content: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nav-logo">₿ Bitcoin Singularity</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/tooling.html" class="active">Tooling</a></li>
+    <li><a href="/blog.html">Essays</a></li>
+    <li><a href="/knowledge.html">Knowledge</a></li>
+    <li><a href="https://agenticterminal.ai" target="_blank">Evidence →</a></li>
+  </ul>
+</nav>
+
+<script>
+document.getElementById('hamburger').addEventListener('click', function() {
+  document.getElementById('nav-links').classList.toggle('open');
+});
+</script>
+
+<main>
+<div class="page-header">
+  <div class="section-label">// MACHINE_INFRASTRUCTURE</div>
+  <h1>Agent Tooling Directory</h1>
+  <p>Bitcoin-native infrastructure for AI agents — wallets, protocols, and coordination tools</p>
+</div>
+
+<div class="content-section">
+  <div class="section-label">// ABOUT_DIRECTORY</div>
+  <h2>About This Directory</h2>
+  <p>
+    This directory curates the essential tooling for AI agents to participate in Bitcoin economies.
+    We track both Bitcoin-native solutions (Lightning, L402, Nostr Wallet Connect) and competing
+    rails (x402 stablecoin protocols) with honest evaluation.
+  </p>
+  <p>
+    <strong>Classification:</strong> Orange accent indicates Bitcoin-native tooling. Blue accent 
+    indicates crypto-generic or competing approaches. We document both because the thesis isn't 
+    about ideology—it's about which infrastructure agents actually choose.
+  </p>
+  <p>
+    <strong>From Bitcoin Singularity (Chapter 10):</strong> "AI agents naturally converge on 
+    Bitcoin—not by design, but by engineering logic." This directory tracks the tools making 
+    that convergence possible.
+  </p>
+</div>
+
+<div class="content-section">
+  <div class="section-label">// FILTER_TOOLS</div>
+  <h2>Filter by Category</h2>
+  <div class="filter-controls">
+    <button class="filter-btn active" data-category="all">All Tools</button>
+  </div>
+</div>
+
+<div id="tools-container" class="loading">
+  Loading tools directory...
+</div>
+
+<div class="content-section" style="margin-top: 48px;">
+  <div class="section-label">// RESEARCH_METHODOLOGY</div>
+  <h2>How We Evaluate</h2>
+  <p>
+    Tools are assessed on practical criteria that matter for agent deployment:
+  </p>
+  <ul style="list-style: none; padding-left: 0; margin-top: 16px;">
+    <li style="padding: 8px 0; display: flex; align-items: center; gap: 12px; color: var(--text-secondary);"><span style="color: var(--bitcoin-orange);">›</span> Agent-friendly API design</li>
+    <li style="padding: 8px 0; display: flex; align-items: center; gap: 12px; color: var(--text-secondary);"><span style="color: var(--bitcoin-orange);">›</span> Payment speed and finality</li>
+    <li style="padding: 8px 0; display: flex; align-items: center; gap: 12px; color: var(--text-secondary);"><span style="color: var(--bitcoin-orange);">›</span> Transaction cost structure</li>
+    <li style="padding: 8px 0; display: flex; align-items: center; gap: 12px; color: var(--text-secondary);"><span style="color: var(--bitcoin-orange);">›</span> Developer experience quality</li>
+    <li style="padding: 8px 0; display: flex; align-items: center; gap: 12px; color: var(--text-secondary);"><span style="color: var(--bitcoin-orange);">›</span> Production readiness</li>
+  </ul>
+  <p style="margin-top: 24px;">
+    Reviews are updated as tools evolve. For real-time protocol metrics, see 
+    <a href="https://agenticterminal.ai" style="color: var(--bitcoin-orange); text-decoration: none;">Agentic Terminal</a>.
+  </p>
+</div>
+</main>
+
+<footer>
+<div class="footer-nav">
+  <a href="/">Home</a>
+  <a href="/tooling.html">Tooling</a>
+  <a href="/blog.html">Essays</a>
+  <a href="/knowledge.html">Knowledge</a>
+  <a href="https://agenticterminal.ai">Evidence</a>
+</div>
+<p>© 2026 Bitcoin Singularity · Boyd Cohen, PhD</p>
+<p style="margin-top: 6px;"><a href="https://agenticterminal.ai">Real-time evidence at Agentic Terminal</a></p>
+</footer>
+
+<script>
+let allTools = [];
+let currentFilter = 'all';
+
+async function loadTools() {
+  try {
+    const response = await fetch('tools-data.json');
+    if (!response.ok) throw new Error('Failed to load tools data');
+    allTools = await response.json();
+
+    const categories = [...new Set(allTools.map(tool => tool.category))].sort();
+    const filterControls = document.querySelector('.filter-controls');
+    const allButton = filterControls.querySelector('[data-category="all"]');
+
+    categories.forEach(category => {
+      const btn = document.createElement('button');
+      btn.className = 'filter-btn';
+      btn.setAttribute('data-category', category);
+      btn.textContent = category;
+      btn.addEventListener('click', () => filterByCategory(category));
+      filterControls.appendChild(btn);
+    });
+
+    allButton.addEventListener('click', () => filterByCategory('all'));
+    renderTools();
+  } catch (error) {
+    document.getElementById('tools-container').innerHTML = `
+      <div class="error">
+        <h3>Error Loading Tools</h3>
+        <p>${error.message}</p>
+      </div>
+    `;
+  }
+}
+
+function filterByCategory(category) {
+  currentFilter = category;
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+    if (btn.getAttribute('data-category') === category) btn.classList.add('active');
+  });
+  renderTools();
+}
+
+function renderTools() {
+  const container = document.getElementById('tools-container');
+  const filteredTools = currentFilter === 'all' 
+    ? allTools 
+    : allTools.filter(tool => tool.category === currentFilter);
+
+  if (filteredTools.length === 0) {
+    container.innerHTML = '<div class="loading">No tools found in this category.</div>';
+    return;
+  }
+
+  const groupedTools = {};
+  filteredTools.forEach(tool => {
+    if (!groupedTools[tool.category]) groupedTools[tool.category] = [];
+    groupedTools[tool.category].push(tool);
+  });
+
+  let html = '<div class="tools-container">';
+  Object.keys(groupedTools).sort().forEach(category => {
+    html += `<div class="category-section" style="margin-bottom: 32px; grid-column: 1 / -1;"><h3 style="font-size: 14px; color: var(--text-primary); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border-subtle);">${category}</h3><div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">`;
+    groupedTools[category].forEach(tool => {
+      const nativeClass = tool.bitcoinNative ? 'bitcoin-native' : 'crypto-generic';
+      const statusClass = tool.status.toLowerCase().replace(/\s+/g, '-');
+      html += `
+        <div class="tool-card ${nativeClass}">
+          <div class="tool-header">
+            <div class="tool-title">
+              <h4><a href="${tool.link}" target="_blank" rel="noopener noreferrer">${tool.name}</a></h4>
+            </div>
+            <div class="tool-badges">
+              <span class="badge status ${statusClass}">${tool.status}</span>
+              <span class="badge classification ${nativeClass}">${tool.bitcoinNative ? '₿ Bitcoin-native' : '◈ Generic'}</span>
+            </div>
+          </div>
+          <div class="tool-description">${tool.description}</div>
+          <div class="tool-review">
+            <div class="tool-review-label">Evaluation</div>
+            <div class="tool-review-text">${tool.review}</div>
+          </div>
+          <div class="tool-last-updated">Last updated: Feb 2026</div>
+        </div>
+      `;
+    });
+    html += '</div></div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', loadTools);
+</script>
+
+</body>
+</html>
