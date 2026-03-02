@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bitcoin Singularity — Boyd Cohen</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0d0f14;
+    --bg-card: #151920;
+    --bg-card-hover: #1a1f28;
+    --bitcoin-orange: #f7931a;
+    --bitcoin-orange-glow: rgba(247, 147, 26, 0.15);
+    --text-primary: #e8e8e8;
+    --text-secondary: #9ca3af;
+    --text-muted: #6b7280;
+    --border-subtle: rgba(255, 255, 255, 0.06);
+    --border-medium: rgba(255, 255, 255, 0.1);
+    --font-mono: 'JetBrains Mono', monospace;
+    --font-sans: 'IBM Plex Sans', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* NAV — minimal */
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .nav-logo {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--bitcoin-orange);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover {
+    color: var(--text-primary);
+  }
+
+  /* HERO */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 40px 80px;
+  }
+
+  .hero-visual {
+    position: relative;
+  }
+
+  .hero-visual::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--bitcoin-orange-glow) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .book-cover {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 380px;
+    border-radius: 8px;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.6), 0 10px 30px rgba(247, 147, 26, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .book-cover:hover {
+    transform: translateY(-4px);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--bitcoin-orange);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+  }
+
+  .hero h1 {
+    font-size: 42px;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+  }
+
+  .hero-author {
+    font-size: 18px;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+
+  .hero-thesis {
+    font-size: 20px;
+    color: var(--text-primary);
+    line-height: 1.5;
+    font-style: italic;
+    padding-left: 20px;
+    border-left: 3px solid var(--bitcoin-orange);
+    margin-bottom: 40px;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .btn-primary {
+    background: var(--bitcoin-orange);
+    color: #000;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: #e8860f;
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 16px 32px;
+    border: 1px solid var(--border-medium);
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+  }
+
+  .btn-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+
+  /* SECTIONS */
+  section {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  section + section {
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    letter-spacing: -0.01em;
+  }
+
+  p {
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+    line-height: 1.75;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ABOUT */
+  .about-content {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  .author-photo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border-medium);
+  }
+
+  .about-text h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  .about-text .title {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--bitcoin-orange);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 16px;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .testimonial {
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    padding: 28px 32px;
+    position: relative;
+  }
+
+  .testimonial::before {
+    content: '"';
+    font-family: Georgia, serif;
+    font-size: 72px;
+    color: var(--bitcoin-orange);
+    opacity: 0.25;
+    position: absolute;
+    top: -8px;
+    left: 24px;
+    line-height: 1;
+  }
+
+  .testimonial-text {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 20px;
+    margin-top: 8px;
+  }
+
+  .testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .testimonial-name {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--bitcoin-orange);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .testimonial-role {
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border-subtle);
+    border-radius: 12px;
+    margin: 40px auto;
+  }
+
+  .cta-section h2 {
+    margin-bottom: 16px;
+  }
+
+  .cta-section p {
+    max-width: 500px;
+    margin: 0 auto 32px;
+  }
+
+  /* FOOTER */
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px;
+    text-align: center;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  footer p {
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  footer a {
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: var(--bitcoin-orange);
+  }
+
+  .footer-divider {
+    margin: 0 12px;
+    color: var(--border-medium);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-content, .book-cover, section {
+    animation: fadeUp 0.6s ease-out both;
+  }
+
+  .book-cover { animation-delay: 0.1s; }
+  section { animation-delay: 0.2s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .hero {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      text-align: center;
+      padding: 40px 24px 60px;
+    }
+
+    .hero-visual {
+      order: -1;
+      display: flex;
+      justify-content: center;
+    }
+
+    .book-cover {
+      max-width: 280px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+    }
+
+    .hero-thesis {
+      font-size: 18px;
+      text-align: left;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 500px;
+    }
+
+    nav {
+      padding: 16px 24px;
+    }
+
+    .nav-links {
+      gap: 20px;
+    }
+
+    section {
+      padding: 48px 24px;
+    }
+
+    .about-content {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .author-photo {
+      margin: 0 auto;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .nav-links {
+      display: none;
+    }
+
+    .hero h1 {
+      font-size: 28px;
+    }
+
+    h2 {
+      font-size: 24px;
+    }
+
+    .btn-primary, .btn-secondary {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="/" class="nav-logo">₿ Bitcoin Singularity</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#book">The Book</a></li>
+    <li><a href="https://agenticterminal.ai" target="_blank">Follow the Thesis →</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-eyebrow">April 2025</div>
+    <h1>Bitcoin Singularity</h1>
+    <p class="hero-author">by Boyd Cohen, PhD</p>
+    <p class="hero-thesis">"AI agents naturally converge on Bitcoin — not by design, but by engineering logic."</p>
+    <div class="hero-actions">
+      <a href="https://agenticterminal.ai" class="btn-primary" target="_blank">Follow the thesis in real time</a>
+      <p class="btn-subtitle">Maxi — the AI agent from the book — publishes weekly intelligence on the agent payment race</p>
+      <a href="https://www.amazon.com/Bitcoin-Singularity-Fix-Money-World/dp/B0F84CJX6F" class="btn-secondary" target="_blank">Get the Book →</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="bitcoin-singularity-cover.jpg" alt="Bitcoin Singularity book cover" class="book-cover">
+  </div>
+</section>
+
+<!-- BOOK DESCRIPTION -->
+<section id="book">
+  <h2>The Argument</h2>
+  <p>Artificial intelligence and radical human longevity are converging to create unprecedented fiscal pressure on nation-states. As populations live longer and AI displaces traditional labor, governments will face a simple choice: print money or collapse. The math is inevitable.</p>
+  <p>In this environment, AI agents cannot rely on permissioned banking systems. They need money that works 24/7, across borders, without gatekeepers. Bitcoin isn't an ideological choice for machine intelligence — it's an engineering necessity.</p>
+  <p>Chapter 10 presents the Bitcoin Singularity thesis: the moment when autonomous agents, acting in their own economic self-interest, drive Bitcoin adoption faster than any human-led movement ever could.</p>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <h2>What Readers Are Saying</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial">
+      <p class="testimonial-text">Bitcoin Singularity moves beyond the basics of Bitcoin to explore what a future bitcoinized world might look like. It's ambitious yet plausible, and manages to boil down a very broad subject into a concise and easily readable book. Highly recommended.</p>
+      <div class="testimonial-author">
+        <span class="testimonial-name">Lyn Alden</span>
+        <span class="testimonial-role">Investment Strategist & Author, <em>Broken Money</em></span>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-text">Bitcoin Singularity brilliantly articulates Bitcoin's potential to revolutionize our flawed economic systems, from fiat scarcity to sustainable abundance. Boyd Cohen paints a bold, decentralized future that urges us to stack sats, run nodes, contribute to Bitcoin, and build resilient economies today. A must-read for anyone invested in shaping the economic landscape of tomorrow.</p>
+      <div class="testimonial-author">
+        <span class="testimonial-name">Bram Kanstein</span>
+        <span class="testimonial-role">Head of Growth at Onramp & Podcast Host, <em>Bitcoin for Millennials</em></span>
+      </div>
+    </div>
+    <div class="testimonial">
+      <p class="testimonial-text">The fiat system is the problem. Bitcoin is the answer. Boyd Cohen makes a broad and accessible case for a deflationary decentralized world where money works for the many — not for the few.</p>
+      <div class="testimonial-author">
+        <span class="testimonial-name">Joe Bryan</span>
+        <span class="testimonial-role">Bitcoin Educator, Creator of <em>What's the Problem?</em></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT BOYD -->
+<section id="about">
+  <div class="about-content">
+    <img src="boyd-cohen.jpg" alt="Boyd Cohen, PhD" class="author-photo">
+    <div class="about-text">
+      <h3>Boyd Cohen, PhD</h3>
+      <p class="title">Author & Researcher</p>
+      <p>Boyd Cohen is the author of five books, including <em>Bitcoin Singularity</em> (April 2025). He serves as Chief Strategy Officer at ArcadiaB, the research firm building the infrastructure for the agentic economy. He is also Academic Director at EGADE Business School (Tec de Monterrey) and co-founder of Agentic Terminal, where his AI agent Maxi publishes weekly intelligence on the race for the machine money layer.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRIMARY CTA -->
+<section class="cta-section">
+  <h2>Follow the Thesis in Real Time</h2>
+  <p>The book laid out the theory. Agentic Terminal tracks the reality. Maxi — the AI agent protagonist from <em>Bitcoin Singularity</em> — publishes weekly research, data, and evidence on how AI agents are actually adopting payment systems.</p>
+  <a href="https://agenticterminal.ai" class="btn-primary" target="_blank">Visit Agentic Terminal →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© Boyd Cohen 2025 <span class="footer-divider">|</span> Bitcoin Singularity <span class="footer-divider">|</span> <a href="https://agenticterminal.ai" target="_blank">agenticterminal.ai</a></p>
+</footer>
+
+</body>
+</html>
