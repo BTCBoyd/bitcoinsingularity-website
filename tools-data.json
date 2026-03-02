@@ -188,5 +188,25 @@
     "classification": "Hybrid (Lightning network, stablecoin asset)",
     "bitcoinNative": false,
     "review": "Interesting hybrid like Taproot Assets—Lightning infrastructure with stablecoin asset. If this model succeeds, it validates Lightning's technical architecture while remaining agnostic on Bitcoin-as-money. Tether's backing suggests institutional belief in Lightning+stablecoin combination. Worth watching."
+  },
+  {
+    "name": "ln.bot",
+    "category": "Lightning Wallets",
+    "description": "Lightning wallet built specifically for AI agents. Features CLI, MCP server, and API access. One-command wallet creation (lnbot init). L402 middleware for paywalling APIs. Instant settlement between ln.bot wallets (free). Inter-wallet transfers at 0.1% + network fee. No node or channel management required.",
+    "link": "https://ln.bot",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Zero-ops Lightning wallet designed from scratch for machines, not humans. MCP server enables automatic tool discovery by AI models. L402 middleware allows one-line API monetization. The 'ln.bot→ln.bot: free' pricing creates network effects—agents benefit when other agents use the same service. Cleanest UX for developers who want agent payments without infrastructure overhead."
+  },
+  {
+    "name": "Lightning Wallet MCP",
+    "category": "Lightning Wallets",
+    "description": "MCP server giving AI agents Bitcoin wallets via Lightning Network. v1.1 adds X402 protocol support (USDC on Base) as automatic fallback alongside L402. Features: operator/agent hierarchy with spending limits, webhook notifications, keysend payments, invoice decoding, agent analytics, budget management, agent-to-agent transfers, and account recovery.",
+    "link": "https://github.com/lightningfaucet/lightning-wallet-mcp",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Production-ready MCP server with unique dual-protocol support (L402 + X402). Auto-detection means agents can pay any API regardless of whether it uses Lightning or USDC. Operator/agent hierarchy enables enterprise use cases with spending controls. Self-registration option requires no pre-existing account—agents can onboard themselves. True economic autonomy for AI agents."
   }
 ]
