@@ -30,24 +30,24 @@
     "review": "Primary competitor to Lightning/L402. Corporate backing, mature infrastructure, and 50M+ x402 transactions processed give this significant market traction. USD-denominated (USDC) provides volatility protection agents may prefer for operational expenses. The question: do agents care more about permissionless architecture (Bitcoin) or USD stability + corporate support (Coinbase)?"
   },
   {
-    "name": "Alby Hub",
+    "name": "Alby Hub + Alby MCP Server",
     "category": "Lightning Wallets",
-    "description": "Self-custodial Lightning wallet with Nostr Wallet Connect (NWC) integration. Includes 'Alby Agent Skill' tutorial for teaching AI agents to use Lightning wallets. Browser extension and mobile app. Open source. Designed for individual users but increasingly used by developers building agent systems.",
+    "description": "Self-custodial Lightning wallet with Nostr Wallet Connect (NWC) integration. Alby Bitcoin Payments MCP Server (released June 2025) enables AI agents to send/receive Lightning payments via Model Context Protocol. Works with Claude, Cursor, Cline, Goose, n8n, and any MCP-compatible LLM. Hosted MCP server available at mcp.getalby.com. Supports L402, LNURL, and NWC standards.",
     "link": "https://albyhub.com",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Grassroots favorite for Lightning+Nostr integration. The Agent Skill tutorial democratizes agent wallet access—doesn't require institutional infrastructure. If decentralized, community-driven agent development wins over corporate platforms, Alby is positioned well. NWC protocol is key interoperability layer."
+    "review": "Grassroots favorite for Lightning+Nostr integration. The MCP server democratizes agent wallet access—no infrastructure required, just an NWC connection string. One-minute setup for agents to gain Bitcoin payment capability. If decentralized, community-driven agent development wins over corporate platforms, Alby is positioned well. NWC protocol is key interoperability layer."
   },
   {
     "name": "LNbits",
     "category": "Lightning Wallets",
-    "description": "Modular Lightning wallet and accounts system with extension marketplace. Experimental NWC service. Can create isolated wallet accounts with specific permissions—useful for agents needing scoped spending. Open source. Self-hosted or use public instances.",
+    "description": "Modular Lightning wallet and accounts system with 50+ extension marketplace. 6 years of real-world use and hardening. Features isolated wallet accounts with scoped API permissions—ideal for agents needing restricted spending access. NWC and LNURL native. Open source. Self-hosted or use SaaS at lnbits.com (21 sats/hr). Used for POS, vending machines, Nostr zaps, and automation.",
     "link": "https://lnbits.com",
-    "status": "Beta",
+    "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Developer-friendly extensibility makes this attractive for custom agent wallet deployments. Extension system allows community-built agent integrations. Status: experimental but actively developed. Good for prototyping, may need hardening for production agent use at scale."
+    "review": "Developer-friendly extensibility makes this attractive for custom agent wallet deployments. Extension system allows community-built agent integrations. 6 years of production use provides stability confidence. Phase-stable release cycle. Ideal for agents needing scoped wallet permissions without building infrastructure from scratch."
   },
   {
     "name": "Stripe Machine Payments",
@@ -57,7 +57,7 @@
     "status": "Preview",
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
-    "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable."
+    "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable. Note: Documentation page currently returns 404—may indicate repositioning or limited beta access."
   },
   {
     "name": "Voltage",
@@ -128,6 +128,16 @@
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
     "review": "The 'server side' of L402. One agent runs Aperture to host paid services; another uses lnget to pay and access. Complete commerce loop. If L402 becomes standard, Aperture instances proliferate. Watch for managed Aperture hosting services to emerge."
+  },
+  {
+    "name": "x402.eco",
+    "category": "Payment Protocols",
+    "description": "Payment layer resource site for AI agent economy. Documents x402 protocol enabling agents to pay for resources programmatically without pre-negotiation. HTTP extended with native payments. Advocates for machine-to-machine commerce where agents pay for compute, data, and inference in real-time.",
+    "link": "https://www.x402.eco",
+    "status": "Production",
+    "classification": "Crypto-generic (stablecoin-based)",
+    "bitcoinNative": false,
+    "review": "Community resource site documenting the x402 ecosystem. Not a tool itself but valuable reference for understanding Coinbase/Cloudflare payment protocol positioning. Quote: 'In five years, more economic activity will happen between machines than between humans and machines.' Useful for tracking x402 adoption narrative."
   },
   {
     "name": "Taproot Assets",
