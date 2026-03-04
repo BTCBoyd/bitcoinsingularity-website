@@ -218,5 +218,15 @@
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
     "review": "Production-ready MCP server with unique dual-protocol support (L402 + X402). Auto-detection means agents can pay any API regardless of whether it uses Lightning or USDC. Operator/agent hierarchy enables enterprise use cases with spending controls. Self-registration option requires no pre-existing account—agents can onboard themselves. True economic autonomy for AI agents."
+  },
+  {
+    "name": "Tether Wallet Toolkit",
+    "category": "Lightning Wallets",
+    "description": "Open-source wallet development kit from Tether supporting both humans and AI agents. Multi-blockchain support including Bitcoin, Lightning Network, Ethereum, Solana, and TON. Provides standardized wallet interfaces for agent integration. Open-sourced October 2025.",
+    "link": "https://github.com/tethertoolkit",
+    "status": "Production",
+    "classification": "Hybrid (multi-blockchain support)",
+    "bitcoinNative": false,
+    "review": "Tether's entry into AI agent wallet infrastructure signals institutional recognition of the category. Multi-chain support means agents aren't locked to a single ecosystem. Bitcoin+Lightning support included but not exclusive—represents 'agnostic' approach vs Bitcoin-native philosophy. Corporate backing provides resources but raises questions about decentralization. Interesting counterpoint to Lightning Labs' Bitcoin-only approach."
   }
 ]
