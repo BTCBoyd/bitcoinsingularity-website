@@ -53,11 +53,11 @@
     "name": "Stripe Machine Payments",
     "category": "Payment Protocols",
     "description": "PaymentIntents API for charging AI agents via x402 protocol. Uses USDC on Base. Pricing models: per-request, per-action, per-second. Includes CLI tool 'purl' and sample code. CoinGecko launched x402 API endpoints simultaneously—agents pay $0.01 USDC per request with no account.",
-    "link": "https://stripe.com/payments/machine",
+    "link": "https://docs.stripe.com/payments/machine",
     "status": "Preview",
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
-    "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable. Note: Documentation page currently returns 404—may indicate repositioning or limited beta access."
+    "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable. Live documentation confirms active development; main marketing page 404s but docs are accessible."
   },
   {
     "name": "Voltage",
@@ -228,5 +228,25 @@
     "classification": "Hybrid (multi-blockchain support)",
     "bitcoinNative": false,
     "review": "Tether's entry into AI agent wallet infrastructure signals institutional recognition of the category. Multi-chain support means agents aren't locked to a single ecosystem. Bitcoin+Lightning support included but not exclusive—represents 'agnostic' approach vs Bitcoin-native philosophy. Corporate backing provides resources but raises questions about decentralization. Interesting counterpoint to Lightning Labs' Bitcoin-only approach."
+  },
+  {
+    "name": "Lightning Enable MCP",
+    "category": "Lightning Wallets",
+    "description": "Open-source MCP server enabling AI agents to make autonomous Bitcoin Lightning payments. Available in .NET and Python. Features: pay invoices, access L402 APIs, budget tracking, create invoices, USD/BTC exchange via Strike. Supports Strike API, LND, NWC (CoinOS, CLINK, Alby), and OpenNode. Includes live L402 demo store at store.lightningenable.com.",
+    "link": "https://github.com/refined-element/lightning-enable-mcp",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Multi-language MCP server (.NET + Python) with broad wallet support. L402-native design with automatic payment handling for API access. Budget controls and spending limits address runaway spending concerns. Live demo store proves real-world functionality. Docker support simplifies deployment. Strong documentation and 13 available tools make this production-ready for agent developers."
+  },
+  {
+    "name": "AgentBTC MCP Server",
+    "category": "Lightning Wallets",
+    "description": "BYON (Bring Your Own Node) Bitcoin/Lightning MCP server. Non-custodial, zero-trust architecture—node credentials never leave your machine. 13 MCP tools for wallet management, invoices, payments, channels, and L402. Features Lightning addresses, spending policies (per-transaction/daily/monthly limits), and full audit trail. Works with Claude Desktop, OpenClaw, any MCP client.",
+    "link": "https://github.com/bkblock/agentbtc-mcp",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "First-mover advantage claimed as 'world's first Bitcoin/Lightning MCP server.' BYON architecture prioritizes security—credentials stay local, no counterparty risk. 13 tools cover complete Lightning operations including channel management. Spending policies with granular limits solve the 'runaway agent' problem. Lightning addresses (bot@yourname.agentbtc.io) enable human-readable payments. Good fit for security-conscious developers with existing LND nodes."
   }
 ]
