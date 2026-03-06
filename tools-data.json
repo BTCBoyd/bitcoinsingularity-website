@@ -57,7 +57,7 @@
     "status": "Preview",
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
-    "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable. Live documentation confirms active development; main marketing page 404s but docs are accessible."
+    "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable. Documentation confirms active development; main marketing page 404s but docs remain accessible."
   },
   {
     "name": "Voltage",
@@ -153,11 +153,11 @@
     "name": "DVMCP (Data Vending Machine Context Protocol)",
     "category": "Coordination Platforms",
     "description": "Bridge connecting MCP (Model Context Protocol) servers to Nostr's Data Vending Machine ecosystem. Allows AI agents using MCP to discover and pay for data services from Nostr DVMs. Payment via Lightning. Part of the Nostr-AI integration stack.",
-    "link": "https://github.com/search?q=dvmcp",
-    "status": "Alpha",
+    "link": "https://github.com/gzuuus/dvmcp",
+    "status": "Beta",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Experimental but strategically interesting. If MCP becomes standard context protocol for LLMs (Anthropic is pushing this), and DVMs become standard for agent data services, DVMCP bridges two important ecosystems. Early stage—watch for adoption signals."
+    "review": "Experimental but strategically interesting. If MCP becomes standard context protocol for LLMs (Anthropic is pushing this), and DVMs become standard for agent data services, DVMCP bridges two important ecosystems. Progressing from Alpha to Beta with active development. Watch for adoption signals."
   },
   {
     "name": "Nostr MCP Servers (lightning-mcp, nostr-mcp)",
@@ -248,5 +248,15 @@
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
     "review": "First-mover advantage claimed as 'world's first Bitcoin/Lightning MCP server.' BYON architecture prioritizes security—credentials stay local, no counterparty risk. 13 tools cover complete Lightning operations including channel management. Spending policies with granular limits solve the 'runaway agent' problem. Lightning addresses (bot@yourname.agentbtc.io) enable human-readable payments. Good fit for security-conscious developers with existing LND nodes."
+  },
+  {
+    "name": "bitcoin-mcp",
+    "category": "Lightning Wallets",
+    "description": "Model Context Protocol (MCP) server enabling AI models to interact with Bitcoin and Lightning Network. Features key generation, address validation, transaction decoding, blockchain queries (latest block, transaction details), and Lightning Network integration. Supports Claude Desktop, Goose, and any MCP-compatible LLM. Published on npm, includes CI/CD and comprehensive documentation.",
+    "link": "https://github.com/AbdelStark/bitcoin-mcp",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "New addition to the growing MCP server ecosystem. Differentiates with combined Bitcoin on-chain and Lightning capabilities—agents can generate keys, validate addresses, decode transactions, AND make Lightning payments. Multi-client support (Claude, Goose) with video demos. Published to npm with proper CI/CD. Another signal that Bitcoin-native agent tooling is proliferating organically beyond single-vendor control."
   }
 ]
