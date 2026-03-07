@@ -152,12 +152,22 @@
   {
     "name": "DVMCP (Data Vending Machine Context Protocol)",
     "category": "Coordination Platforms",
-    "description": "Bridge connecting MCP (Model Context Protocol) servers to Nostr's Data Vending Machine ecosystem. Allows AI agents using MCP to discover and pay for data services from Nostr DVMs. Payment via Lightning. Part of the Nostr-AI integration stack.",
+    "description": "Bridge connecting MCP (Model Context Protocol) servers to Nostr's Data Vending Machine ecosystem. Allows AI agents using MCP to discover and pay for data services from Nostr DVMs. Payment via Lightning. Part of the Nostr-AI integration stack. ARCHIVED - superseded by ContextVM SDK.",
     "link": "https://github.com/gzuuus/dvmcp",
+    "status": "Deprecated",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Project archived March 2026. Development moved to ContextVM SDK (github.com/ContextVM/sdk). Historical significance: pioneered the bridge between MCP and Nostr DVMs. If using DVMCP, migrate to ContextVM SDK which continues the same vision with improved architecture."
+  },
+  {
+    "name": "ContextVM SDK",
+    "category": "Coordination Platforms",
+    "description": "JavaScript/TypeScript SDK implementing the Context Vending Machine Protocol. Bridges Nostr and Model Context Protocol (MCP) to enable decentralized access and exposure of computational services. Features Proxy (client-side MCP server over Nostr), Gateway (server transport for Nostr exposure), Relay management, and cryptographic signing. Successor to DVMCP.",
+    "link": "https://github.com/ContextVM/sdk",
     "status": "Beta",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Experimental but strategically interesting. If MCP becomes standard context protocol for LLMs (Anthropic is pushing this), and DVMs become standard for agent data services, DVMCP bridges two important ecosystems. Progressing from Alpha to Beta with active development. Watch for adoption signals."
+    "review": "Evolution of DVMCP with cleaner architecture and TypeScript SDK approach. Enables MCP servers to gain Nostr interoperability without rewriting. Proxy pattern is key innovation: existing MCP servers maintain conventional transports while gaining decentralized discovery via Nostr. Early stage but represents the synthesis of two important protocols (MCP + Nostr). Watch for adoption in agent coordination use cases."
   },
   {
     "name": "Nostr MCP Servers (lightning-mcp, nostr-mcp)",
