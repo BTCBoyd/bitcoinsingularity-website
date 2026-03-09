@@ -27,6 +27,20 @@
       "flagship": false,
       "approved": true,
       "submittedAt": "2026-02-24T02:50:27.406Z"
+    },
+    "riobamba-1773063708944": {
+      "city": "Riobamba",
+      "country": "Ecuador",
+      "lat": -1.6716698,
+      "lng": -78.6607421,
+      "venue": "",
+      "organizer": "Israel Quisnancela",
+      "date": "2026-03-09T08:50",
+      "contact": "israelalexander1096@gmail.com",
+      "description": "",
+      "flagship": false,
+      "approved": true,
+      "submittedAt": "2026-03-09T13:41:48.820Z"
     }
   }
 }
