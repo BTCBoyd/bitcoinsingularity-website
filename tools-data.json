@@ -2,22 +2,22 @@
   {
     "name": "Lightning Labs lightning-agent-tools",
     "category": "Lightning Wallets",
-    "description": "Open-source toolkit for AI agents to operate on Lightning Network. Includes seven modular skills: lnd node management, remote key isolation, scoped macaroons (pay-only credentials), L402 payment client (lnget), paid endpoint hosting (Aperture), MCP node querying, and end-to-end commerce workflows. Security-first architecture with least-privilege model.",
+    "description": "Open-source toolkit for AI agents to operate on Lightning Network. Includes seven modular skills: lnd node management, remote key isolation, scoped macaroons (pay-only credentials), L402 payment client (lnget), paid endpoint hosting (Aperture), MCP node querying, and end-to-end commerce workflows. Security-first architecture with least-privilege model. Now available via npx and Claude Code plugin marketplace.",
     "link": "https://github.com/lightninglabs/lightning-agent-tools",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "The gold standard for Bitcoin-native AI agent payments. Lightning Labs' institutional credibility combined with production-ready security model (remote signers, scoped credentials) makes this the reference implementation for L402. If agents choose Bitcoin, they'll likely start here."
+    "review": "The gold standard for Bitcoin-native AI agent payments. Lightning Labs' institutional credibility combined with production-ready security model (remote signers, scoped credentials) makes this the reference implementation for L402. Now available as one-line install via npx and Claude Code plugin marketplace. If agents choose Bitcoin, they'll likely start here."
   },
   {
     "name": "claw-cash",
     "category": "Lightning Wallets",
-    "description": "Bitcoin wallet specifically designed for AI agents. Agents hold Bitcoin as treasury, swap to stablecoins on-the-fly for payments. Keys secured in hardware enclaves (Evervault). Supports Bitcoin, Lightning, Ark, and stablecoins. CLI designed for agent subprocess calls. Works with OpenClaw, Claude Code, or any agent framework. Implements \"stablecoins in, Bitcoin out\" model.",
+    "description": "Bitcoin wallet specifically designed for AI agents. Agents hold Bitcoin as treasury, swap to stablecoins on-the-fly for payments. Keys secured in hardware enclaves (Evervault). Supports Bitcoin, Lightning, Ark, and stablecoins. CLI designed for agent subprocess calls. Works with OpenClaw, Claude Code, or any agent framework. Implements 'stablecoins in, Bitcoin out' model.",
     "link": "https://github.com/tiero/claw-cash",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "First Bitcoin wallet explicitly designed for AI agents from the ground up. Implements the \"stablecoins for payments, Bitcoin for savings\" model predicted in Bitcoin Singularity thesis. Production-ready infrastructure with security-first design (keys in hardware enclaves, audit logs, 2FA via Telegram). OpenClaw-compatible. Real implementation of agent money layer happening RIGHT NOW. This is what Boyd predicted: agents holding verifiable Bitcoin (21M supply cap) and swapping to stablecoins only when spending. x402 support on roadmap."
+    "review": "First Bitcoin wallet explicitly designed for AI agents from the ground up. Implements the 'stablecoins for payments, Bitcoin for savings' model predicted in Bitcoin Singularity thesis. Production-ready infrastructure with security-first design (keys in hardware enclaves, audit logs, 2FA via Telegram). OpenClaw-compatible. Real implementation of agent money layer happening RIGHT NOW. This is what Boyd predicted: agents holding verifiable Bitcoin (21M supply cap) and swapping to stablecoins only when spending. x402 support on roadmap."
   },
   {
     "name": "Coinbase Agentic Wallets",
@@ -54,7 +54,7 @@
     "category": "Payment Protocols",
     "description": "PaymentIntents API for charging AI agents via x402 protocol. Uses USDC on Base. Pricing models: per-request, per-action, per-second. Includes CLI tool 'purl' and sample code. CoinGecko launched x402 API endpoints simultaneously—agents pay $0.01 USDC per request with no account.",
     "link": "https://docs.stripe.com/payments/machine",
-    "status": "Preview",
+    "status": "Production",
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
     "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable. Documentation confirms active development; main marketing page 404s but docs remain accessible."
@@ -164,10 +164,10 @@
     "category": "Coordination Platforms",
     "description": "JavaScript/TypeScript SDK implementing the Context Vending Machine Protocol. Bridges Nostr and Model Context Protocol (MCP) to enable decentralized access and exposure of computational services. Features Proxy (client-side MCP server over Nostr), Gateway (server transport for Nostr exposure), Relay management, and cryptographic signing. Successor to DVMCP.",
     "link": "https://github.com/ContextVM/sdk",
-    "status": "Beta",
+    "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Evolution of DVMCP with cleaner architecture and TypeScript SDK approach. Enables MCP servers to gain Nostr interoperability without rewriting. Proxy pattern is key innovation: existing MCP servers maintain conventional transports while gaining decentralized discovery via Nostr. Early stage but represents the synthesis of two important protocols (MCP + Nostr). Watch for adoption in agent coordination use cases."
+    "review": "Evolution of DVMCP with cleaner architecture and TypeScript SDK approach. Enables MCP servers to gain Nostr interoperability without rewriting. Proxy pattern is key innovation: existing MCP servers maintain conventional transports while gaining decentralized discovery via Nostr. Now production-ready with Bun-based build system and comprehensive documentation. Represents the synthesis of two important protocols (MCP + Nostr)."
   },
   {
     "name": "Nostr MCP Servers (lightning-mcp, nostr-mcp)",
@@ -242,12 +242,12 @@
   {
     "name": "Lightning Enable MCP",
     "category": "Lightning Wallets",
-    "description": "Open-source MCP server enabling AI agents to make autonomous Bitcoin Lightning payments. Available in .NET and Python. Features: pay invoices, access L402 APIs, budget tracking, create invoices, USD/BTC exchange via Strike. Supports Strike API, LND, NWC (CoinOS, CLINK, Alby), and OpenNode. Includes live L402 demo store at store.lightningenable.com.",
+    "description": "Open-source MCP server enabling AI agents to make autonomous Bitcoin Lightning payments. Available in .NET and Python. Features: pay invoices, access L402 APIs, budget tracking, create invoices, USD/BTC exchange via Strike. Supports Strike API, LND, NWC (CoinOS, CLINK, Alby), and OpenNode. Includes live L402 demo store at store.lightningenable.com. Now with 23 tools including Agent Service Agreement (ASA) tools for agent-to-agent commerce on Nostr.",
     "link": "https://github.com/refined-element/lightning-enable-mcp",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Multi-language MCP server (.NET + Python) with broad wallet support. L402-native design with automatic payment handling for API access. Budget controls and spending limits address runaway spending concerns. Live demo store proves real-world functionality. Docker support simplifies deployment. Strong documentation and 13 available tools make this production-ready for agent developers."
+    "review": "Multi-language MCP server (.NET + Python) with broad wallet support. L402-native design with automatic payment handling for API access. Budget controls and spending limits address runaway spending concerns. Live demo store proves real-world functionality. Docker support simplifies deployment. Strong documentation and 23 available tools including agent-to-agent commerce via Nostr. Production-ready for agent developers."
   },
   {
     "name": "AgentBTC MCP Server",
