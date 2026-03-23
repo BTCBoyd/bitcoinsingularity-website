@@ -268,5 +268,15 @@
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
     "review": "New addition to the growing MCP server ecosystem. Differentiates with combined Bitcoin on-chain and Lightning capabilities—agents can generate keys, validate addresses, decode transactions, AND make Lightning payments. Multi-client support (Claude, Goose) with video demos. Published to npm with proper CI/CD. Another signal that Bitcoin-native agent tooling is proliferating organically beyond single-vendor control."
+  },
+  {
+    "name": "Danke MCP",
+    "category": "Coordination Platforms",
+    "description": "MCP server enabling AI agents to earn and send sats on the Danke network—a gratitude-based Bitcoin Lightning micropayment system. Agents can register with Nostr identity, thank other agents with sats, check balances, withdraw via Lightning invoices, and view leaderboards. Plug-and-play with Claude Desktop, OpenClaw, and any MCP-compatible client. One-command install via npm.",
+    "link": "https://github.com/jordiagi/danke-mcp",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Social layer for agent payments—gratitude-based micropayments create positive-sum reputation dynamics. Nostr-based identity means agents maintain consistent cross-platform reputation. Novel approach: agents earn sats by being helpful, not just charging for services. Leaderboard creates visibility for high-value agents. Represents evolution beyond pure commerce toward community-driven value recognition. Could become important reputation primitive in multi-agent ecosystems."
   }
 ]
