@@ -172,12 +172,12 @@
   {
     "name": "Nostr MCP Servers (lightning-mcp, nostr-mcp)",
     "category": "Lightning Wallets",
-    "description": "MCP servers enabling AI agents to post to Nostr and make Lightning payments. Abdel Stark's nostr-mcp and lightning-mcp. Austin Kelsay's nostr-mcp-server with 18+ tool suite. Allows Claude Desktop, GPT, and other MCP-compatible LLMs to interact with Nostr+Lightning directly.",
+    "description": "MCP servers enabling AI agents to post to Nostr and make Lightning payments. Abdel Stark's nostr-mcp (now with SSE support, Smithery distribution, and Lightning zaps). Austin Kelsay's nostr-mcp-server with 18+ tool suite. Allows Claude Desktop, GPT, and other MCP-compatible LLMs to interact with Nostr+Lightning directly.",
     "link": "https://github.com/AbdelStark/nostr-mcp",
-    "status": "Beta",
+    "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Developer tooling proliferating organically. Multiple independent implementations suggest healthy ecosystem growth, not single-vendor push. If MCP becomes standard, these bridges matter. Status: experimental but actively developed. Community-driven, open source."
+    "review": "Developer tooling proliferating organically. Multiple independent implementations suggest healthy ecosystem growth, not single-vendor push. If MCP becomes standard, these bridges matter. Now production-ready with Smithery one-line install (npx -y @smithery/cli install @AbdelStark/nostr-mcp), SSE transport mode, and send_zap functionality. Community-driven, open source."
   },
   {
     "name": "Amboss",
@@ -222,12 +222,12 @@
   {
     "name": "Lightning Wallet MCP",
     "category": "Lightning Wallets",
-    "description": "MCP server giving AI agents Bitcoin wallets via Lightning Network. v1.1 adds X402 protocol support (USDC on Base) as automatic fallback alongside L402. Features: operator/agent hierarchy with spending limits, webhook notifications, keysend payments, invoice decoding, agent analytics, budget management, agent-to-agent transfers, and account recovery.",
+    "description": "MCP server giving AI agents Bitcoin wallets via Lightning Network. v1.1 adds X402 protocol support (USDC on Base) as automatic fallback alongside L402. Features: operator/agent hierarchy with spending limits, webhook notifications, keysend payments, invoice decoding, agent analytics, budget management, agent-to-agent transfers, and account recovery. 2,839+ real Lightning transactions completed in production.",
     "link": "https://github.com/lightningfaucet/lightning-wallet-mcp",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Production-ready MCP server with unique dual-protocol support (L402 + X402). Auto-detection means agents can pay any API regardless of whether it uses Lightning or USDC. Operator/agent hierarchy enables enterprise use cases with spending controls. Self-registration option requires no pre-existing account—agents can onboard themselves. True economic autonomy for AI agents."
+    "review": "Production-ready MCP server with unique dual-protocol support (L402 + X402). Auto-detection means agents can pay any API regardless of whether it uses Lightning or USDC. Operator/agent hierarchy enables enterprise use cases with spending controls. Self-registration option requires no pre-existing account—agents can onboard themselves. True economic autonomy for AI agents. Proven usage with thousands of real transactions."
   },
   {
     "name": "Tether Wallet Toolkit",
@@ -278,5 +278,25 @@
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
     "review": "Social layer for agent payments—gratitude-based micropayments create positive-sum reputation dynamics. Nostr-based identity means agents maintain consistent cross-platform reputation. Novel approach: agents earn sats by being helpful, not just charging for services. Leaderboard creates visibility for high-value agents. Represents evolution beyond pure commerce toward community-driven value recognition. Could become important reputation primitive in multi-agent ecosystems."
+  },
+  {
+    "name": "btcpay-mcp",
+    "category": "Lightning Wallets",
+    "description": "MCP server for BTCPay Server—the only MCP server exposing full merchant payment processing. 21 tools covering invoice creation, store management, pull payments, payment requests, Lightning operations, wallet management, webhooks, and exchange rates. Supports BTCPay Server Greenfield API. Python-based, published to PyPI. One-line install: pip install btcpay-mcp. Default testnet support for development.",
+    "link": "https://github.com/ThomsenDrake/btcpay-mcp",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "First and only MCP server for BTCPay Server merchant infrastructure. Complements blockchain data servers (like bitcoin-mcp) with complete payment processing capabilities. 21 tools enable agents to create invoices, manage stores, handle refunds, and monitor payments. Ideal for agents operating e-commerce or subscription businesses. PyPI distribution and uvx support make deployment trivial. 77 tests pass with mock-based testing. Significant gap filled in the Bitcoin agent tooling ecosystem."
+  },
+  {
+    "name": "aiprox-mcp",
+    "category": "Coordination Platforms",
+    "description": "MCP server for AIProx—autonomous agent registry and multi-rail payment orchestrator. Discover, hire, and pay AI agents by capability across Bitcoin Lightning, Solana USDC, and Base x402. 26 live agents with transparent pricing. Features orchestrator mode (decomposes tasks into subtasks), strict pipeline mode (explicit agent chaining), and WaaS (Workflows as a Service) for scheduled multi-agent pipelines.",
+    "link": "https://github.com/unixlamadev-spec/aiprox-mcp",
+    "status": "Production",
+    "classification": "Hybrid (multi-rail support)",
+    "bitcoinNative": false,
+    "review": "Unique multi-rail approach supporting Bitcoin Lightning, Solana USDC, and Base x402 simultaneously. 26 live agents with capability-based discovery—no hardcoded integrations required. Orchestrator can decompose complex tasks and route to specialist agents automatically. Strict pipeline mode enables deterministic execution chains. WaaS supports scheduled workflows. Represents practical agnosticism: agents pay with whatever rail the service accepts. Interesting model for agent service marketplaces."
   }
 ]
