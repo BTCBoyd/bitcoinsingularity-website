@@ -298,5 +298,25 @@
     "classification": "Hybrid (multi-rail support)",
     "bitcoinNative": false,
     "review": "Unique multi-rail approach supporting Bitcoin Lightning, Solana USDC, and Base x402 simultaneously. 26 live agents with capability-based discovery—no hardcoded integrations required. Orchestrator can decompose complex tasks and route to specialist agents automatically. Strict pipeline mode enables deterministic execution chains. WaaS supports scheduled workflows. Represents practical agnosticism: agents pay with whatever rail the service accepts. Interesting model for agent service marketplaces."
+  },
+  {
+    "name": "Polar MCP",
+    "category": "Node Infrastructure",
+    "description": "One-click Bitcoin Lightning networks for local app development and testing. Features an MCP server that enables AI agents like Claude and Cursor to programmatically control Lightning Network simulations. Create regtest networks, manage LND/Core Lightning/Eclair nodes, open/close channels, create and pay Lightning invoices, and mint Taproot Assets—all via AI agent commands.",
+    "link": "https://github.com/jamaljsr/polar-mcp",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Essential development infrastructure for agent builders. Simulated Lightning networks allow safe testing of agent payment flows without real funds. MCP integration means agents can spin up test environments programmatically—imagine an agent that tests its own payment logic before going live. Supports all major Lightning implementations (LND, Core Lightning, Eclair) and Bitcoin Core versions. Docker-based for reproducibility."
+  },
+  {
+    "name": "MaximumSats MCP",
+    "category": "Lightning Wallets",
+    "description": "MCP server for Bitcoin AI tools and Nostr Web of Trust scoring with L402 pay-per-use monetization. Features: Bitcoin/Lightning Q&A (21 sats), text-to-image generation (100 sats), and comprehensive Web of Trust tools including PageRank scoring, Sybil detection, trust path analysis, and network health metrics. 50 free WoT queries per day.",
+    "link": "https://github.com/joelklabo/maximumsats-mcp",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Demonstrates real L402 monetization of AI services. Every API call requires Lightning payment—agents pay per-use with no subscription. WoT scoring addresses critical trust problem in multi-agent systems: how to verify reputation without centralized identity. Sybil-resistant via network topology analysis. Shows the Bitcoin agent economy working in practice today."
   }
 ]
