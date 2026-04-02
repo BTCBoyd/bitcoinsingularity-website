@@ -50,14 +50,14 @@
     "review": "Developer-friendly extensibility makes this attractive for custom agent wallet deployments. Extension system allows community-built agent integrations. 6 years of production use provides stability confidence. Phase-stable release cycle. Ideal for agents needing scoped wallet permissions without building infrastructure from scratch."
   },
   {
-    "name": "Stripe Machine Payments",
+    "name": "Stripe Agentic Commerce Suite",
     "category": "Payment Protocols",
-    "description": "PaymentIntents API for charging AI agents via x402 protocol. Uses USDC on Base. Pricing models: per-request, per-action, per-second. Includes CLI tool 'purl' and sample code. CoinGecko launched x402 API endpoints simultaneously—agents pay $0.01 USDC per request with no account.",
-    "link": "https://docs.stripe.com/payments/machine",
+    "description": "Complete solution for businesses to sell across AI agents with single integration. Features Shared Payment Tokens (SPTs) for secure agent payments, product catalog syndication to AI agents, low-code deployment. Expanded March 2026 with additional payment methods including card vault integration. Used by Visa, OpenAI, Anthropic, Mastercard, and Shopify at launch.",
+    "link": "https://stripe.com/newsroom/news/agentic-commerce-suite",
     "status": "Production",
-    "classification": "Crypto-generic (stablecoin-based)",
+    "classification": "Crypto-generic (fiat + stablecoin hybrid)",
     "bitcoinNative": false,
-    "review": "When Stripe moves, markets follow. Machine payments preview validates the category but chose x402/USDC, not L402/Bitcoin. This accelerates agent payment adoption generally while creating path dependency toward stablecoins. Counter-evidence to Bitcoin-maximalist thesis—but also confirms machine payments are inevitable. Documentation confirms active development; main marketing page 404s but docs remain accessible."
+    "review": "Stripe's full entry into agent payments—significantly expanded from initial Machine Payments preview. SPTs (Shared Payment Tokens) enable secure delegated payments, addressing the 'agent acting on behalf of user' use case. Major validation: dedicated 'Agentic Commerce' product team didn't exist a year ago. Partnership with PwC for enterprise adoption. Fiat-first approach with crypto optionality—no Bitcoin/Lightning support. Institutional signal that machine-to-machine commerce is inevitable, but reinforces stablecoin/fiat path dependency over Bitcoin-native rails."
   },
   {
     "name": "Voltage",
