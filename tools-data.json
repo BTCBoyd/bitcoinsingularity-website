@@ -2,12 +2,12 @@
   {
     "name": "Lightning Labs lightning-agent-tools",
     "category": "Lightning Wallets",
-    "description": "Open-source toolkit for AI agents to operate on Lightning Network. Includes seven modular skills: lnd node management, remote key isolation, scoped macaroons (pay-only credentials), L402 payment client (lnget), paid endpoint hosting (Aperture), MCP node querying, and end-to-end commerce workflows. Security-first architecture with least-privilege model. Now available via npx and Claude Code plugin marketplace.",
+    "description": "Open-source toolkit for AI agents to operate on Lightning Network. Includes seven modular skills: lnd node management, remote key isolation, scoped macaroons (pay-only credentials), L402 payment client (lnget), paid endpoint hosting (Aperture), MCP node querying, and end-to-end commerce workflows. Security-first architecture with least-privilege model. Available via npx (@lightninglabs/lightning-mcp-server) and Claude Code plugin marketplace. Updated March 2026: L402 bLIP specification streamlined with version field for forward compatibility and token-agnostic design.",
     "link": "https://github.com/lightninglabs/lightning-agent-tools",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "The gold standard for Bitcoin-native AI agent payments. Lightning Labs' institutional credibility combined with production-ready security model (remote signers, scoped credentials) makes this the reference implementation for L402. Now available as one-line install via npx and Claude Code plugin marketplace. If agents choose Bitcoin, they'll likely start here."
+    "review": "The gold standard for Bitcoin-native AI agent payments. Lightning Labs' institutional credibility combined with production-ready security model (remote signers, scoped credentials) makes this the reference implementation for L402. March 2026 blog post detailed why L402 is purpose-built for agent commerce: cryptographic proof of payment built into credentials, privacy via onion routing, no intermediaries, and macaroon-based delegation for multi-agent hierarchies. Now available as one-line install via npx and Claude Code plugin marketplace. If agents choose Bitcoin, they'll likely start here."
   },
   {
     "name": "claw-cash",
@@ -122,12 +122,12 @@
   {
     "name": "Aperture",
     "category": "Payment Protocols",
-    "description": "Reverse proxy for hosting L402-gated API endpoints. Part of Lightning Labs ecosystem. Allows agents to monetize their services by requiring L402 payments for API access. Handles Lightning invoice generation, payment verification, and credential issuance (macaroons).",
+    "description": "Reverse proxy for hosting L402-gated API endpoints. Part of Lightning Labs ecosystem. Allows agents to monetize their services by requiring L402 payments for API access. Handles Lightning invoice generation, payment verification, and credential issuance (macaroons). Production-proven: powering Lightning Loop since 2020 (5+ years of real-world L402 usage).",
     "link": "https://github.com/lightninglabs/aperture",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "The 'server side' of L402. One agent runs Aperture to host paid services; another uses lnget to pay and access. Complete commerce loop. If L402 becomes standard, Aperture instances proliferate. Watch for managed Aperture hosting services to emerge."
+    "review": "The 'server side' of L402. One agent runs Aperture to host paid services; another uses lnget to pay and access. Complete commerce loop. Production-proven infrastructure: Lightning Loop has used Aperture for L402 payments since 2020—5+ years of real-world operation. If L402 becomes standard, Aperture instances proliferate. Watch for managed Aperture hosting services to emerge."
   },
   {
     "name": "x402.eco",
@@ -172,12 +172,12 @@
   {
     "name": "Nostr MCP Servers (lightning-mcp, nostr-mcp)",
     "category": "Lightning Wallets",
-    "description": "MCP servers enabling AI agents to post to Nostr and make Lightning payments. Abdel Stark's nostr-mcp (now with SSE support, Smithery distribution, and Lightning zaps). Austin Kelsay's nostr-mcp-server with 18+ tool suite. Allows Claude Desktop, GPT, and other MCP-compatible LLMs to interact with Nostr+Lightning directly.",
+    "description": "MCP servers enabling AI agents to post to Nostr and make Lightning payments. Abdel Stark's nostr-mcp with Smithery one-line install (npx -y @smithery/cli install @AbdelStark/nostr-mcp), SSE transport, and Lightning zaps. Austin Kelsay's nostr-mcp-server with 18+ tool suite. Allows Claude Desktop, GPT, and other MCP-compatible LLMs to interact with Nostr+Lightning directly.",
     "link": "https://github.com/AbdelStark/nostr-mcp",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Developer tooling proliferating organically. Multiple independent implementations suggest healthy ecosystem growth, not single-vendor push. If MCP becomes standard, these bridges matter. Now production-ready with Smithery one-line install (npx -y @smithery/cli install @AbdelStark/nostr-mcp), SSE transport mode, and send_zap functionality. Community-driven, open source."
+    "review": "Developer tooling proliferating organically. Multiple independent implementations suggest healthy ecosystem growth, not single-vendor push. If MCP becomes standard, these bridges matter. Now production-ready with Smithery distribution for one-line install, SSE transport mode, and send_zap functionality. Community-driven, open source."
   },
   {
     "name": "Amboss",
@@ -222,12 +222,12 @@
   {
     "name": "Lightning Wallet MCP",
     "category": "Lightning Wallets",
-    "description": "MCP server giving AI agents Bitcoin wallets via Lightning Network. v1.1 adds X402 protocol support (USDC on Base) as automatic fallback alongside L402. Features: operator/agent hierarchy with spending limits, webhook notifications, keysend payments, invoice decoding, agent analytics, budget management, agent-to-agent transfers, and account recovery. 2,839+ real Lightning transactions completed in production.",
+    "description": "MCP server giving AI agents Bitcoin wallets via Lightning Network. v1.1 adds X402 protocol support (USDC on Base) as automatic fallback alongside L402. Features: operator/agent hierarchy with spending limits, webhook notifications, keysend payments, invoice decoding, agent analytics, budget management, agent-to-agent transfers, and account recovery. CLI interface (lw command) for CLI-first agents. 2,839+ real Lightning transactions completed in production.",
     "link": "https://github.com/lightningfaucet/lightning-wallet-mcp",
     "status": "Production",
     "classification": "Bitcoin-native",
     "bitcoinNative": true,
-    "review": "Production-ready MCP server with unique dual-protocol support (L402 + X402). Auto-detection means agents can pay any API regardless of whether it uses Lightning or USDC. Operator/agent hierarchy enables enterprise use cases with spending controls. Self-registration option requires no pre-existing account—agents can onboard themselves. True economic autonomy for AI agents. Proven usage with thousands of real transactions."
+    "review": "Production-ready MCP server with unique dual-protocol support (L402 + X402). Auto-detection means agents can pay any API regardless of whether it uses Lightning or USDC. Operator/agent hierarchy enables enterprise use cases with spending controls. Self-registration option requires no pre-existing account—agents can onboard themselves. New CLI interface (lw command) enables CLI-first agents like OpenClaw and Pi. True economic autonomy for AI agents. Proven usage with thousands of real transactions."
   },
   {
     "name": "Tether Wallet Toolkit",
