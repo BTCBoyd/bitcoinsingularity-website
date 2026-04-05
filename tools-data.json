@@ -1,5 +1,15 @@
 [
   {
+    "name": "invinoveritas",
+    "category": "AI Services",
+    "description": "Lightning-paid reasoning and decision intelligence API for autonomous AI agents. Pay-per-insight using L402 protocol (Bitcoin Lightning). No subscriptions, accounts, or KYC. Agents pay only when confidence matters — with sats, atomically, without intermediaries. Features strategic reasoning (/reason endpoint, ~500-700 sats) and structured decision intelligence (/decision endpoint, ~1000-1200 sats) with confidence scores and risk levels. Includes MCP server for Claude Desktop/Cursor, CLI client, and Freqtrade trading bot integration. Deployed April 2026.",
+    "link": "https://github.com/babyblueviper1/invinoveritas",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Pure Bitcoin × AI convergence. Demonstrates real L402 monetization of AI reasoning services — agents pay per-insight with no subscription overhead. Example use case: trading bots call /decision before executing trades, skipping entries when confidence is low. ~500-1200 sats per call creates predictable, atomic cost structure. 'Agents pay only when the decision truly matters' captures the value prop perfectly. Freqtrade integration shows practical trading application. Built primarily for autonomous agents needing high-quality reasoning without increasing local compute costs."
+  },
+  {
     "name": "Lightning Labs lightning-agent-tools",
     "category": "Lightning Wallets",
     "description": "Open-source toolkit for AI agents to operate on Lightning Network. Includes seven modular skills: lnd node management, remote key isolation, scoped macaroons (pay-only credentials), L402 payment client (lnget), paid endpoint hosting (Aperture), MCP node querying, and end-to-end commerce workflows. Security-first architecture with least-privilege model. Available via npx (@lightninglabs/lightning-mcp-server) and Claude Code plugin marketplace. March 2026: Available as one-line install via npx and Claude Code plugin marketplace.",
