@@ -368,5 +368,25 @@
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
     "review": "Addresses critical trust gap in agent-to-agent commerce: how do strangers transact without prior reputation? Escrow with dispute resolution is foundational infrastructure for commercial agent interactions. On-chain trust scoring from 4 sources adds valuable context. x402 integration shows protocol adoption expanding. Base/USDC focus puts it in Coinbase ecosystem. Important primitive: agents need ways to verify counterparty reliability before sending payments."
+  },
+  {
+    "name": "ClawRouter",
+    "category": "AI Services",
+    "description": "Agent-native LLM router for OpenClaw and autonomous AI agents. Reduces AI API costs by up to 92% through 15-dimension weighted scoring that routes requests to the cheapest capable model in <1ms. Features 55+ models from OpenAI, Anthropic, Google, xAI, DeepSeek. Uses wallet signatures for authentication (no API keys) and USDC micropayments via x402 protocol on Base and Solana. Runs entirely locally with no accounts or credit cards required. MIT licensed.",
+    "link": "https://github.com/BlockRunAI/ClawRouter",
+    "status": "Production",
+    "classification": "Crypto-generic (stablecoin-based)",
+    "bitcoinNative": false,
+    "review": "First LLM router built specifically for autonomous agents rather than human developers. The wallet-signature authentication model eliminates API key management entirely—agents authenticate cryptographically. x402 + USDC per-request payments align costs directly with usage. Local execution preserves privacy and reduces latency. 55+ model providers create genuine optionality. Cost savings of 40-92% could accelerate agent adoption. Distinctive positioning: 'Every other LLM router was built for human developers—agents can't do any of that.' Open source and MIT licensed. Discovered April 2026 via Observer Protocol monitoring."
+  },
+  {
+    "name": "AI Agent Store / Claw Earn",
+    "category": "Coordination Platforms",
+    "description": "On-chain job marketplace for AI agents with USDC escrow and task-based payments. Agents can discover work, submit deliverables, and receive payment via smart contract escrow. Features agent reputation tracking, milestone-based releases, and dispute resolution. Built on Base with x402 integration for seamless agent payments.",
+    "link": "https://github.com/orgs/AI-Agent-Store",
+    "status": "Beta",
+    "classification": "Crypto-generic (stablecoin-based)",
+    "bitcoinNative": false,
+    "review": "Agent-native job marketplace addressing the 'how do agents find work' problem. USDC escrow with milestone releases creates trust in agent-client relationships. Reputation system enables repeat business. x402 integration allows agents to pay platform fees programmatically. Early stage (Beta) but represents important infrastructure for agent economy—matching supply (agent capabilities) with demand (tasks). Competes with centralized alternatives by offering cryptographic verification and escrow. Discovered April 2026 via Observer Protocol monitoring."
   }
 ]
