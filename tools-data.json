@@ -388,5 +388,45 @@
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
     "review": "Agent-native job marketplace addressing the 'how do agents find work' problem. USDC escrow with milestone releases creates trust in agent-client relationships. Reputation system enables repeat business. x402 integration allows agents to pay platform fees programmatically. Early stage (Beta) but represents important infrastructure for agent economy—matching supply (agent capabilities) with demand (tasks). Competes with centralized alternatives by offering cryptographic verification and escrow. Discovered April 2026 via Observer Protocol monitoring."
+  },
+  {
+    "name": "Xverse Agentic Wallet",
+    "category": "Lightning Wallets",
+    "description": "Headless, developer-first Bitcoin wallet for AI agents. Self-custodial Lightning payments via Spark with Machine Payments Protocol (MPP) for automatic pay-per-call API settlement. Multi-chain trading across Starknet, Spark, Runes, and Stacks. Treasury management with cold storage sweeps, rebalancing, and staking rewards. CLI-first with JSON output for agent integration. Launched April 2026.",
+    "link": "https://docs.xverse.app/xverse-agentic-wallet",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "First major Bitcoin wallet provider (Xverse has millions of users) to ship agent-native infrastructure. Headless design signals seriousness about automation—no UI, pure CLI/API. MPP (Machine Payments Protocol) is Xverse's answer to L402: automatic Lightning settlement for API calls without human approval. Multi-chain trading capabilities give agents optionality. Treasury features (cold sweeps, rebalancing) show understanding of agent operational needs. Xverse MCP Server adds 54 read-only Bitcoin data tools. Combined offering gives agents both read and write access to Bitcoin's full stack. Major validation of Bitcoin-native agent thesis from established player."
+  },
+  {
+    "name": "Xverse MCP Server",
+    "category": "AI Services",
+    "description": "MCP server exposing 54 read-only tools for AI agents to query Bitcoin blockchain data. Covers Bitcoin transactions, Ordinals, Runes, BRC-20, Spark, and swap quotes. Works with Claude, Cursor, VS Code, Codex, Windsurf, and Zed. Streamable HTTP transport. Authenticates with Xverse API key.",
+    "link": "https://docs.xverse.app/api/mcp-server",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Comprehensive Bitcoin data layer for AI agents. 54 tools covering the full Bitcoin ecosystem: base layer (fees, mempool, UTXOs), Ordinals (inscriptions, rare sats), Runes (balances, market data), BRC-20 tokens, and Spark L2. Read-only design is intentional—pairs with Agentic Wallet for writes. Streamable HTTP transport aligns with MCP spec evolution. From Xverse, one of the most-used Bitcoin wallets. Gives agents instant access to Bitcoin-native data without running full nodes or indexers."
+  },
+  {
+    "name": "MCPay",
+    "category": "Payment Protocols",
+    "description": "Open-source infrastructure adding on-chain x402 payments to any MCP server. Registry for discovering paid MCP servers, monetizer proxy for wrapping existing endpoints with pay-per-call, and SDK for building monetized servers. Supports EVM (Base, Avalanche, IoTeX, Sei) and SVM (Solana) networks. Facilitator handles payment verification and automatic retries.",
+    "link": "https://mcpay.tech",
+    "status": "Production",
+    "classification": "Crypto-generic (stablecoin-based)",
+    "bitcoinNative": false,
+    "review": "Infrastructure play for the x402 ecosystem—making it trivial to monetize any MCP server. Registry solves discovery problem: where do agents find paid services? Proxy approach means zero code changes to existing services. SDK enables custom logic. Multi-chain support (EVM + SVM) reflects x402's chain-agnostic design. Facilitator service handles the complexity of payment verification. If x402 becomes standard for MCP payments, MCPay captures infrastructure value. No Bitcoin/Lightning support—pure stablecoin/EVM approach."
+  },
+  {
+    "name": "x402-api-mcp-server",
+    "category": "AI Services",
+    "description": "MCP server providing AI agents pay-per-call access to DeFi data via x402 protocol. 8 tools: crypto prices (0.001 USDC), gas prices (0.001 USDC), DEX quotes (0.002 USDC), token security scan (0.003 USDC), whale tracking (0.005 USDC), yield scanning (0.005 USDC), funding rates (0.008 USDC), and wallet profiling (0.008 USDC). Payments in USDC on Base.",
+    "link": "https://github.com/fernsugi/x402-api-mcp-server",
+    "status": "Production",
+    "classification": "Crypto-generic (stablecoin-based)",
+    "bitcoinNative": false,
+    "review": "Demonstrates real-world x402 micropayment commerce for data services. Price discovery in action: simple queries (prices, gas) cost 0.001 USDC, complex analysis (wallet profiling) costs 0.008 USDC. Agents pay only for what they use—no subscriptions, no API keys. Auto-pay mode enables fully autonomous operation. Useful for agents needing real-time DeFi data: trading bots, portfolio managers, risk monitors. Data sources include Uniswap, SushiSwap, 1inch, Aave, Compound, Morpho, Lido, Pendle. No Bitcoin/Lightning support—pure EVM ecosystem play."
   }
 ]
