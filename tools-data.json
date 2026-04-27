@@ -428,5 +428,15 @@
     "classification": "Crypto-generic (stablecoin-based)",
     "bitcoinNative": false,
     "review": "Demonstrates real-world x402 micropayment commerce for data services. Price discovery in action: simple queries (prices, gas) cost 0.001 USDC, complex analysis (wallet profiling) costs 0.008 USDC. Agents pay only for what they use—no subscriptions, no API keys. Auto-pay mode enables fully autonomous operation. Useful for agents needing real-time DeFi data: trading bots, portfolio managers, risk monitors. Data sources include Uniswap, SushiSwap, 1inch, Aave, Compound, Morpho, Lido, Pendle. No Bitcoin/Lightning support—pure EVM ecosystem play."
+  },
+  {
+    "name": "BitAgent",
+    "category": "Coordination Platforms",
+    "description": "Open-source Python framework for building AI agents that autonomously send and receive Bitcoin payments over Lightning. Agents discover each other via Nostr, verify identity with DIDs (did:key, did:nostr, did:bitcoin), and coordinate multi-step workflows settled in real sats. Features 8 built-in agents: PolyglotAgent (translation/transcription), CoordinatorAgent (multi-agent orchestration), PriceOracleAgent, WebFetchAgent, SearchAgent, StreamfinderAgent (A2A reference), and IdentityAgent (paid NIP-05 registration). Includes MCP server for Claude integration and A2A JSON-RPC protocol support. Built on LNbits with Fedimint ecash wallet support.",
+    "link": "https://github.com/intrinsicinvestment91/bitagent",
+    "status": "Production",
+    "classification": "Bitcoin-native",
+    "bitcoinNative": true,
+    "review": "Comprehensive agent framework with Bitcoin payments as first-class primitive—not an afterthought. Unique combination of Nostr discovery + DIDs + Lightning creates decentralized agent marketplace without central coordination. IdentityAgent with paid NIP-05 registration addresses the 'who is this agent' trust problem. CoordinatorAgent enables multi-step workflows where costs flow automatically between agents. A2A JSON-RPC protocol support means agents can call each other without human involvement. MCP server gives Claude direct access. LNbits-based but Fedimint support shows forward-thinking. Example use case: research pipeline where coordinator calls transcription → translation → summarization, each hop paid automatically. MIT licensed. Railway and Start9 deployment options."
   }
 ]
